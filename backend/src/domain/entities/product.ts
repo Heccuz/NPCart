@@ -1,12 +1,10 @@
 import { assertDomain } from '../errors/domain-error'
-import { Slug } from '../value-objects/slug'
 import { Stock } from '../value-objects/stock'
 import { Money } from '../value-objects/money'
 
 export interface ProductProps {
   id: string
   name: string
-  slug: string
   categoryId: string
   primarySeriesId: string
   seriesIds: string[]
@@ -28,7 +26,6 @@ export class Product {
   static create(input: {
     id?: string
     name: string
-    slug?: string
     categoryId: string
     primarySeriesId: string
     seriesIds: string[]
@@ -56,7 +53,6 @@ export class Product {
     return new Product({
       id: input.id ?? '',
       name,
-      slug: (input.slug ? Slug.from(input.slug) : Slug.from(name)).value,
       categoryId: input.categoryId,
       primarySeriesId: input.primarySeriesId,
       seriesIds,

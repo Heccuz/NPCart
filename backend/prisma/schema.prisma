@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id             String   @id @default(cuid())
+  name           String
+  slug           String
+  basePriceCents Int
+  sortOrder      Int      @default(0)
+  createdAt      DateTime @default(now())
+  deletedAt      DateTime?
+
+  products Product[]
+  offers   CategoryOffer[]
+
+  @@index([deletedAt])
+}
+
+model Series {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String
+  imageUrl  String?
+  sortOrder Int       @default(0)
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+
+  primaryOf Product[]       @relation("PrimarySeries")
+  products  ProductSeries[]
+
+  @@index([deletedAt])
+}
+
+model Product {
+  id              String    @id @default(cuid())
+  name            String
+  categoryId      String
+  primarySeriesId String
+  priceCents      Int
+  imageUrl        String    @default("")
+  details         String    @default("")
+  stock           Int
+  isActive        Boolean   @default(true)
+  isFeatured      Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+
+  category      Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  primarySeries Series          @relation("PrimarySeries", fields: [primarySeriesId], references: [id], onDelete: Restrict)
+  series        ProductSeries[]
+  orderItems    OrderItem[]
+
+  @@index([categoryId])
+  @@index([primarySeriesId])
+  @@index([deletedAt])
+}
+
+model ProductSeries {
+  productId String
+  seriesId  String
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  series  Series  @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+
+  @@id([productId, seriesId])
+  @@index([seriesId])
+}
+
+model CategoryOffer {
+  id             String    @id @default(cuid())
+  categoryId     String
+  minQuantity    Int
+  unitPriceCents Int
+  isActive       Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  deletedAt      DateTime?
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  @@index([categoryId])
+  @@index([deletedAt])
+}
+
+enum OrderStatus {
+  PENDIENTE
+  CONFIRMADO
+  CANCELADO
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  code          String      @unique
+  status        OrderStatus @default(PENDIENTE)
+  subtotalCents Int
+  discountCents Int
+  totalCents    Int
+  createdAt     DateTime    @default(now())
+  confirmedAt   DateTime?
+
+  items OrderItem[]
+
+  @@index([status, createdAt])
+}
+
+model OrderItem {
+  orderId        String
+  productId      String
+  name           String
+  categoryName   String
+  seriesName     String
+  unitPriceCents Int
+  qty            Int
+  lineTotalCents Int
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@id([orderId, productId])
+}
+
+model AdminUser {
+  id           String @id @default(cuid())
+  email        String @unique
+  passwordHash String
+}
