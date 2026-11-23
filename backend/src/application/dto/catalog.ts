@@ -136,3 +136,25 @@ export interface StockWarning {
   requested: number
   available: number
 }
+
+export type OrderExclusionReason = 'AGOTADO' | 'NO_DISPONIBLE'
+
+export interface ExcludedOrderItem {
+  productId: string
+  name: string
+  reason: OrderExclusionReason
+  requestedQty: number
+}
+
+export interface AdjustedOrderItem {
+  productId: string
+  name: string
+  requestedQty: number
+  availableQty: number
+}
+
+export interface CreateOrderResult {
+  order: OrderDto
+  excluded: ExcludedOrderItem[]
+  adjusted: AdjustedOrderItem[]
+}

@@ -9,6 +9,7 @@ export interface OfferInput {
 
 export interface IOfferRepository {
   list(includeArchived: boolean): Promise<OfferDto[]>
+  listActive(): Promise<OfferDto[]>
   listActiveByCategoryIds(categoryIds: string[]): Promise<OfferDto[]>
   listActiveByCategory(categoryId: string): Promise<OfferDto[]>
   findById(id: string): Promise<OfferDto | null>

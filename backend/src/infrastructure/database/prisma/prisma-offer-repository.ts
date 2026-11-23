@@ -14,6 +14,15 @@ export class PrismaOfferRepository implements IOfferRepository {
     return rows.map(toOfferDto)
   }
 
+  async listActive() {
+    const rows = await prisma.categoryOffer.findMany({
+      where: { isActive: true, deletedAt: null, category: { deletedAt: null } },
+      include: offerInclude,
+      orderBy: [{ category: { sortOrder: 'asc' } }, { minQuantity: 'asc' }],
+    })
+    return rows.map(toOfferDto)
+  }
+
   async listActiveByCategoryIds(categoryIds: string[]) {
     if (categoryIds.length === 0) return []
     const rows = await prisma.categoryOffer.findMany({
