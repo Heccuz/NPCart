@@ -140,7 +140,26 @@ export class OrderUseCases {
       items: entity.items,
     })
 
-    return { order, excluded, adjusted }
+    const categoryNameById = new Map<string, string>()
+    for (const line of pricing.lines) {
+      const product = byId.get(line.productId)
+      if (product) categoryNameById.set(line.categoryId, product.category.name)
+    }
+
+    const categories = pricing.categories.map((category) => ({
+      categoryId: category.categoryId,
+      categoryName: categoryNameById.get(category.categoryId) ?? 'Mini',
+      units: category.units,
+      appliedOffer: category.offer
+        ? {
+            minQuantity: category.offer.minQuantity,
+            unitPriceCents: category.offer.unitPriceCents,
+          }
+        : null,
+      discountCents: category.discountCents,
+    }))
+
+    return { order, categories, excluded, adjusted }
   }
 
   listAdmin(filters: OrderListFilters): Promise<PaginatedOrders> {

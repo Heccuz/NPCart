@@ -1,16 +1,19 @@
 import { useEffect } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
+import { useCartUiStore } from '@/application/store/cart-ui-store'
+import CartDrawer from '@/presentation/components/CartDrawer'
 import { useCart } from '@/presentation/hooks/useCart'
 import { useCartRevalidation } from '@/presentation/hooks/useCartRevalidation'
 
-function CartButton() {
+function CartButton({ onClick }: { onClick: () => void }) {
   const { count } = useCart()
 
   return (
     <button
       type="button"
+      onClick={onClick}
       className="relative flex h-11 w-11 items-center justify-center rounded-full border border-ink/15 transition hover:border-ink/40"
-      aria-label={`Carrito (${count} ítems)`}
+      aria-label={`Abrir carrito (${count} ítems)`}
     >
       <svg
         aria-hidden="true"
@@ -38,6 +41,7 @@ function CartButton() {
 export default function PublicLayout() {
   useCartRevalidation()
   const { pathname } = useLocation()
+  const openCart = useCartUiStore((state) => state.open)
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' })
@@ -70,7 +74,7 @@ export default function PublicLayout() {
             >
               Catálogo
             </Link>
-            <CartButton />
+            <CartButton onClick={openCart} />
           </div>
         </div>
       </header>
@@ -78,6 +82,8 @@ export default function PublicLayout() {
       <main className="flex-1">
         <Outlet />
       </main>
+
+      <CartDrawer />
 
       <footer className="mt-20 border-t border-ink/10 py-10">
         <div className="container-page flex flex-col gap-4 text-sm text-ink/60 sm:flex-row sm:items-center sm:justify-between">

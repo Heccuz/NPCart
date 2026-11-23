@@ -153,8 +153,17 @@ export interface AdjustedOrderItem {
   availableQty: number
 }
 
+export interface OrderCategorySummary {
+  categoryId: string
+  categoryName: string
+  units: number
+  appliedOffer: { minQuantity: number; unitPriceCents: number } | null
+  discountCents: number
+}
+
 export interface CreateOrderResult {
   order: OrderDto
+  categories: OrderCategorySummary[]
   excluded: ExcludedOrderItem[]
   adjusted: AdjustedOrderItem[]
 }
