@@ -26,6 +26,7 @@ Catálogo web de minis impresas en 3D con carrito, pedido persistido como snapsh
 | Moneda | PEN (S/), locale `es-PE`, teléfono WhatsApp +51 |
 | Visibilidad | **No indexada**: `robots.txt`, `noindex`, `X-Robots-Tag`; el link se distribuye por WhatsApp |
 | Despliegue | Railway (backend + Postgres) y Netlify (frontend) |
+| Responsive | **Mobile-first**: el tráfico viene de WhatsApp, el móvil es la pantalla principal; todo el flujo debe verse y funcionar impecable en 360 px desde el día uno |
 
 ### Los dos ejes del catálogo
 
@@ -192,6 +193,17 @@ frontend/src/
 - **Envío del pedido.** Botón "Enviar por WhatsApp" → `POST /api/orders` → si el servidor excluyó ítems, aviso antes de abrir WhatsApp → link `wa.me` con mensaje y **código de pedido**.
 - **Panel admin.** Tabla con filtros y paginación, toggles rápidos de activo y destacado, formulario con select de tamaño y **multi-select de series con chips** (la principal marcada con estrella y reasignable con un clic), precio autocompletado desde la categoría y campo de URL de imagen con **preview en vivo** para validar el link de Drive antes de guardar. Además, **página de pedidos**: buscar por código, ver el detalle del snapshot, confirmar (descuenta stock) o cancelar (lo devuelve).
 
+### Responsive — mobile-first
+
+El link se distribuye por WhatsApp, así que **el teléfono es la pantalla principal**, no un caso borde. La web debe verse y funcionar impecable en móvil desde la primera versión, no como adaptación tardía.
+
+- **Enfoque mobile-first:** se maqueta primero para 360–430 px y se escala hacia arriba con los breakpoints de Tailwind (`sm`, `md`, `lg`, `xl`); nunca al revés.
+- **Catálogo:** grid de 2 columnas en móvil y 3–4 en desktop. El panel de filtros se convierte en **bottom sheet** con chips en móvil, no un sidebar que se aplasta; los chips de faceta tienen hit area mínima de 44 px.
+- **Carrito:** en móvil el drawer ocupa toda la pantalla; el botón "Enviar por WhatsApp" queda **sticky** en la parte inferior para no obligar a scrollear.
+- **Detalle de producto:** imagen primero, y precio + CTA visibles sin scroll.
+- **Panel admin:** su pantalla principal es el escritorio, pero las tablas colapsan a tarjetas en móvil y los toggles siguen siendo tocables.
+- **Verificación continua:** cada fase que toque UI se prueba en viewport real (device toolbar y, al menos una vez, un teléfono físico) — no se deja solo para la fase de pulido.
+
 ---
 
 ## 5. Google Drive como storage de imágenes
@@ -245,7 +257,7 @@ Agrupado por tamaño para que el ahorro sea legible. El **código de pedido** pe
 | 6 | Catálogo | Home con series, grid, filtros facetados, detalle de producto |
 | 7 | Carrito + WhatsApp | Drawer, cálculo de ofertas, barra de progreso, `POST /api/orders` con reconciliación y código, generación del link |
 | 8 | Panel admin | Login, CRUD completo, archivado/restaurar, toggles, multi-select de series, preview de imagen, **página de pedidos** (confirmar/cancelar con stock) |
-| 9 | Pulido | Responsive, accesibilidad, estados vacíos y de error, **anti-indexación** (robots.txt, noindex, X-Robots-Tag), build de producción |
+| 9 | Pulido | Responsive mobile-first verificado en viewport real, accesibilidad, estados vacíos y de error, **anti-indexación** (robots.txt, noindex, X-Robots-Tag), build de producción |
 | 10 | Despliegue | Railway y Netlify configurados, migraciones en pipeline, backup documentado, verificación end-to-end |
 
 ---
