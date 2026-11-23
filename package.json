@@ -19,7 +19,11 @@
     "format": "prettier --write .",
     "db:up": "docker compose up -d",
     "db:migrate": "npm run db:migrate -w backend",
-    "db:seed": "npm run db:seed -w backend"
+    "db:seed": "npm run db:seed -w backend",
+    "db:backup": "bash backend/scripts/backup-db.sh"
+  },
+  "engines": {
+    "node": ">=22"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",

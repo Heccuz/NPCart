@@ -170,6 +170,19 @@ const offersSeed = [
 ]
 
 async function main() {
+  // En producción el seed solo garantiza el admin: nunca pisa el catálogo real.
+  const seedDemo = process.env.SEED_DEMO === 'true' || process.env.NODE_ENV !== 'production'
+
+  if (seedDemo) {
+    await seedCatalog()
+  } else {
+    console.log('[seed] Producción: se omiten datos demo (SEED_DEMO=true para forzarlos)')
+  }
+
+  await ensureAdmin()
+}
+
+async function seedCatalog() {
   const categoryIds = new Map<string, string>()
   for (const category of categories) {
     const existing = await prisma.category.findFirst({ where: { slug: category.slug } })
@@ -242,6 +255,12 @@ async function main() {
     }
   }
 
+  console.log(
+    `[seed] ${categories.length} categorías, ${seriesSeed.length} series, ${productsSeed.length} productos y ${offersSeed.length} tramos demo`,
+  )
+}
+
+async function ensureAdmin() {
   const adminEmail = (process.env.ADMIN_EMAIL ?? 'admin@npcart.local').toLowerCase()
   const adminPassword = process.env.ADMIN_PASSWORD ?? 'cambia-esta-clave-ahora'
   const passwordHash = await bcrypt.hash(adminPassword, 10)
@@ -250,10 +269,7 @@ async function main() {
     update: { passwordHash },
     create: { email: adminEmail, passwordHash },
   })
-
-  console.log(
-    `[seed] ${categories.length} categorías, ${seriesSeed.length} series, ${productsSeed.length} productos, ${offersSeed.length} tramos y admin ${adminEmail}`,
-  )
+  console.log(`[seed] Admin asegurado: ${adminEmail}`)
 }
 
 main()
