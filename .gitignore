@@ -1,18 +1,35 @@
+# Dependencias y build
 node_modules/
 dist/
 build/
 coverage/
 *.tsbuildinfo
+.vite/
 
+# Entorno y secretos
 .env
 .env.*
 !.env.example
 !.env.test
+*.pem
 
+# Datos locales: dumps de la base de datos (contienen pedidos reales)
+backups/
+
+# Skills de agente: se reinstalan desde skills-lock.json
+.agents/
+
+# Tooling local
+.netlify/
+.railway/
+*.local
+
+# SO / IDE
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
 
+# Logs
 *.log
 npm-debug.log*
