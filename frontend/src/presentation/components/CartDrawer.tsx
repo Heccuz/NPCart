@@ -154,7 +154,7 @@ export default function CartDrawer() {
         <header className="flex h-16 items-center justify-between border-b border-ink/10 px-4 sm:px-5">
           <div>
             <p className="font-display text-lg font-semibold">Tu pedido</p>
-            <p className="text-xs text-ink/50">
+            <p className="text-xs text-ink/60">
               {items.reduce((sum, item) => sum + item.qty, 0)} minis en el carrito
             </p>
           </div>
@@ -181,7 +181,7 @@ export default function CartDrawer() {
 
               {pending.excluded.length > 0 && (
                 <div className="mt-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-wider text-ink/50">
+                  <p className="text-[11px] font-semibold uppercase tracking-wider text-ink/60">
                     Excluidos del pedido
                   </p>
                   <ul className="mt-1 space-y-1 text-sm text-ink/75">
@@ -197,7 +197,7 @@ export default function CartDrawer() {
 
               {pending.adjusted.length > 0 && (
                 <div className="mt-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-wider text-ink/50">
+                  <p className="text-[11px] font-semibold uppercase tracking-wider text-ink/60">
                     Cantidades ajustadas
                   </p>
                   <ul className="mt-1 space-y-1 text-sm text-ink/75">
@@ -236,7 +236,7 @@ export default function CartDrawer() {
                   <section key={group.categoryId}>
                     <div className="flex items-baseline justify-between gap-2">
                       <h3 className="font-display text-sm font-semibold">{group.categoryName}</h3>
-                      <span className="text-[11px] text-ink/40">
+                      <span className="text-[11px] text-ink/60">
                         {breakdown?.units ?? group.items.reduce((sum, item) => sum + item.qty, 0)}{' '}
                         unid.
                       </span>
@@ -271,13 +271,13 @@ export default function CartDrawer() {
                               <p className="truncate font-display text-sm font-semibold">
                                 {item.name}
                               </p>
-                              <p className="text-[11px] text-ink/40">{item.seriesName}</p>
+                              <p className="text-[11px] text-ink/60">{item.seriesName}</p>
                               <div className="mt-1 flex items-center gap-1.5 text-sm">
                                 <span className={cn('font-semibold', discounted && 'text-ember')}>
                                   {formatCents(effectivePrice)}
                                 </span>
                                 {discounted && (
-                                  <span className="text-[11px] text-ink/35 line-through">
+                                  <span className="text-[11px] text-ink/55 line-through">
                                     {formatCents(item.priceCents)}
                                   </span>
                                 )}
@@ -291,7 +291,7 @@ export default function CartDrawer() {
                                 <button
                                   type="button"
                                   onClick={() => removeItem(item.productId)}
-                                  className="text-[11px] font-medium text-ink/40 underline-offset-4 hover:text-ember hover:underline"
+                                  className="text-[11px] font-medium text-ink/60 underline-offset-4 hover:text-ember hover:underline"
                                 >
                                   Quitar
                                 </button>
@@ -306,7 +306,7 @@ export default function CartDrawer() {
               })}
             </div>
             {offers.length === 0 && (
-              <p className="mt-5 text-[11px] text-ink/40">
+              <p className="mt-5 text-[11px] text-ink/60">
                 Las ofertas por cantidad se aplican automáticamente al enviar.
               </p>
             )}
@@ -344,7 +344,7 @@ export default function CartDrawer() {
             >
               {sending ? 'Preparando pedido…' : 'Enviar pedido por WhatsApp'}
             </button>
-            <p className="mt-2 text-center text-[11px] leading-snug text-ink/40">
+            <p className="mt-2 text-center text-[11px] leading-snug text-ink/60">
               Abre WhatsApp con tu pedido y un código verificable. Confirmas con el vendedor.
             </p>
           </footer>

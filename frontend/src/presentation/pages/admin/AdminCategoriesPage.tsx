@@ -98,7 +98,7 @@ function CategoryForm({ category, onSaved }: { category: Category | null; onSave
           onChange={(event) => setSlug(event.target.value)}
           placeholder="mini-mediana"
         />
-        <p className="mt-1 text-[11px] text-ink/40">
+        <p className="mt-1 text-[11px] text-ink/60">
           Se genera del nombre si lo dejas vacío. Se usa en la URL del catálogo.
         </p>
       </div>
@@ -123,7 +123,7 @@ export default function AdminCategoriesPage() {
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Category | null>(null)
 
-  const { data: categories = [], isLoading } = useQuery({
+  const { data: categories = [], isLoading, isError, refetch } = useQuery({
     queryKey: ['admin', 'categories'],
     queryFn: () => adminGateway.listCategories(),
   })
@@ -159,7 +159,7 @@ export default function AdminCategoriesPage() {
         <div>
           <p className="eyebrow">Admin</p>
           <h1 className="mt-1 font-display text-2xl font-semibold sm:text-3xl">Categorías</h1>
-          <p className="mt-1 text-xs text-ink/50">
+          <p className="mt-1 text-xs text-ink/60">
             Tamaños de mini. Definen el precio base y las ofertas por cantidad.
           </p>
         </div>
@@ -178,7 +178,7 @@ export default function AdminCategoriesPage() {
       {notice && (
         <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-ink/10 bg-white/70 px-4 py-3 text-sm">
           <p className="text-ink/70">{notice}</p>
-          <button type="button" onClick={() => setNotice('')} className="text-ink/40">
+          <button type="button" onClick={() => setNotice('')} className="text-ink/60">
             ✕
           </button>
         </div>
@@ -193,7 +193,14 @@ export default function AdminCategoriesPage() {
         Mostrar archivadas
       </label>
 
-      {isLoading ? (
+      {isError ? (
+        <div className="card mt-5 px-5 py-10 text-center text-sm">
+          <p className="text-ink/60">No pudimos cargar las categorías.</p>
+          <button type="button" onClick={() => refetch()} className="btn-ghost mt-3 h-10">
+            Reintentar
+          </button>
+        </div>
+      ) : isLoading ? (
         <div className="mt-5 space-y-2">
           {Array.from({ length: 4 }, (_, index) => (
             <div key={index} className="h-14 animate-pulse rounded-xl bg-sand" />
@@ -213,12 +220,12 @@ export default function AdminCategoriesPage() {
                 <p className="font-display text-sm font-semibold">
                   {category.name}
                   {category.deletedAt && (
-                    <span className="ml-2 text-[10px] font-semibold uppercase tracking-wider text-ink/40">
+                    <span className="ml-2 text-[10px] font-semibold uppercase tracking-wider text-ink/60">
                       archivada
                     </span>
                   )}
                 </p>
-                <p className="text-[11px] text-ink/40">
+                <p className="text-[11px] text-ink/60">
                   /{category.slug} · orden {category.sortOrder}
                 </p>
               </div>

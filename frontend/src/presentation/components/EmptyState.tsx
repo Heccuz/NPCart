@@ -19,7 +19,7 @@ export default function EmptyState({
 }: EmptyStateProps) {
   return (
     <div className="card flex flex-col items-center gap-3 px-6 py-14 text-center">
-      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-ink/5 text-ink/40">
+      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-ink/5 text-ink/60">
         {icon ?? (
           <svg
             aria-hidden="true"

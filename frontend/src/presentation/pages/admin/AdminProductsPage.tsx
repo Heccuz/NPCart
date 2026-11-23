@@ -202,7 +202,7 @@ function ProductForm({
                     onClick={() => setForm({ ...form, primarySeriesId: item.id })}
                     aria-label={`Marcar ${item.name} como serie principal`}
                     title={isPrimary ? 'Serie principal' : 'Marcar como principal'}
-                    className={cn('py-1.5 pl-0.5 pr-2.5 text-sm', isPrimary ? 'text-ember' : 'text-bone/50')}
+                    className={cn('py-1.5 pl-0.5 pr-2.5 text-sm', isPrimary ? 'text-ember' : 'text-bone/65')}
                   >
                     {isPrimary ? '★' : '☆'}
                   </button>
@@ -211,7 +211,7 @@ function ProductForm({
             )
           })}
         </div>
-        <p className="mt-1.5 text-[11px] text-ink/40">
+        <p className="mt-1.5 text-[11px] text-ink/60">
           La estrella marca la serie principal que se muestra en la tarjeta.
         </p>
       </div>
@@ -270,7 +270,7 @@ function ProductForm({
             placeholder="https://drive.google.com/file/d/…/view"
           />
         </div>
-        <p className="mt-1 text-[11px] text-ink/40">
+        <p className="mt-1 text-[11px] text-ink/60">
           Comparte el archivo como “cualquiera con el link”. La URL se normaliza sola.
         </p>
       </div>
@@ -311,7 +311,7 @@ export default function AdminProductsPage() {
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Product | null>(null)
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['admin', 'products', debouncedQ, page],
     queryFn: () => adminGateway.listProducts({ q: debouncedQ, page, pageSize: PAGE_SIZE }),
   })
@@ -389,7 +389,7 @@ export default function AdminProductsPage() {
       {notice && (
         <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-ink/10 bg-white/70 px-4 py-3 text-sm">
           <p className="text-ink/70">{notice}</p>
-          <button type="button" onClick={() => setNotice('')} className="text-ink/40">
+          <button type="button" onClick={() => setNotice('')} className="text-ink/60">
             ✕
           </button>
         </div>
@@ -412,21 +412,28 @@ export default function AdminProductsPage() {
         </label>
       </div>
 
-      {isLoading ? (
+      {isError ? (
+        <div className="card mt-6 px-5 py-10 text-center text-sm">
+          <p className="text-ink/60">No pudimos cargar los productos.</p>
+          <button type="button" onClick={() => refetch()} className="btn-ghost mt-3 h-10">
+            Reintentar
+          </button>
+        </div>
+      ) : isLoading ? (
         <div className="mt-6 space-y-2">
           {Array.from({ length: 5 }, (_, index) => (
             <div key={index} className="h-14 animate-pulse rounded-xl bg-sand" />
           ))}
         </div>
       ) : products.length === 0 ? (
-        <div className="card mt-6 px-5 py-10 text-center text-sm text-ink/50">
+        <div className="card mt-6 px-5 py-10 text-center text-sm text-ink/60">
           No hay productos que coincidan.
         </div>
       ) : (
         <>
           <div className="mt-5 hidden overflow-hidden rounded-2xl border border-ink/10 bg-white/60 md:block">
             <table className="w-full text-sm">
-              <thead className="border-b border-ink/10 bg-ink/5 text-left text-[11px] uppercase tracking-wider text-ink/50">
+              <thead className="border-b border-ink/10 bg-ink/5 text-left text-[11px] uppercase tracking-wider text-ink/60">
                 <tr>
                   <th className="px-4 py-3 font-semibold">Producto</th>
                   <th className="px-4 py-3 font-semibold">Tamaño</th>
@@ -448,7 +455,7 @@ export default function AdminProductsPage() {
                         />
                         <div className="min-w-0">
                           <p className="truncate font-medium">{product.name}</p>
-                          <p className="truncate text-[11px] text-ink/40">
+                          <p className="truncate text-[11px] text-ink/60">
                             {product.primarySeries.name}
                             {product.deletedAt && ' · archivado'}
                           </p>
@@ -474,7 +481,7 @@ export default function AdminProductsPage() {
                             'rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider',
                             product.isActive
                               ? 'border-moss/40 bg-moss/10 text-moss'
-                              : 'border-ink/15 text-ink/40',
+                              : 'border-ink/15 text-ink/60',
                           )}
                         >
                           {product.isActive ? 'Activo' : 'Inactivo'}
@@ -492,7 +499,7 @@ export default function AdminProductsPage() {
                             'rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider',
                             product.isFeatured
                               ? 'border-ember/40 bg-ember/10 text-ember'
-                              : 'border-ink/15 text-ink/40',
+                              : 'border-ink/15 text-ink/60',
                           )}
                         >
                           {product.isFeatured ? '★ Destacado' : 'Destacar'}
@@ -556,7 +563,7 @@ export default function AdminProductsPage() {
                   />
                   <div className="min-w-0 flex-1">
                     <p className="truncate font-display text-sm font-semibold">{product.name}</p>
-                    <p className="text-[11px] text-ink/40">
+                    <p className="text-[11px] text-ink/60">
                       {product.category.name} · {product.primarySeries.name}
                     </p>
                     <p className="mt-1 text-sm">
@@ -575,7 +582,7 @@ export default function AdminProductsPage() {
                       'rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider',
                       product.isActive
                         ? 'border-moss/40 bg-moss/10 text-moss'
-                        : 'border-ink/15 text-ink/40',
+                        : 'border-ink/15 text-ink/60',
                     )}
                   >
                     {product.isActive ? 'Activo' : 'Inactivo'}
@@ -590,7 +597,7 @@ export default function AdminProductsPage() {
                       'rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider',
                       product.isFeatured
                         ? 'border-ember/40 bg-ember/10 text-ember'
-                        : 'border-ink/15 text-ink/40',
+                        : 'border-ink/15 text-ink/60',
                     )}
                   >
                     {product.isFeatured ? '★ Destacado' : 'Destacar'}
@@ -641,7 +648,7 @@ export default function AdminProductsPage() {
               >
                 Anterior
               </button>
-              <span className="text-ink/50">
+              <span className="text-ink/60">
                 Página {page} de {totalPages}
               </span>
               <button

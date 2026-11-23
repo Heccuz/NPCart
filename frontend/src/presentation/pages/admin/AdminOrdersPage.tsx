@@ -15,7 +15,7 @@ function StatusPill({ status }: { status: OrderStatus }) {
   const styles: Record<OrderStatus, string> = {
     PENDIENTE: 'border-ember/40 bg-ember/10 text-ember',
     CONFIRMADO: 'border-moss/40 bg-moss/10 text-moss',
-    CANCELADO: 'border-ink/15 bg-ink/5 text-ink/45',
+    CANCELADO: 'border-ink/15 bg-ink/5 text-ink/60',
   }
   return (
     <span
@@ -47,7 +47,7 @@ export default function AdminOrdersPage() {
   const [selected, setSelected] = useState<Order | null>(null)
   const [warnings, setWarnings] = useState<StockWarning[]>([])
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['admin', 'orders', debouncedQ, status, page],
     queryFn: () =>
       adminGateway.listOrders({
@@ -107,7 +107,7 @@ export default function AdminOrdersPage() {
       <div>
         <p className="eyebrow">Admin</p>
         <h1 className="mt-1 font-display text-2xl font-semibold sm:text-3xl">Pedidos</h1>
-        <p className="mt-1 text-xs text-ink/50">
+        <p className="mt-1 text-xs text-ink/60">
           Verifica el código que llega por WhatsApp y confirma la venta.
         </p>
       </div>
@@ -115,7 +115,7 @@ export default function AdminOrdersPage() {
       {notice && (
         <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-ink/10 bg-white/70 px-4 py-3 text-sm">
           <p className="text-ink/70">{notice}</p>
-          <button type="button" onClick={() => setNotice('')} className="text-ink/40">
+          <button type="button" onClick={() => setNotice('')} className="text-ink/60">
             ✕
           </button>
         </div>
@@ -140,14 +140,21 @@ export default function AdminOrdersPage() {
         </select>
       </div>
 
-      {isLoading ? (
+      {isError ? (
+        <div className="card mt-5 px-5 py-10 text-center text-sm">
+          <p className="text-ink/60">No pudimos cargar los pedidos.</p>
+          <button type="button" onClick={() => refetch()} className="btn-ghost mt-3 h-10">
+            Reintentar
+          </button>
+        </div>
+      ) : isLoading ? (
         <div className="mt-5 space-y-2">
           {Array.from({ length: 5 }, (_, index) => (
             <div key={index} className="h-14 animate-pulse rounded-xl bg-sand" />
           ))}
         </div>
       ) : orders.length === 0 ? (
-        <div className="card mt-5 px-5 py-10 text-center text-sm text-ink/50">
+        <div className="card mt-5 px-5 py-10 text-center text-sm text-ink/60">
           No hay pedidos que coincidan.
         </div>
       ) : (
@@ -160,7 +167,7 @@ export default function AdminOrdersPage() {
               >
                 <div className="min-w-0 flex-1">
                   <p className="font-display text-sm font-semibold">{order.code}</p>
-                  <p className="text-[11px] text-ink/40">
+                  <p className="text-[11px] text-ink/60">
                     {formatDateTime(order.createdAt)} · {order.items.length} ítem(s)
                   </p>
                 </div>
@@ -187,7 +194,7 @@ export default function AdminOrdersPage() {
               >
                 Anterior
               </button>
-              <span className="text-ink/50">
+              <span className="text-ink/60">
                 Página {page} de {totalPages}
               </span>
               <button
@@ -234,7 +241,7 @@ export default function AdminOrdersPage() {
                 </button>
               )}
               {selected.status === 'CANCELADO' && (
-                <p className="text-xs text-ink/50">Este pedido ya está cancelado.</p>
+                <p className="text-xs text-ink/60">Este pedido ya está cancelado.</p>
               )}
             </div>
           )
@@ -244,7 +251,7 @@ export default function AdminOrdersPage() {
           <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-3 text-sm">
               <StatusPill status={selected.status} />
-              <span className="text-ink/50">{formatDateTime(selected.createdAt)}</span>
+              <span className="text-ink/60">{formatDateTime(selected.createdAt)}</span>
               <span className="ml-auto font-semibold">{formatCents(selected.totalCents)}</span>
             </div>
 
@@ -264,7 +271,7 @@ export default function AdminOrdersPage() {
 
             <div className="overflow-hidden rounded-xl border border-ink/10">
               <table className="w-full text-sm">
-                <thead className="bg-ink/5 text-left text-[10px] uppercase tracking-wider text-ink/50">
+                <thead className="bg-ink/5 text-left text-[10px] uppercase tracking-wider text-ink/60">
                   <tr>
                     <th className="px-3 py-2 font-semibold">Mini</th>
                     <th className="px-3 py-2 font-semibold">Cant.</th>
@@ -277,7 +284,7 @@ export default function AdminOrdersPage() {
                     <tr key={item.productId}>
                       <td className="px-3 py-2">
                         <p className="font-medium">{item.name}</p>
-                        <p className="text-[11px] text-ink/40">
+                        <p className="text-[11px] text-ink/60">
                           {item.categoryName} · {item.seriesName}
                         </p>
                       </td>
@@ -311,7 +318,7 @@ export default function AdminOrdersPage() {
               </div>
             </dl>
 
-            <p className="text-[11px] leading-relaxed text-ink/40">
+            <p className="text-[11px] leading-relaxed text-ink/60">
               {statusLabel(selected.status)} · El código del mensaje de WhatsApp debe coincidir con
               el mostrado arriba.
             </p>

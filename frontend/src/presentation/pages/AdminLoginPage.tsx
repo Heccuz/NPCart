@@ -38,10 +38,11 @@ export default function AdminLoginPage() {
           <p className="font-display text-2xl font-extrabold">
             NPCart<span className="text-ember">.</span>
           </p>
-          <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-ink/40">Panel admin</p>
+          <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-ink/60">Panel admin</p>
         </div>
 
         <form onSubmit={submit} className="card mt-8 space-y-4 p-6">
+          <h1 className="font-display text-lg font-semibold">Iniciar sesión</h1>
           <div>
             <label className="label" htmlFor="email">
               Email
@@ -84,7 +85,7 @@ export default function AdminLoginPage() {
           </button>
         </form>
 
-        <p className="mt-4 text-center text-xs text-ink/40">
+        <p className="mt-4 text-center text-xs text-ink/60">
           <a href="/" className="underline-offset-4 hover:underline">
             Volver a la tienda
           </a>

@@ -56,7 +56,7 @@ function PriceRange({
           }}
           className="input h-11"
         />
-        <span className="text-ink/30">—</span>
+        <span className="text-ink/60">—</span>
         <input
           type="number"
           inputMode="decimal"

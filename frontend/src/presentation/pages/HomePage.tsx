@@ -119,15 +119,15 @@ export default function HomePage() {
             <dl className="mt-10 grid grid-cols-3 gap-4 border-t border-ink/10 pt-6 text-sm">
               <div>
                 <dt className="font-display text-lg font-semibold">2–5 cm</dt>
-                <dd className="text-xs text-ink/50">3 tamaños</dd>
+                <dd className="text-xs text-ink/60">3 tamaños</dd>
               </div>
               <div>
                 <dt className="font-display text-lg font-semibold">A pedido</dt>
-                <dd className="text-xs text-ink/50">Impresión propia</dd>
+                <dd className="text-xs text-ink/60">Impresión propia</dd>
               </div>
               <div>
                 <dt className="font-display text-lg font-semibold">S/ 8</dt>
-                <dd className="text-xs text-ink/50">Desde</dd>
+                <dd className="text-xs text-ink/60">Desde</dd>
               </div>
             </dl>
           </div>
@@ -170,7 +170,7 @@ export default function HomePage() {
                 Ofertas por tamaño
               </h2>
             </div>
-            <p className="max-w-sm text-sm text-ink/50">
+            <p className="max-w-sm text-sm text-ink/60">
               Mezcla series libremente: lo que importa es cuántas minis del mismo tamaño llevas.
             </p>
           </div>
@@ -179,14 +179,14 @@ export default function HomePage() {
             {categoriesWithOffers.map((category) => (
               <div key={category.id} className="card p-5">
                 <p className="font-display text-lg font-semibold">{category.name}</p>
-                <p className="mt-1 text-xs text-ink/50">Cualquier serie de este tamaño</p>
+                <p className="mt-1 text-xs text-ink/60">Cualquier serie de este tamaño</p>
                 <div className="mt-4 space-y-2">
                   {offersForCategory(offersData, category.id).map((tier) => (
                     <div key={tier.id} className="flex items-baseline justify-between text-sm">
                       <span className="text-ink/60">Lleva {tier.minQuantity}+</span>
                       <span className="font-semibold">
                         {formatCents(tier.unitPriceCents)}{' '}
-                        <span className="text-xs font-medium text-ink/40">c/u</span>
+                        <span className="text-xs font-medium text-ink/60">c/u</span>
                       </span>
                     </div>
                   ))}
@@ -210,13 +210,26 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="mt-5">
-          <ProductGrid
-            products={featuredData}
-            offers={offersData}
-            loading={featured.isLoading}
-            skeletonCount={4}
-            onQuickAdd={(product) => addItem(productToCartItem(product))}
-          />
+          {featured.isError ? (
+            <div className="card px-5 py-10 text-center text-sm text-ink/60">
+              No pudimos cargar las destacadas.{' '}
+              <button
+                type="button"
+                onClick={() => featured.refetch()}
+                className="font-semibold text-ember underline-offset-4 hover:underline"
+              >
+                Reintentar
+              </button>
+            </div>
+          ) : (
+            <ProductGrid
+              products={featuredData}
+              offers={offersData}
+              loading={featured.isLoading}
+              skeletonCount={4}
+              onQuickAdd={(product) => addItem(productToCartItem(product))}
+            />
+          )}
         </div>
       </section>
 

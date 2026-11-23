@@ -33,7 +33,7 @@ export default function AdminLayout() {
           <p className="font-display text-xl font-extrabold">
             NPCart<span className="text-ember">.</span>
           </p>
-          <p className="mt-0.5 text-[11px] uppercase tracking-[0.18em] text-bone/40">Panel admin</p>
+          <p className="mt-0.5 text-[11px] uppercase tracking-[0.18em] text-bone/60">Panel admin</p>
         </div>
 
         <nav className="flex-1 space-y-1 px-3 py-4">
@@ -56,7 +56,7 @@ export default function AdminLayout() {
         </nav>
 
         <div className="space-y-3 border-t border-bone/10 px-5 py-4 text-xs">
-          <p className="truncate text-bone/50">{email}</p>
+          <p className="truncate text-bone/65">{email}</p>
           <Link to="/" className="block text-bone/60 transition hover:text-bone">
             Ver tienda
           </Link>
@@ -75,12 +75,12 @@ export default function AdminLayout() {
           <div className="flex h-14 items-center justify-between px-4">
             <Link to="/admin/productos" className="font-display text-lg font-extrabold">
               NPCart<span className="text-ember">.</span>
-              <span className="ml-2 text-[10px] font-semibold uppercase tracking-wider text-ink/40">
+              <span className="ml-2 text-[10px] font-semibold uppercase tracking-wider text-ink/60">
                 Admin
               </span>
             </Link>
             <div className="flex items-center gap-2">
-              <Link to="/" className="text-xs font-medium text-ink/50">
+              <Link to="/" className="text-xs font-medium text-ink/60">
                 Tienda
               </Link>
               <button
@@ -110,7 +110,7 @@ export default function AdminLayout() {
           </nav>
         </header>
 
-        <main className="container-page py-6 sm:py-8">
+        <main id="admin-main" tabIndex={-1} className="container-page py-6 outline-none sm:py-8">
           <Outlet />
         </main>
       </div>

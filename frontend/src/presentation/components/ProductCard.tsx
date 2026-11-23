@@ -63,7 +63,7 @@ export default function ProductCard({ product, offer, onQuickAdd }: ProductCardP
       </div>
 
       <div className="flex flex-1 flex-col p-3.5">
-        <p className="truncate text-[10px] font-semibold uppercase tracking-wider text-ink/40">
+        <p className="truncate text-[10px] font-semibold uppercase tracking-wider text-ink/60">
           {product.primarySeries.name}
         </p>
         <h3 className="mt-0.5 line-clamp-2 min-h-[2.5em] font-display text-[15px] font-semibold leading-snug">
@@ -73,7 +73,7 @@ export default function ProductCard({ product, offer, onQuickAdd }: ProductCardP
           <div className="flex items-baseline justify-between gap-2">
             <span className="text-[15px] font-semibold">{formatCents(product.priceCents)}</span>
             {soldOut && (
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-ink/40">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-ink/60">
                 Agotado
               </span>
             )}

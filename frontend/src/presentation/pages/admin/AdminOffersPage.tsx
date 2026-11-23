@@ -113,7 +113,7 @@ function OfferForm({
         Oferta activa
       </label>
 
-      <p className="rounded-xl bg-ink/5 px-3 py-2 text-[11px] leading-relaxed text-ink/50">
+      <p className="rounded-xl bg-ink/5 px-3 py-2 text-[11px] leading-relaxed text-ink/60">
         Los tramos de una categoría deben tener cantidades distintas y precios estrictamente
         decrecientes: 5+ a S/ 12, 10+ a S/ 10.
       </p>
@@ -139,7 +139,7 @@ export default function AdminOffersPage() {
   const [editing, setEditing] = useState<CategoryOffer | null>(null)
 
   const { data: categories = [] } = useCategories()
-  const { data: offers = [], isLoading } = useQuery({
+  const { data: offers = [], isLoading, isError, refetch } = useQuery({
     queryKey: ['admin', 'offers'],
     queryFn: () => adminGateway.listOffers(),
   })
@@ -188,7 +188,7 @@ export default function AdminOffersPage() {
         <div>
           <p className="eyebrow">Admin</p>
           <h1 className="mt-1 font-display text-2xl font-semibold sm:text-3xl">Ofertas</h1>
-          <p className="mt-1 text-xs text-ink/50">
+          <p className="mt-1 text-xs text-ink/60">
             Tramos por cantidad, agrupados por tamaño. Se suman todas las series.
           </p>
         </div>
@@ -207,7 +207,7 @@ export default function AdminOffersPage() {
       {notice && (
         <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-ink/10 bg-white/70 px-4 py-3 text-sm">
           <p className="text-ink/70">{notice}</p>
-          <button type="button" onClick={() => setNotice('')} className="text-ink/40">
+          <button type="button" onClick={() => setNotice('')} className="text-ink/60">
             ✕
           </button>
         </div>
@@ -222,14 +222,21 @@ export default function AdminOffersPage() {
         Mostrar archivadas
       </label>
 
-      {isLoading ? (
+      {isError ? (
+        <div className="card mt-5 px-5 py-10 text-center text-sm">
+          <p className="text-ink/60">No pudimos cargar las ofertas.</p>
+          <button type="button" onClick={() => refetch()} className="btn-ghost mt-3 h-10">
+            Reintentar
+          </button>
+        </div>
+      ) : isLoading ? (
         <div className="mt-5 space-y-2">
           {Array.from({ length: 3 }, (_, index) => (
             <div key={index} className="h-24 animate-pulse rounded-xl bg-sand" />
           ))}
         </div>
       ) : groups.length === 0 ? (
-        <div className="card mt-5 px-5 py-10 text-center text-sm text-ink/50">
+        <div className="card mt-5 px-5 py-10 text-center text-sm text-ink/60">
           Todavía no hay ofertas.
         </div>
       ) : (
@@ -248,16 +255,16 @@ export default function AdminOffersPage() {
                   >
                     <span className="min-w-0 flex-1">
                       <span className="font-medium">Lleva {offer.minQuantity}+</span>
-                      <span className="text-ink/40"> → </span>
+                      <span className="text-ink/60"> → </span>
                       <span className="font-semibold">{formatCents(offer.unitPriceCents)}</span>
-                      <span className="text-xs text-ink/40"> c/u</span>
+                      <span className="text-xs text-ink/60"> c/u</span>
                     </span>
                     <span
                       className={cn(
                         'rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider',
                         offer.isActive
                           ? 'border-moss/40 bg-moss/10 text-moss'
-                          : 'border-ink/15 text-ink/40',
+                          : 'border-ink/15 text-ink/60',
                       )}
                     >
                       {offer.isActive ? 'activa' : 'inactiva'}

@@ -12,7 +12,10 @@ export default function SeriesPage() {
   const { addItem } = useCart()
 
   const current = seriesList.find((item) => item.slug === slug)
-  const { data, isLoading } = useProducts({ series: [slug ?? '__none__'], pageSize: 24 })
+  const { data, isLoading, isError, refetch } = useProducts({
+    series: [slug ?? '__none__'],
+    pageSize: 24,
+  })
 
   const products = data?.items ?? []
 
@@ -31,7 +34,7 @@ export default function SeriesPage() {
 
   return (
     <div className="container-page py-8 sm:py-10">
-      <nav aria-label="Migas de pan" className="text-xs text-ink/50">
+      <nav aria-label="Migas de pan" className="text-xs text-ink/60">
         <Link to="/catalogo" className="hover:text-ink">
           Catálogo
         </Link>{' '}
@@ -48,7 +51,7 @@ export default function SeriesPage() {
             Todas las minis de esta temática, en sus distintos tamaños.
           </p>
         </div>
-        <p className="text-sm text-ink/50">{data?.total ?? 0} minis</p>
+        <p className="text-sm text-ink/60">{data?.total ?? 0} minis</p>
       </header>
 
       <div className="mt-6">
@@ -58,12 +61,21 @@ export default function SeriesPage() {
           loading={isLoading || seriesLoading}
           onQuickAdd={(product) => addItem(productToCartItem(product))}
           emptyState={
-            <EmptyState
-              title="Todavía no hay minis en esta serie"
-              description="Estamos preparando nuevos modelos. Mientras tanto, mira el resto del catálogo."
-              actionLabel="Ver catálogo"
-              actionTo="/catalogo"
-            />
+            isError ? (
+              <EmptyState
+                title="No pudimos cargar esta serie"
+                description="Revisa tu conexión e intenta de nuevo."
+                actionLabel="Reintentar"
+                onAction={() => refetch()}
+              />
+            ) : (
+              <EmptyState
+                title="Todavía no hay minis en esta serie"
+                description="Estamos preparando nuevos modelos. Mientras tanto, mira el resto del catálogo."
+                actionLabel="Ver catálogo"
+                actionTo="/catalogo"
+              />
+            )
           }
         />
       </div>

@@ -49,6 +49,12 @@ export default function PublicLayout() {
 
   return (
     <div className="flex min-h-dvh flex-col">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-bone"
+      >
+        Saltar al contenido
+      </a>
       <header className="sticky top-0 z-30 border-b border-ink/10 bg-bone/85 backdrop-blur-md">
         <div className="container-page flex h-16 items-center justify-between gap-4">
           <Link to="/" className="font-display text-2xl font-extrabold tracking-tight">
@@ -79,7 +85,7 @@ export default function PublicLayout() {
         </div>
       </header>
 
-      <main className="flex-1">
+      <main id="main" tabIndex={-1} className="flex-1 outline-none">
         <Outlet />
       </main>
 

@@ -113,7 +113,7 @@ export default function CatalogPage() {
   const sheetOpen = useFilterStore((state) => state.open)
   const setSheetOpen = useFilterStore((state) => state.setOpen)
 
-  const { data, isLoading, isFetching } = useProducts({
+  const { data, isLoading, isFetching, isError, refetch } = useProducts({
     categories: filters.categories,
     series: filters.series,
     q: filters.q,
@@ -193,9 +193,9 @@ export default function CatalogPage() {
 
           <div>
             <div className="mb-4 flex flex-wrap items-center gap-2">
-              <p className="mr-1 text-sm text-ink/50">
+              <p className="mr-1 text-sm text-ink/60">
                 {total} {total === 1 ? 'mini' : 'minis'}
-                {isFetching && !isLoading && <span className="ml-2 text-ink/30">actualizando…</span>}
+                {isFetching && !isLoading && <span className="ml-2 text-ink/60">actualizando…</span>}
               </p>
               <ActiveChips
                 categories={categories}
@@ -208,7 +208,7 @@ export default function CatalogPage() {
                 <button
                   type="button"
                   onClick={clear}
-                  className="text-xs font-semibold text-ink/40 underline-offset-4 hover:text-ink hover:underline"
+                  className="text-xs font-semibold text-ink/60 underline-offset-4 hover:text-ink hover:underline"
                 >
                   Limpiar todo
                 </button>
@@ -221,12 +221,21 @@ export default function CatalogPage() {
               loading={isLoading}
               onQuickAdd={(product) => addItem(productToCartItem(product))}
               emptyState={
-                <EmptyState
-                  title="Ninguna mini coincide"
-                  description="Prueba quitando algún filtro o busca por otra temática."
-                  actionLabel="Limpiar filtros"
-                  onAction={clear}
-                />
+                isError && products.length === 0 ? (
+                  <EmptyState
+                    title="No pudimos cargar el catálogo"
+                    description="Revisa tu conexión e intenta de nuevo."
+                    actionLabel="Reintentar"
+                    onAction={() => refetch()}
+                  />
+                ) : (
+                  <EmptyState
+                    title="Ninguna mini coincide"
+                    description="Prueba quitando algún filtro o busca por otra temática."
+                    actionLabel="Limpiar filtros"
+                    onAction={clear}
+                  />
+                )
               }
             />
 

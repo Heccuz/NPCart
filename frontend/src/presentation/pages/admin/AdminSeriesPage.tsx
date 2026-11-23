@@ -119,7 +119,7 @@ export default function AdminSeriesPage() {
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Series | null>(null)
 
-  const { data: series = [], isLoading } = useQuery({
+  const { data: series = [], isLoading, isError, refetch } = useQuery({
     queryKey: ['admin', 'series'],
     queryFn: () => adminGateway.listSeries(),
   })
@@ -155,7 +155,7 @@ export default function AdminSeriesPage() {
         <div>
           <p className="eyebrow">Admin</p>
           <h1 className="mt-1 font-display text-2xl font-semibold sm:text-3xl">Series</h1>
-          <p className="mt-1 text-xs text-ink/50">Temáticas que agrupan las minis.</p>
+          <p className="mt-1 text-xs text-ink/60">Temáticas que agrupan las minis.</p>
         </div>
         <button
           type="button"
@@ -172,7 +172,7 @@ export default function AdminSeriesPage() {
       {notice && (
         <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-ink/10 bg-white/70 px-4 py-3 text-sm">
           <p className="text-ink/70">{notice}</p>
-          <button type="button" onClick={() => setNotice('')} className="text-ink/40">
+          <button type="button" onClick={() => setNotice('')} className="text-ink/60">
             ✕
           </button>
         </div>
@@ -187,7 +187,14 @@ export default function AdminSeriesPage() {
         Mostrar archivadas
       </label>
 
-      {isLoading ? (
+      {isError ? (
+        <div className="card mt-5 px-5 py-10 text-center text-sm">
+          <p className="text-ink/60">No pudimos cargar las series.</p>
+          <button type="button" onClick={() => refetch()} className="btn-ghost mt-3 h-10">
+            Reintentar
+          </button>
+        </div>
+      ) : isLoading ? (
         <div className="mt-5 space-y-2">
           {Array.from({ length: 4 }, (_, index) => (
             <div key={index} className="h-14 animate-pulse rounded-xl bg-sand" />
@@ -212,12 +219,12 @@ export default function AdminSeriesPage() {
                 <p className="truncate font-display text-sm font-semibold">
                   {item.name}
                   {item.deletedAt && (
-                    <span className="ml-2 text-[10px] font-semibold uppercase tracking-wider text-ink/40">
+                    <span className="ml-2 text-[10px] font-semibold uppercase tracking-wider text-ink/60">
                       archivada
                     </span>
                   )}
                 </p>
-                <p className="text-[11px] text-ink/40">
+                <p className="text-[11px] text-ink/60">
                   /{item.slug} · orden {item.sortOrder}
                 </p>
               </div>

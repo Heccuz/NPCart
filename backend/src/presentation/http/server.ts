@@ -17,6 +17,11 @@ export function createApp() {
 
   if (env.NODE_ENV === 'production') app.set('trust proxy', 1)
 
+  // Catálogo con posible IP de terceros: fuera de buscadores.
+  app.use((_req, res, next) => {
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow')
+    next()
+  })
   app.use(express.json({ limit: '100kb' }))
   app.use(
     cors({

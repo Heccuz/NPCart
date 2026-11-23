@@ -35,7 +35,7 @@ export default function SearchBar({
         fill="none"
         stroke="currentColor"
         strokeWidth="1.8"
-        className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink/40"
+        className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink/60"
       >
         <circle cx="11" cy="11" r="6.5" />
         <path d="m20 20-4.2-4.2" />

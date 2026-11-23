@@ -31,7 +31,7 @@ function DetailSkeleton() {
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>()
-  const { data: product, isLoading } = useProduct(id)
+  const { data: product, isLoading, isError, refetch } = useProduct(id)
   const { data: offers = [] } = useOffers()
   const { addItem } = useCart()
   const [added, setAdded] = useState(false)
@@ -42,6 +42,19 @@ export default function ProductDetailPage() {
   })
 
   if (isLoading) return <DetailSkeleton />
+
+  if (isError) {
+    return (
+      <div className="container-page py-16">
+        <EmptyState
+          title="No pudimos cargar esta mini"
+          description="Revisa tu conexión e intenta de nuevo."
+          actionLabel="Reintentar"
+          onAction={() => refetch()}
+        />
+      </div>
+    )
+  }
 
   if (!product) {
     return (
@@ -70,7 +83,7 @@ export default function ProductDetailPage() {
 
   return (
     <div className="container-page py-6 sm:py-10">
-      <nav aria-label="Migas de pan" className="text-xs text-ink/50">
+      <nav aria-label="Migas de pan" className="text-xs text-ink/60">
         <Link to="/catalogo" className="hover:text-ink">
           Catálogo
         </Link>{' '}
@@ -120,7 +133,7 @@ export default function ProductDetailPage() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-2 text-xs text-ink/50">
+              <p className="mt-2 text-xs text-ink/60">
                 Se mezclan todas las minis de este tamaño, sin importar la serie.
               </p>
             </div>
@@ -147,21 +160,21 @@ export default function ProductDetailPage() {
 
           <dl className="mt-7 grid grid-cols-2 gap-4 border-t border-ink/10 pt-5 text-sm">
             <div>
-              <dt className="text-xs uppercase tracking-wider text-ink/40">Tamaño</dt>
+              <dt className="text-xs uppercase tracking-wider text-ink/60">Tamaño</dt>
               <dd className="mt-0.5 font-medium">{product.category.name}</dd>
             </div>
             <div>
-              <dt className="text-xs uppercase tracking-wider text-ink/40">Disponibles</dt>
+              <dt className="text-xs uppercase tracking-wider text-ink/60">Disponibles</dt>
               <dd className="mt-0.5 font-medium">
                 {soldOut ? 'Sin stock' : `${product.stock} unidades`}
               </dd>
             </div>
             <div>
-              <dt className="text-xs uppercase tracking-wider text-ink/40">Serie principal</dt>
+              <dt className="text-xs uppercase tracking-wider text-ink/60">Serie principal</dt>
               <dd className="mt-0.5 font-medium">{product.primarySeries.name}</dd>
             </div>
             <div>
-              <dt className="text-xs uppercase tracking-wider text-ink/40">Impresión</dt>
+              <dt className="text-xs uppercase tracking-wider text-ink/60">Impresión</dt>
               <dd className="mt-0.5 font-medium">Bajo pedido</dd>
             </div>
           </dl>
