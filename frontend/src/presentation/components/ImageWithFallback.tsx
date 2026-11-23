@@ -8,24 +8,28 @@ interface ImageWithFallbackProps {
   className?: string
   imgClassName?: string
   priority?: boolean
+  /** Oculta el texto "Sin foto" en miniaturas pequeñas. */
+  hideLabel?: boolean
 }
 
-function MiniPlaceholder() {
+function MiniPlaceholder({ hideLabel }: { hideLabel?: boolean }) {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-shale via-coal to-ink text-bone/40">
+    <div className="flex h-full w-full flex-col items-center justify-center gap-1.5 bg-gradient-to-br from-shale via-coal to-ink text-bone/40">
       <svg
         aria-hidden="true"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
         strokeWidth="1.4"
-        className="h-10 w-10"
+        className="h-[38%] max-h-12 min-h-4 w-[38%] min-w-4 max-w-12"
       >
         <circle cx="12" cy="5.5" r="2.5" />
         <path d="M9.5 10h5l1 4.5h-7l1-4.5Z" />
         <path d="M6 21l1.2-6.5h9.6L18 21" />
       </svg>
-      <span className="text-[10px] font-semibold uppercase tracking-[0.18em]">Sin foto</span>
+      {!hideLabel && (
+        <span className="text-[10px] font-semibold uppercase tracking-[0.18em]">Sin foto</span>
+      )}
     </div>
   )
 }
@@ -36,6 +40,7 @@ export default function ImageWithFallback({
   className,
   imgClassName,
   priority = false,
+  hideLabel = false,
 }: ImageWithFallbackProps) {
   const resolved = resolveImageUrl(src, 800)
   const [failed, setFailed] = useState(false)
@@ -44,7 +49,7 @@ export default function ImageWithFallback({
   if (!resolved || failed) {
     return (
       <div className={cn('overflow-hidden', className)}>
-        <MiniPlaceholder />
+        <MiniPlaceholder hideLabel={hideLabel} />
       </div>
     )
   }

@@ -1,0 +1,119 @@
+import type { ReactNode } from 'react'
+import { Link, Navigate, NavLink, Outlet, useLocation } from 'react-router-dom'
+import { useAuthStore } from '@/application/store/auth-store'
+import { cn } from '@/presentation/lib/cn'
+
+export function ProtectedRoute({ children }: { children: ReactNode }) {
+  const token = useAuthStore((state) => state.token)
+  const location = useLocation()
+
+  if (!token) {
+    return <Navigate to="/admin/login" replace state={{ from: location.pathname }} />
+  }
+
+  return <>{children}</>
+}
+
+const links = [
+  { to: '/admin/productos', label: 'Productos' },
+  { to: '/admin/pedidos', label: 'Pedidos' },
+  { to: '/admin/categorias', label: 'Categorías' },
+  { to: '/admin/series', label: 'Series' },
+  { to: '/admin/ofertas', label: 'Ofertas' },
+]
+
+export default function AdminLayout() {
+  const email = useAuthStore((state) => state.email)
+  const logout = useAuthStore((state) => state.logout)
+
+  return (
+    <div className="min-h-dvh bg-bone">
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col bg-ink text-bone lg:flex">
+        <div className="border-b border-bone/10 px-5 py-5">
+          <p className="font-display text-xl font-extrabold">
+            NPCart<span className="text-ember">.</span>
+          </p>
+          <p className="mt-0.5 text-[11px] uppercase tracking-[0.18em] text-bone/40">Panel admin</p>
+        </div>
+
+        <nav className="flex-1 space-y-1 px-3 py-4">
+          {links.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              className={({ isActive }) =>
+                cn(
+                  'block rounded-xl px-3 py-2.5 text-sm font-medium transition',
+                  isActive
+                    ? 'bg-bone/10 text-bone'
+                    : 'text-bone/60 hover:bg-bone/5 hover:text-bone',
+                )
+              }
+            >
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="space-y-3 border-t border-bone/10 px-5 py-4 text-xs">
+          <p className="truncate text-bone/50">{email}</p>
+          <Link to="/" className="block text-bone/60 transition hover:text-bone">
+            Ver tienda
+          </Link>
+          <button
+            type="button"
+            onClick={logout}
+            className="w-full rounded-xl border border-bone/15 px-3 py-2 text-left font-medium text-bone/70 transition hover:border-bone/40 hover:text-bone"
+          >
+            Cerrar sesión
+          </button>
+        </div>
+      </aside>
+
+      <div className="lg:pl-60">
+        <header className="sticky top-0 z-20 border-b border-ink/10 bg-bone/85 backdrop-blur-md lg:hidden">
+          <div className="flex h-14 items-center justify-between px-4">
+            <Link to="/admin/productos" className="font-display text-lg font-extrabold">
+              NPCart<span className="text-ember">.</span>
+              <span className="ml-2 text-[10px] font-semibold uppercase tracking-wider text-ink/40">
+                Admin
+              </span>
+            </Link>
+            <div className="flex items-center gap-2">
+              <Link to="/" className="text-xs font-medium text-ink/50">
+                Tienda
+              </Link>
+              <button
+                type="button"
+                onClick={logout}
+                className="rounded-full border border-ink/15 px-3 py-1.5 text-xs font-semibold"
+              >
+                Salir
+              </button>
+            </div>
+          </div>
+          <nav className="scrollbar-none flex gap-1 overflow-x-auto px-3 pb-2">
+            {links.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={({ isActive }) =>
+                  cn(
+                    'shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold',
+                    isActive ? 'border-ink bg-ink text-bone' : 'border-ink/10 text-ink/60',
+                  )
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </nav>
+        </header>
+
+        <main className="container-page py-6 sm:py-8">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  )
+}

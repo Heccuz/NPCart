@@ -117,6 +117,13 @@ export interface AdjustedOrderItem {
   availableQty: number
 }
 
+export interface StockWarning {
+  productId: string
+  name: string
+  requested: number
+  available: number
+}
+
 export interface OrderCategorySummary {
   categoryId: string
   categoryName: string

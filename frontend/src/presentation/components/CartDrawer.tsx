@@ -265,7 +265,7 @@ export default function CartDrawer() {
                             <ImageWithFallback
                               src={item.imageUrl}
                               alt={item.name}
-                              className="h-16 w-16 shrink-0 rounded-xl"
+                              className="h-16 w-16 shrink-0 rounded-xl" hideLabel
                             />
                             <div className="min-w-0 flex-1">
                               <p className="truncate font-display text-sm font-semibold">
