@@ -18,10 +18,13 @@ function CartButton() {
         fill="none"
         stroke="currentColor"
         strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         className="h-5 w-5"
       >
-        <path d="M6 7h12l-1.3 10.4a2 2 0 0 1-2 1.6H9.3a2 2 0 0 1-2-1.6L6 7Z" />
-        <path d="M9 7a3 3 0 0 1 6 0" />
+        <circle cx="9.5" cy="20" r="1.4" />
+        <circle cx="18" cy="20" r="1.4" />
+        <path d="M3 4h2l2.1 11.2h11.7L21 7H6" />
       </svg>
       {count > 0 && (
         <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-ember px-1 text-[11px] font-bold text-white">

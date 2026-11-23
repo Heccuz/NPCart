@@ -11,6 +11,11 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    // WSL sobre /mnt/d no emite eventos de fs: sin polling el HMR no ve cambios.
+    watch: {
+      usePolling: Boolean(process.env.WSL_DISTRO_NAME || process.env.CHOKIDAR_USEPOLLING),
+      interval: 400,
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:4000',

@@ -1,0 +1,70 @@
+import { useState } from 'react'
+import { resolveImageUrl } from '@/infrastructure/images/resolve-image-url'
+import { cn } from '../lib/cn'
+
+interface ImageWithFallbackProps {
+  src: string | null | undefined
+  alt: string
+  className?: string
+  imgClassName?: string
+  priority?: boolean
+}
+
+function MiniPlaceholder() {
+  return (
+    <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-shale via-coal to-ink text-bone/40">
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        className="h-10 w-10"
+      >
+        <circle cx="12" cy="5.5" r="2.5" />
+        <path d="M9.5 10h5l1 4.5h-7l1-4.5Z" />
+        <path d="M6 21l1.2-6.5h9.6L18 21" />
+      </svg>
+      <span className="text-[10px] font-semibold uppercase tracking-[0.18em]">Sin foto</span>
+    </div>
+  )
+}
+
+export default function ImageWithFallback({
+  src,
+  alt,
+  className,
+  imgClassName,
+  priority = false,
+}: ImageWithFallbackProps) {
+  const resolved = resolveImageUrl(src, 800)
+  const [failed, setFailed] = useState(false)
+  const [loaded, setLoaded] = useState(false)
+
+  if (!resolved || failed) {
+    return (
+      <div className={cn('overflow-hidden', className)}>
+        <MiniPlaceholder />
+      </div>
+    )
+  }
+
+  return (
+    <div className={cn('relative overflow-hidden bg-sand', className)}>
+      {!loaded && <div className="absolute inset-0 animate-pulse bg-sand" />}
+      <img
+        src={resolved}
+        alt={alt}
+        loading={priority ? 'eager' : 'lazy'}
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        onError={() => setFailed(true)}
+        className={cn(
+          'h-full w-full object-cover transition-opacity duration-300',
+          loaded ? 'opacity-100' : 'opacity-0',
+          imgClassName,
+        )}
+      />
+    </div>
+  )
+}

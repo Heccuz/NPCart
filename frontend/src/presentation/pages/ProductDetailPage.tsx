@@ -1,8 +1,190 @@
-export default function ProductDetailPage() {
+import { useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import type { Product } from '@/domain/entities'
+import { formatCents } from '@/domain/money'
+import { offersForCategory } from '@/domain/offers'
+import { productToCartItem } from '@/application/use-cases/cart-actions'
+import EmptyState from '@/presentation/components/EmptyState'
+import ImageWithFallback from '@/presentation/components/ImageWithFallback'
+import OfferBadge from '@/presentation/components/OfferBadge'
+import ProductGrid from '@/presentation/components/ProductGrid'
+import StockBadge from '@/presentation/components/StockBadge'
+import { useCart } from '@/presentation/hooks/useCart'
+import { useOffers, useProduct, useProducts } from '@/presentation/hooks/useProducts'
+
+function DetailSkeleton() {
   return (
-    <div className="container-page py-16">
-      <h1 className="font-display text-3xl font-semibold tracking-tight">Detalle</h1>
-      <p className="mt-3 text-ink/70">Detalle de producto en la fase 6.</p>
+    <div className="container-page py-8">
+      <div className="grid gap-6 lg:grid-cols-2 lg:gap-10">
+        <div className="aspect-square animate-pulse rounded-3xl bg-sand" />
+        <div className="space-y-4">
+          <div className="h-5 w-32 animate-pulse rounded bg-sand" />
+          <div className="h-10 w-2/3 animate-pulse rounded bg-sand" />
+          <div className="h-7 w-24 animate-pulse rounded bg-sand" />
+          <div className="h-24 w-full animate-pulse rounded bg-sand" />
+          <div className="h-12 w-full animate-pulse rounded-full bg-sand" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default function ProductDetailPage() {
+  const { id } = useParams<{ id: string }>()
+  const { data: product, isLoading } = useProduct(id)
+  const { data: offers = [] } = useOffers()
+  const { addItem } = useCart()
+  const [added, setAdded] = useState(false)
+
+  const relatedQuery = useProducts({
+    series: [product?.primarySeries.slug ?? '__none__'],
+    pageSize: 5,
+  })
+
+  if (isLoading) return <DetailSkeleton />
+
+  if (!product) {
+    return (
+      <div className="container-page py-16">
+        <EmptyState
+          title="Esta mini no está disponible"
+          description="Puede que se haya agotado o que el link esté mal escrito."
+          actionLabel="Volver al catálogo"
+          actionTo="/catalogo"
+        />
+      </div>
+    )
+  }
+
+  const soldOut = product.stock === 0
+  const tiers = offersForCategory(offers, product.categoryId)
+  const related = (relatedQuery.data?.items ?? [])
+    .filter((item) => item.id !== product.id)
+    .slice(0, 4)
+
+  const handleAdd = () => {
+    addItem(productToCartItem(product))
+    setAdded(true)
+    window.setTimeout(() => setAdded(false), 1500)
+  }
+
+  return (
+    <div className="container-page py-6 sm:py-10">
+      <nav aria-label="Migas de pan" className="text-xs text-ink/50">
+        <Link to="/catalogo" className="hover:text-ink">
+          Catálogo
+        </Link>{' '}
+        / <span className="text-ink/70">{product.category.name}</span>
+      </nav>
+
+      <div className="mt-4 grid gap-6 lg:grid-cols-2 lg:gap-10">
+        <div className="lg:sticky lg:top-24 lg:h-fit">
+          <ImageWithFallback
+            src={product.imageUrl}
+            alt={product.name}
+            className="aspect-square w-full rounded-3xl border border-ink/10"
+            priority
+          />
+        </div>
+
+        <div>
+          <div className="flex flex-wrap gap-2">
+            <span className="chip chip-active">{product.category.name}</span>
+            {product.series.map((item) => (
+              <Link key={item.id} to={`/series/${item.slug}`} className="chip hover:border-ink/40">
+                {item.name}
+              </Link>
+            ))}
+          </div>
+
+          <h1 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+            {product.name}
+          </h1>
+
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <p className="text-2xl font-semibold">{formatCents(product.priceCents)}</p>
+            {tiers[0] && <OfferBadge offer={tiers[0]} priceCents={product.priceCents} />}
+            <StockBadge stock={product.stock} />
+          </div>
+
+          {tiers.length > 0 && (
+            <div className="mt-5 rounded-2xl border border-ember/30 bg-ember/5 p-4">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-ember">
+                Ofertas por cantidad
+              </p>
+              <ul className="mt-2 space-y-1 text-sm text-ink/70">
+                {tiers.map((tier) => (
+                  <li key={tier.id}>
+                    Lleva {tier.minQuantity}+ y paga{' '}
+                    <strong className="text-ink">{formatCents(tier.unitPriceCents)}</strong> c/u
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-2 text-xs text-ink/50">
+                Se mezclan todas las minis de este tamaño, sin importar la serie.
+              </p>
+            </div>
+          )}
+
+          <p className="mt-5 whitespace-pre-line text-sm leading-relaxed text-ink/70">
+            {product.details ||
+              'Mini impresa en 3D bajo pedido. Escríbenos por WhatsApp si quieres un acabado o escala distinta.'}
+          </p>
+
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <button
+              type="button"
+              onClick={handleAdd}
+              disabled={soldOut}
+              className="btn-ember h-12 flex-1 text-base sm:flex-none sm:px-8"
+            >
+              {soldOut ? 'Agotado' : added ? '✓ Agregado al carrito' : 'Agregar al carrito'}
+            </button>
+            <Link to="/catalogo" className="btn-ghost h-12">
+              Seguir viendo
+            </Link>
+          </div>
+
+          <dl className="mt-7 grid grid-cols-2 gap-4 border-t border-ink/10 pt-5 text-sm">
+            <div>
+              <dt className="text-xs uppercase tracking-wider text-ink/40">Tamaño</dt>
+              <dd className="mt-0.5 font-medium">{product.category.name}</dd>
+            </div>
+            <div>
+              <dt className="text-xs uppercase tracking-wider text-ink/40">Disponibles</dt>
+              <dd className="mt-0.5 font-medium">
+                {soldOut ? 'Sin stock' : `${product.stock} unidades`}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs uppercase tracking-wider text-ink/40">Serie principal</dt>
+              <dd className="mt-0.5 font-medium">{product.primarySeries.name}</dd>
+            </div>
+            <div>
+              <dt className="text-xs uppercase tracking-wider text-ink/40">Impresión</dt>
+              <dd className="mt-0.5 font-medium">Bajo pedido</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      {related.length > 1 && (
+        <section className="mt-14">
+          <div className="flex items-end justify-between">
+            <h2 className="font-display text-2xl font-semibold">También te puede interesar</h2>
+            <Link to="/catalogo" className="text-sm font-semibold text-ember hover:underline">
+              Ver todo
+            </Link>
+          </div>
+          <div className="mt-4">
+            <ProductGrid
+              products={related as Product[]}
+              offers={offers}
+              onQuickAdd={(item) => addItem(productToCartItem(item))}
+            />
+          </div>
+        </section>
+      )}
     </div>
   )
 }
