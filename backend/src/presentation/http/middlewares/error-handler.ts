@@ -1,5 +1,5 @@
 import type { ErrorRequestHandler } from 'express'
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../../../generated/prisma/client'
 import { ZodError } from 'zod'
 import { AppError } from '../../../application/errors/app-error'
 import { DomainError } from '../../../domain/errors/domain-error'

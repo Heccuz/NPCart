@@ -12,5 +12,5 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["src", "prisma", "scripts"]
+  "include": ["src", "prisma", "scripts", "prisma.config.ts"]
 }

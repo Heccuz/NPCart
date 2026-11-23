@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import bcrypt from 'bcryptjs'
-import { PrismaClient } from '@prisma/client'
+import { createPrismaClient } from '../src/infrastructure/database/prisma/client'
 
 /**
  * Crea o resetea el admin desde ADMIN_EMAIL / ADMIN_PASSWORD.
@@ -18,7 +18,7 @@ async function main() {
     throw new Error('ADMIN_PASSWORD debe tener al menos 8 caracteres')
   }
 
-  const prisma = new PrismaClient()
+  const prisma = createPrismaClient()
   try {
     const passwordHash = await bcrypt.hash(password, 10)
     const user = await prisma.adminUser.upsert({

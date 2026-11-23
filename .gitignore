@@ -6,6 +6,9 @@ coverage/
 *.tsbuildinfo
 .vite/
 
+# Cliente Prisma generado (se regenera con `npm run db:generate -w backend`)
+backend/src/generated/
+
 # Entorno y secretos
 .env
 .env.*

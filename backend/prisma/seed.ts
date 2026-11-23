@@ -1,8 +1,8 @@
 import 'dotenv/config'
-import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
+import { createPrismaClient } from '../src/infrastructure/database/prisma/client'
 
-const prisma = new PrismaClient()
+const prisma = createPrismaClient()
 
 const categories = [
   { name: 'Mini pequeña', slug: 'mini-pequena', basePriceCents: 800, sortOrder: 1 },

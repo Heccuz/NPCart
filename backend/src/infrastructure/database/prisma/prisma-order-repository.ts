@@ -1,4 +1,4 @@
-import type { Prisma } from '@prisma/client'
+import type { Prisma } from '../../../generated/prisma/client'
 import type { StockWarning } from '../../../application/dto/catalog'
 import type { IOrderRepository } from '../../../domain/repositories/order-repository'
 import { prisma } from './client'
