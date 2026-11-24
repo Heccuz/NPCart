@@ -12,6 +12,8 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    // Fallar en vez de saltar a 5174: otro puerto no está en FRONTEND_ORIGINS (CORS).
+    strictPort: true,
     // WSL sobre /mnt/d no emite eventos de fs: sin polling el HMR no ve cambios.
     watch: {
       usePolling: Boolean(process.env.WSL_DISTRO_NAME || process.env.CHOKIDAR_USEPOLLING),
