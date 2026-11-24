@@ -110,7 +110,7 @@ export default function AdminLayout() {
           </nav>
         </header>
 
-        <main id="admin-main" tabIndex={-1} className="container-page py-6 outline-none sm:py-8">
+        <main id="admin-main" tabIndex={-1} className="container-page py-6 outline-hidden sm:py-8">
           <Outlet />
         </main>
       </div>

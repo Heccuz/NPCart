@@ -34,7 +34,7 @@ export default function Modal({ open, onClose, title, children, footer, wide }: 
         type="button"
         aria-label="Cerrar"
         onClick={onClose}
-        className="absolute inset-0 bg-ink/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-ink/50 backdrop-blur-xs"
       />
       <div
         role="dialog"

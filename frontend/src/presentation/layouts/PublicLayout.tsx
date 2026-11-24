@@ -85,7 +85,7 @@ export default function PublicLayout() {
         </div>
       </header>
 
-      <main id="main" tabIndex={-1} className="flex-1 outline-none">
+      <main id="main" tabIndex={-1} className="flex-1 outline-hidden">
         <Outlet />
       </main>
 

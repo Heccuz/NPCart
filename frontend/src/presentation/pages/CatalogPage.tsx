@@ -37,7 +37,7 @@ function FilterSheet({
         type="button"
         aria-label="Cerrar filtros"
         onClick={onClose}
-        className="absolute inset-0 bg-ink/45 backdrop-blur-sm"
+        className="absolute inset-0 bg-ink/45 backdrop-blur-xs"
       />
       <div className="absolute inset-x-0 bottom-0 flex max-h-[88dvh] flex-col rounded-t-3xl bg-bone shadow-2xl">
         <div className="flex items-center justify-between border-b border-ink/10 px-5 py-4">

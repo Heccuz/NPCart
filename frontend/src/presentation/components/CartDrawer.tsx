@@ -144,7 +144,7 @@ export default function CartDrawer() {
         type="button"
         aria-label="Cerrar carrito"
         onClick={close}
-        className="absolute inset-0 bg-ink/45 backdrop-blur-sm"
+        className="absolute inset-0 bg-ink/45 backdrop-blur-xs"
       />
 
       <aside
