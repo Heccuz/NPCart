@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
+import { useAuthStore } from '@/application/store/auth-store'
 import { useCartUiStore } from '@/application/store/cart-ui-store'
 import CartDrawer from '@/presentation/components/CartDrawer'
 import BrandMark from '@/presentation/components/BrandMark'
@@ -44,6 +45,7 @@ export default function PublicLayout() {
   useCartRevalidation()
   const { pathname } = useLocation()
   const openCart = useCartUiStore((state) => state.open)
+  const token = useAuthStore((state) => state.token)
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' })
@@ -76,6 +78,27 @@ export default function PublicLayout() {
           </nav>
 
           <div className="flex items-center gap-3">
+            {token && (
+              <Link
+                to="/admin/productos"
+                className="btn-ghost hidden h-11 px-4 text-sm sm:inline-flex"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-4 w-4"
+                >
+                  <rect x="4" y="11" width="16" height="10" rx="2" />
+                  <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+                </svg>
+                Panel admin
+              </Link>
+            )}
             <ThemeToggle className="h-11 w-11 border-navy/15 text-navy/70 hover:border-navy/40 hover:bg-navy/5" />
             <Link to="/catalogo" className="btn-ghost h-11 px-4 text-sm sm:hidden">
               Catálogo
