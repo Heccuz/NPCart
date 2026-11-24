@@ -54,14 +54,50 @@ function buildWhere(
   return where
 }
 
+function byName(a: ProductRow, b: ProductRow) {
+  return a.name.localeCompare(b.name, 'es', { sensitivity: 'base' })
+}
+
 function sortRows(rows: ProductRow[], sort: ProductSort = 'default'): ProductRow[] {
   const copy = [...rows]
+  // Desempate estable: más recientes primero y, si empatan, por nombre.
+  const tiebreak = (a: ProductRow, b: ProductRow) =>
+    b.createdAt.getTime() - a.createdAt.getTime() || byName(a, b)
   switch (sort) {
     case 'price_asc':
-      copy.sort((a, b) => a.priceCents - b.priceCents)
+      copy.sort((a, b) => a.priceCents - b.priceCents || tiebreak(a, b))
       break
     case 'price_desc':
-      copy.sort((a, b) => b.priceCents - a.priceCents)
+      copy.sort((a, b) => b.priceCents - a.priceCents || tiebreak(a, b))
+      break
+    case 'name_asc':
+      copy.sort((a, b) => byName(a, b) || tiebreak(a, b))
+      break
+    case 'name_desc':
+      copy.sort((a, b) => byName(b, a) || tiebreak(a, b))
+      break
+    case 'size_asc':
+      copy.sort(
+        (a, b) => a.category.sortOrder - b.category.sortOrder || byName(a, b) || tiebreak(a, b),
+      )
+      break
+    case 'size_desc':
+      copy.sort(
+        (a, b) => b.category.sortOrder - a.category.sortOrder || byName(a, b) || tiebreak(a, b),
+      )
+      break
+    case 'stock_asc':
+      copy.sort((a, b) => a.stock - b.stock || tiebreak(a, b))
+      break
+    case 'stock_desc':
+      copy.sort((a, b) => b.stock - a.stock || tiebreak(a, b))
+      break
+    case 'status_asc':
+      // Activos primero: es el estado útil por defecto en la tabla admin.
+      copy.sort((a, b) => Number(b.isActive) - Number(a.isActive) || tiebreak(a, b))
+      break
+    case 'status_desc':
+      copy.sort((a, b) => Number(a.isActive) - Number(b.isActive) || tiebreak(a, b))
       break
     case 'newest':
       copy.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())

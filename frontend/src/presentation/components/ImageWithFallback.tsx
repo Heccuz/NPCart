@@ -14,7 +14,7 @@ interface ImageWithFallbackProps {
 
 function MiniPlaceholder({ hideLabel }: { hideLabel?: boolean }) {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-1.5 bg-gradient-to-br from-shale via-coal to-ink text-mist/60">
+    <div className="bg-expressive flex h-full w-full flex-col items-center justify-center gap-1.5 text-brand-ink/70">
       <svg
         aria-hidden="true"
         viewBox="0 0 24 24"

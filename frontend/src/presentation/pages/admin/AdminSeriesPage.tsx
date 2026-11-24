@@ -22,9 +22,7 @@ function SeriesForm({ series, onSaved }: { series: Series | null; onSaved: () =>
         imageUrl: imageUrl.trim() || null,
         sortOrder: Number(sortOrder),
       }
-      return series
-        ? adminGateway.updateSeries(series.id, input)
-        : adminGateway.createSeries(input)
+      return series ? adminGateway.updateSeries(series.id, input) : adminGateway.createSeries(input)
     },
     onSuccess: onSaved,
     onError: (mutationError) => setError(apiErrorMessage(mutationError)),
@@ -119,7 +117,12 @@ export default function AdminSeriesPage() {
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Series | null>(null)
 
-  const { data: series = [], isLoading, isError, refetch } = useQuery({
+  const {
+    data: series = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
     queryKey: ['admin', 'series'],
     queryFn: () => adminGateway.listSeries(),
   })
@@ -170,7 +173,7 @@ export default function AdminSeriesPage() {
       </div>
 
       {notice && (
-        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-navy/10 bg-white/70 px-4 py-3 text-sm">
+        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-navy/10 bg-surface px-4 py-3 text-sm">
           <p className="text-navy/70">{notice}</p>
           <button type="button" onClick={() => setNotice('')} className="text-navy/60">
             ✕
@@ -206,14 +209,15 @@ export default function AdminSeriesPage() {
             <li
               key={item.id}
               className={cn(
-                'flex items-center gap-3 rounded-2xl border border-navy/10 bg-white/60 px-3 py-2.5',
+                'flex items-center gap-3 rounded-2xl border border-navy/10 bg-surface px-3 py-2.5',
                 item.deletedAt && 'opacity-60',
               )}
             >
               <ImageWithFallback
                 src={item.imageUrl}
                 alt={item.name}
-                className="h-12 w-12 shrink-0 rounded-xl" hideLabel
+                className="h-12 w-12 shrink-0 rounded-xl"
+                hideLabel
               />
               <div className="min-w-0 flex-1">
                 <p className="truncate font-display text-sm">
@@ -230,7 +234,11 @@ export default function AdminSeriesPage() {
               </div>
               <div className="flex gap-3 text-xs font-semibold">
                 {item.deletedAt ? (
-                  <button type="button" onClick={() => restore.mutate(item.id)} className="text-turquoise-ink">
+                  <button
+                    type="button"
+                    onClick={() => restore.mutate(item.id)}
+                    className="text-turquoise-ink"
+                  >
                     Restaurar
                   </button>
                 ) : (

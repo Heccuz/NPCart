@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import type { Product } from '@/domain/entities'
+import type { Product, ProductSort } from '@/domain/entities'
 import { formatCents } from '@/domain/money'
 import { adminGateway } from '@/infrastructure/http/admin-gateway'
 import { apiErrorMessage } from '@/infrastructure/http/client'
@@ -11,6 +11,60 @@ import { useCategories, useSeries } from '@/presentation/hooks/useProducts'
 import { cn } from '@/presentation/lib/cn'
 
 const PAGE_SIZE = 50
+
+type SortKey = 'name' | 'size' | 'price' | 'stock' | 'status'
+type SortDirection = 'asc' | 'desc'
+
+const SORT_KEYS: Record<SortKey, { asc: ProductSort; desc: ProductSort }> = {
+  name: { asc: 'name_asc', desc: 'name_desc' },
+  size: { asc: 'size_asc', desc: 'size_desc' },
+  price: { asc: 'price_asc', desc: 'price_desc' },
+  stock: { asc: 'stock_asc', desc: 'stock_desc' },
+  status: { asc: 'status_asc', desc: 'status_desc' },
+}
+
+function activeSortOf(sort: ProductSort): { key: SortKey; direction: SortDirection } | null {
+  for (const key of Object.keys(SORT_KEYS) as SortKey[]) {
+    if (sort === SORT_KEYS[key].asc) return { key, direction: 'asc' }
+    if (sort === SORT_KEYS[key].desc) return { key, direction: 'desc' }
+  }
+  return null
+}
+
+function SortableHeader({
+  label,
+  sortKey,
+  activeSort,
+  onSort,
+}: {
+  label: string
+  sortKey: SortKey
+  activeSort: { key: SortKey; direction: SortDirection } | null
+  onSort: (key: SortKey) => void
+}) {
+  const active = activeSort?.key === sortKey
+  const direction = activeSort?.direction ?? 'asc'
+  return (
+    <th
+      className="px-4 py-3 font-semibold"
+      aria-sort={active ? (direction === 'asc' ? 'ascending' : 'descending') : 'none'}
+    >
+      <button
+        type="button"
+        onClick={() => onSort(sortKey)}
+        className={cn(
+          'inline-flex cursor-pointer items-center gap-1 transition-colors hover:text-navy',
+          active && 'text-navy',
+        )}
+      >
+        {label}
+        <span aria-hidden="true" className="text-[9px]">
+          {active ? (direction === 'asc' ? '▲' : '▼') : '↕'}
+        </span>
+      </button>
+    </th>
+  )
+}
 
 interface FormState {
   name: string
@@ -40,13 +94,7 @@ function initialForm(product: Product | null): FormState {
   }
 }
 
-function ProductForm({
-  product,
-  onSaved,
-}: {
-  product: Product | null
-  onSaved: () => void
-}) {
+function ProductForm({ product, onSaved }: { product: Product | null; onSaved: () => void }) {
   const { data: categories = [] } = useCategories()
   const { data: series = [] } = useSeries()
   const [form, setForm] = useState<FormState>(() => initialForm(product))
@@ -183,8 +231,8 @@ function ProductForm({
                 className={cn(
                   'inline-flex items-center rounded-full border text-[11px] font-semibold',
                   selected
-                    ? 'border-navy bg-navy text-mist'
-                    : 'border-navy/15 bg-white/60 text-navy/70',
+                    ? 'border-brand bg-brand text-brand-ink'
+                    : 'border-navy/15 bg-surface text-navy/70',
                 )}
               >
                 <button
@@ -200,7 +248,10 @@ function ProductForm({
                     onClick={() => setForm({ ...form, primarySeriesId: item.id })}
                     aria-label={`Marcar ${item.name} como serie principal`}
                     title={isPrimary ? 'Serie principal' : 'Marcar como principal'}
-                    className={cn('py-1.5 pl-0.5 pr-2.5 text-sm', isPrimary ? 'text-violet' : 'text-mist/65')}
+                    className={cn(
+                      'py-1.5 pl-0.5 pr-2.5 text-sm',
+                      isPrimary ? 'text-turquoise' : 'text-brand-ink/65',
+                    )}
                   >
                     {isPrimary ? '★' : '☆'}
                   </button>
@@ -304,19 +355,31 @@ export default function AdminProductsPage() {
   const [q, setQ] = useState('')
   const debouncedQ = useDebounce(q, 300)
   const [page, setPage] = useState(1)
+  const [sort, setSort] = useState<ProductSort>('default')
   const [showArchived, setShowArchived] = useState(false)
   const [notice, setNotice] = useState('')
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Product | null>(null)
 
+  const activeSort = useMemo(() => activeSortOf(sort), [sort])
+
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ['admin', 'products', debouncedQ, page],
-    queryFn: () => adminGateway.listProducts({ q: debouncedQ, page, pageSize: PAGE_SIZE }),
+    queryKey: ['admin', 'products', debouncedQ, page, sort],
+    queryFn: () => adminGateway.listProducts({ q: debouncedQ, page, pageSize: PAGE_SIZE, sort }),
   })
 
   useEffect(() => {
     setPage(1)
   }, [debouncedQ])
+
+  const toggleSort = (key: SortKey) => {
+    setSort((current) => {
+      if (current === SORT_KEYS[key].asc) return SORT_KEYS[key].desc
+      if (current === SORT_KEYS[key].desc) return 'default'
+      return SORT_KEYS[key].asc
+    })
+    setPage(1)
+  }
 
   const products = useMemo(
     () => (data?.items ?? []).filter((product) => showArchived || !product.deletedAt),
@@ -385,7 +448,7 @@ export default function AdminProductsPage() {
       </div>
 
       {notice && (
-        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-navy/10 bg-white/70 px-4 py-3 text-sm">
+        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-navy/10 bg-surface px-4 py-3 text-sm">
           <p className="text-navy/70">{notice}</p>
           <button type="button" onClick={() => setNotice('')} className="text-navy/60">
             ✕
@@ -429,15 +492,40 @@ export default function AdminProductsPage() {
         </div>
       ) : (
         <>
-          <div className="mt-5 hidden overflow-hidden rounded-2xl border border-navy/10 bg-white/60 md:block">
+          <div className="mt-5 hidden overflow-hidden rounded-2xl border border-navy/10 bg-surface md:block">
             <table className="w-full text-sm">
               <thead className="border-b border-navy/10 bg-navy/5 text-left text-[11px] uppercase tracking-wider text-navy/60">
                 <tr>
-                  <th className="px-4 py-3 font-semibold">Producto</th>
-                  <th className="px-4 py-3 font-semibold">Tamaño</th>
-                  <th className="px-4 py-3 font-semibold">Precio</th>
-                  <th className="px-4 py-3 font-semibold">Stock</th>
-                  <th className="px-4 py-3 font-semibold">Estado</th>
+                  <SortableHeader
+                    label="Producto"
+                    sortKey="name"
+                    activeSort={activeSort}
+                    onSort={toggleSort}
+                  />
+                  <SortableHeader
+                    label="Tamaño"
+                    sortKey="size"
+                    activeSort={activeSort}
+                    onSort={toggleSort}
+                  />
+                  <SortableHeader
+                    label="Precio"
+                    sortKey="price"
+                    activeSort={activeSort}
+                    onSort={toggleSort}
+                  />
+                  <SortableHeader
+                    label="Stock"
+                    sortKey="stock"
+                    activeSort={activeSort}
+                    onSort={toggleSort}
+                  />
+                  <SortableHeader
+                    label="Estado"
+                    sortKey="status"
+                    activeSort={activeSort}
+                    onSort={toggleSort}
+                  />
                   <th className="px-4 py-3" />
                 </tr>
               </thead>
@@ -449,7 +537,8 @@ export default function AdminProductsPage() {
                         <ImageWithFallback
                           src={product.imageUrl}
                           alt={product.name}
-                          className="h-10 w-10 shrink-0 rounded-lg" hideLabel
+                          className="h-10 w-10 shrink-0 rounded-lg"
+                          hideLabel
                         />
                         <div className="min-w-0">
                           <p className="truncate font-medium">{product.name}</p>
@@ -549,7 +638,7 @@ export default function AdminProductsPage() {
               <li
                 key={product.id}
                 className={cn(
-                  'rounded-2xl border border-navy/10 bg-white/60 p-3',
+                  'rounded-2xl border border-navy/10 bg-surface p-3',
                   product.deletedAt && 'opacity-60',
                 )}
               >
@@ -557,7 +646,8 @@ export default function AdminProductsPage() {
                   <ImageWithFallback
                     src={product.imageUrl}
                     alt={product.name}
-                    className="h-14 w-14 shrink-0 rounded-xl" hideLabel
+                    className="h-14 w-14 shrink-0 rounded-xl"
+                    hideLabel
                   />
                   <div className="min-w-0 flex-1">
                     <p className="truncate font-display text-sm">{product.name}</p>

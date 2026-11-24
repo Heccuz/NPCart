@@ -6,7 +6,7 @@ interface QuantityStepperProps {
 
 export default function QuantityStepper({ value, max, onChange }: QuantityStepperProps) {
   return (
-    <div className="inline-flex items-center rounded-full border border-navy/15 bg-white/70">
+    <div className="inline-flex items-center rounded-full border border-navy/15 bg-surface">
       <button
         type="button"
         aria-label="Quitar una unidad"

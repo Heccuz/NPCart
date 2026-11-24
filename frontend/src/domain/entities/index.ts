@@ -54,7 +54,19 @@ export interface CategoryOffer {
   category: Ref
 }
 
-export type ProductSort = 'default' | 'price_asc' | 'price_desc' | 'newest'
+export type ProductSort =
+  | 'default'
+  | 'price_asc'
+  | 'price_desc'
+  | 'newest'
+  | 'name_asc'
+  | 'name_desc'
+  | 'size_asc'
+  | 'size_desc'
+  | 'stock_asc'
+  | 'stock_desc'
+  | 'status_asc'
+  | 'status_desc'
 
 export interface FacetCounts {
   categories: Record<string, number>

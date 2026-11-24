@@ -7,17 +7,8 @@ import FilterPanel from '@/presentation/components/FilterPanel'
 import ProductGrid from '@/presentation/components/ProductGrid'
 import SearchBar from '@/presentation/components/SearchBar'
 import { useCart } from '@/presentation/hooks/useCart'
-import {
-  PAGE_SIZE,
-  SORT_OPTIONS,
-  useCatalogFilters,
-} from '@/presentation/hooks/useCatalogFilters'
-import {
-  useCategories,
-  useOffers,
-  useProducts,
-  useSeries,
-} from '@/presentation/hooks/useProducts'
+import { PAGE_SIZE, SORT_OPTIONS, useCatalogFilters } from '@/presentation/hooks/useCatalogFilters'
+import { useCategories, useOffers, useProducts, useSeries } from '@/presentation/hooks/useProducts'
 import { cn } from '@/presentation/lib/cn'
 
 function FilterSheet({
@@ -37,7 +28,7 @@ function FilterSheet({
         type="button"
         aria-label="Cerrar filtros"
         onClick={onClose}
-        className="absolute inset-0 bg-navy/45 backdrop-blur-xs"
+        className="absolute inset-0 bg-brand/60 backdrop-blur-xs"
       />
       <div className="absolute inset-x-0 bottom-0 flex max-h-[88dvh] flex-col rounded-t-3xl bg-mist shadow-2xl">
         <div className="flex items-center justify-between border-b border-navy/10 px-5 py-4">
@@ -169,7 +160,7 @@ export default function CatalogPage() {
               aria-label="Ordenar productos"
               value={filters.sort}
               onChange={(event) => update({ sort: event.target.value as ProductSort })}
-              className="input h-11 w-full bg-white/70 text-sm sm:w-56"
+              className="input h-11 w-full bg-surface text-sm sm:w-56"
             >
               {SORT_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -195,7 +186,9 @@ export default function CatalogPage() {
             <div className="mb-4 flex flex-wrap items-center gap-2">
               <p className="mr-1 text-sm text-navy/60">
                 {total} {total === 1 ? 'mini' : 'minis'}
-                {isFetching && !isLoading && <span className="ml-2 text-navy/60">actualizando…</span>}
+                {isFetching && !isLoading && (
+                  <span className="ml-2 text-navy/60">actualizando…</span>
+                )}
               </p>
               <ActiveChips
                 categories={categories}

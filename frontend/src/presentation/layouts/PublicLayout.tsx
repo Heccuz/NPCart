@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useCartUiStore } from '@/application/store/cart-ui-store'
 import CartDrawer from '@/presentation/components/CartDrawer'
+import BrandMark from '@/presentation/components/BrandMark'
+import ThemeToggle from '@/presentation/components/ThemeToggle'
 import { useCart } from '@/presentation/hooks/useCart'
 import { useCartRevalidation } from '@/presentation/hooks/useCartRevalidation'
 
@@ -30,7 +32,7 @@ function CartButton({ onClick }: { onClick: () => void }) {
         <path d="M3 4h2l2.1 11.2h11.7L21 7H6" />
       </svg>
       {count > 0 && (
-        <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-turquoise px-1 text-[11px] font-bold text-navy">
+        <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-turquoise px-1 text-[11px] font-bold text-brand">
           {count}
         </span>
       )}
@@ -57,8 +59,11 @@ export default function PublicLayout() {
       </a>
       <header className="sticky top-0 z-30 border-b border-navy/10 bg-mist/85 backdrop-blur-md">
         <div className="container-page flex h-16 items-center justify-between gap-4">
-          <Link to="/" className="font-display text-2xl tracking-tight">
-            Alvina 3D<span className="text-turquoise">.</span>
+          <Link to="/" className="flex items-center gap-2 font-display text-2xl tracking-tight">
+            <BrandMark className="h-8 w-8" />
+            <span>
+              Alvina 3D<span className="text-turquoise">.</span>
+            </span>
           </Link>
 
           <nav className="hidden items-center gap-1 text-sm font-medium sm:flex">
@@ -71,12 +76,17 @@ export default function PublicLayout() {
           </nav>
 
           <div className="flex items-center gap-3">
+            <ThemeToggle className="h-11 w-11 border-navy/15 text-navy/70 hover:border-navy/40 hover:bg-navy/5" />
             <Link to="/catalogo" className="btn-ghost h-11 px-4 text-sm sm:hidden">
               Catálogo
             </Link>
             <CartButton onClick={openCart} />
           </div>
         </div>
+        <div
+          aria-hidden="true"
+          className="h-0.5 bg-gradient-to-r from-brand via-violet-brand to-turquoise"
+        />
       </header>
 
       <main id="main" tabIndex={-1} className="flex-1 outline-hidden">
@@ -85,10 +95,10 @@ export default function PublicLayout() {
 
       <CartDrawer />
 
-      <footer className="mt-20 border-t border-navy/10 py-10">
-        <div className="container-page flex flex-col gap-4 text-sm text-navy/60 sm:flex-row sm:items-center sm:justify-between">
+      <footer className="mt-20 bg-expressive py-10 text-brand-ink">
+        <div className="container-page flex flex-col gap-4 text-sm text-brand-ink/70 sm:flex-row sm:items-center sm:justify-between">
           <p>Alvina 3D — miniaturas y piezas personalizadas, hechas a pedido en Perú.</p>
-          <p className="text-xs uppercase tracking-[0.18em]">
+          <p className="text-xs uppercase tracking-[0.18em] text-brand-ink/60">
             Pedidos por WhatsApp · Cajamarca, Perú
           </p>
         </div>

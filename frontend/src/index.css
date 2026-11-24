@@ -1,22 +1,52 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-/* Paleta ALVINA: azul marino + turquesa + blanco núcleo; violeta secundario. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Paleta ALVINA: azul marino + turquesa + blanco núcleo; violeta secundario.
+ * - Tokens "brand": fijos en ambos temas (superficies de marca).
+ * - Tokens semánticos: el modo noche los sobrescribe más abajo.
+ */
 @theme {
+  --color-brand: #001b46;
+  --color-brand-deep: #00112e;
+  --color-brand-mid: #0a2a5c;
+  --color-brand-ink: #f6f8fb;
+  --color-violet-brand: #70205e;
+  --color-turquoise: #00d8dc;
+  --color-turquoise-deep: #00aeb3;
+
   --color-navy: #001b46;
   --color-navy-deep: #00112e;
   --color-navy-mid: #0a2a5c;
   --color-mist: #f6f8fb;
   --color-haze: #e9eef7;
-  --color-turquoise: #00d8dc;
-  --color-turquoise-deep: #00aeb3;
-  /* Turquesa oscurecido para texto sobre fondos claros (AA, ~5.7:1). */
+  --color-surface: rgba(255, 255, 255, 0.66);
   --color-turquoise-ink: #00727a;
   --color-violet: #70205e;
 
-  --font-display: "Anton", "Arial Narrow", system-ui, sans-serif;
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: 'Anton', 'Arial Narrow', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
 
   --shadow-card: 0 18px 40px -24px rgba(0, 27, 70, 0.35);
+}
+
+:root {
+  color-scheme: light;
+}
+
+/* Modo noche: invierte tinta/fondos y aclara los acentos para mantener contraste. */
+.dark {
+  color-scheme: dark;
+  --color-navy: #eef4fc;
+  --color-navy-deep: #dce8f8;
+  --color-navy-mid: #c6daf2;
+  --color-mist: #061126;
+  --color-haze: #0c1e3b;
+  --color-surface: rgba(12, 30, 59, 0.72);
+  --color-turquoise-ink: #5ce8eb;
+  --color-violet: #f090dd;
+  --shadow-card: 0 18px 40px -24px rgba(0, 0, 0, 0.7);
 }
 
 @layer base {
@@ -26,9 +56,18 @@
 
   body {
     @apply bg-mist font-sans text-navy;
-    background-image: radial-gradient(circle at 20% 0%, rgba(0, 27, 70, 0.04), transparent 45%),
-      radial-gradient(circle at 85% 15%, rgba(0, 216, 220, 0.09), transparent 40%);
+    background-image:
+      radial-gradient(circle at 20% 0%, rgba(0, 27, 70, 0.04), transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(0, 216, 220, 0.09), transparent 40%),
+      radial-gradient(circle at 70% 100%, rgba(112, 32, 94, 0.05), transparent 45%);
     background-attachment: fixed;
+  }
+
+  .dark body {
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(0, 216, 220, 0.1), transparent 42%),
+      radial-gradient(circle at 88% 8%, rgba(112, 32, 94, 0.3), transparent 46%),
+      radial-gradient(circle at 50% 100%, rgba(0, 27, 70, 0.85), transparent 60%);
   }
 
   ::selection {
@@ -36,7 +75,7 @@
   }
 
   :where(a, button, input, select, textarea):focus-visible {
-    outline: 2px solid #00727a;
+    outline: 2px solid var(--color-turquoise-ink);
     outline-offset: 2px;
   }
 }
@@ -44,6 +83,22 @@
 /* Registrada como utility para poder @apply en los .btn-*. */
 @utility btn {
   @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turquoise-ink disabled:cursor-not-allowed disabled:opacity-40;
+}
+
+/* Fondo expresivo: degradado azul marino → violeta de marca (siempre oscuro). */
+@utility bg-expressive {
+  background-color: #001b46;
+  background-image: linear-gradient(135deg, #001b46 0%, #241a55 55%, #70205e 100%);
+}
+
+@utility bg-expressive-card {
+  background-color: #171a44;
+  background-image: linear-gradient(
+    150deg,
+    rgba(0, 27, 70, 0.97) 0%,
+    rgba(52, 24, 84, 0.97) 58%,
+    rgba(112, 32, 94, 0.97) 100%
+  );
 }
 
 @layer components {
@@ -56,20 +111,20 @@
   }
 
   .btn-accent {
-    @apply btn bg-turquoise text-navy hover:bg-turquoise-deep;
+    @apply btn bg-turquoise text-brand hover:bg-turquoise-deep;
   }
 
   .btn-ghost {
     @apply btn border border-navy/15 bg-transparent text-navy hover:border-navy/40 hover:bg-navy/5;
   }
 
-  /* Ghost para fondos navy (hero, secciones oscuras). */
+  /* Ghost para superficies de marca oscuras (hero, footer, sidebar). */
   .btn-ghost-light {
-    @apply btn border border-mist/25 bg-transparent text-mist hover:border-mist/50 hover:bg-white/5;
+    @apply btn border border-brand-ink/25 bg-transparent text-brand-ink hover:border-brand-ink/50 hover:bg-white/5;
   }
 
   .input {
-    @apply w-full rounded-xl border border-navy/15 bg-white/70 px-3.5 py-2.5 text-sm text-navy outline-hidden transition placeholder:text-navy/55 focus:border-turquoise-ink focus:ring-2 focus:ring-turquoise/25;
+    @apply w-full rounded-xl border border-navy/15 bg-surface px-3.5 py-2.5 text-sm text-navy outline-hidden transition placeholder:text-navy/55 focus:border-turquoise-ink focus:ring-2 focus:ring-turquoise/25;
   }
 
   .label {
@@ -77,11 +132,11 @@
   }
 
   .card {
-    @apply rounded-2xl border border-navy/10 bg-white/60 backdrop-blur-xs;
+    @apply rounded-2xl border border-navy/10 bg-surface backdrop-blur-xs;
   }
 
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full border border-navy/10 bg-mist/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-navy/70 backdrop-blur-xs;
+    @apply inline-flex items-center gap-1 rounded-full border border-navy/10 bg-surface px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-navy/70 backdrop-blur-xs;
   }
 
   .chip-active {
@@ -92,7 +147,7 @@
     @apply text-[11px] font-semibold uppercase tracking-[0.22em] text-violet;
   }
 
-  /* Eyebrow para fondos navy. */
+  /* Eyebrow para fondos de marca oscuros. */
   .eyebrow-light {
     @apply text-[11px] font-semibold uppercase tracking-[0.22em] text-turquoise;
   }

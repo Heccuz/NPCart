@@ -4,8 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <title>Alvina 3D — Minis impresas en 3D</title>
+    <script>
+      // Aplica el tema antes del primer pintado para evitar el destello claro.
+      ;(function () {
+        try {
+          var stored = localStorage.getItem('npcart.theme')
+          var dark = stored
+            ? stored === 'dark'
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+          document.documentElement.classList.toggle('dark', dark)
+          document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
+        } catch (error) {
+          /* Sin localStorage: el CSS sigue al sistema. */
+        }
+      })()
+    </script>
     <meta
       name="description"
       content="Catálogo de minis impresas en 3D de Alvina 3D. Elige tu tamaño y temática y pide por WhatsApp."

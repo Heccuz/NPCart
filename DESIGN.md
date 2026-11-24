@@ -1,34 +1,67 @@
 # DESIGN.md — ALVINA (NPCart)
 
 Sistema visual de la tienda. Fuente de verdad: `frontend/src/index.css`
-(bloque `@theme`) — este documento lo explica, no lo reemplaza.
+(bloques `@theme` y `.dark`) — este documento lo explica, no lo reemplaza.
 
 ## Identidad
 
 Marca de impresión 3D con personalidad de taller: un gato negro, una
 impresora y una pieza turquesa. Núcleo cromático: **azul marino + turquesa +
-blanco**; **violeta** como secundario para ofertas y campañas. Negro solo
-como apoyo del dibujo (no es un color de superficie).
+blanco**; **violeta (#70205E)** como secundario expresivo para ofertas,
+campañas y superficies con degradado. Negro solo como apoyo del dibujo (no es
+un color de superficie).
 
 ## Paleta (tokens Tailwind)
 
-| Token | Valor | Uso |
-|---|---|---|
-| `navy` | `#001b46` | Texto principal, botones primarios, superficies oscuras (hero, pasos, footer del flujo) |
-| `navy-deep` | `#00112e` | Hover de superficies navy, sidebar admin |
-| `navy-mid` | `#0a2a5c` | Estados intermedios, gradientes |
-| `mist` | `#f6f8fb` | Fondo de compra (blanco frío) |
-| `haze` | `#e9eef7` | Superficies secundarias, skeletons |
-| `turquoise` | `#00d8dc` | Acento: rellenos, barras, badges, CTA de acento |
-| `turquoise-deep` | `#00aeb3` | Hover de rellenos turquesa |
-| `turquoise-ink` | `#00727a` | **Texto** turquesa sobre fondos claros (AA ~5.7:1) |
-| `violet` | `#70205e` | Ofertas, promos, errores de formulario, eyebrows |
+### Tokens de marca (fijos en día y noche)
+
+| Token            | Valor     | Uso                                                                        |
+| ---------------- | --------- | -------------------------------------------------------------------------- |
+| `brand`          | `#001b46` | Superficies de marca que deben seguir oscuras (sidebar admin, chips fijos) |
+| `brand-deep`     | `#00112e` | Fondo de portadas de serie, gradientes                                     |
+| `brand-mid`      | `#0a2a5c` | Estados intermedios, gradientes                                            |
+| `brand-ink`      | `#f6f8fb` | Texto sobre superficies `brand` / expresivas                               |
+| `violet-brand`   | `#70205e` | Extremo violeta de los degradados expresivos y badge de oferta             |
+| `turquoise`      | `#00d8dc` | Acento: rellenos, barras, badges, CTA de acento                            |
+| `turquoise-deep` | `#00aeb3` | Hover de rellenos turquesa                                                 |
+
+### Tokens semánticos (cambian con el tema)
+
+| Token           | Día                     | Noche                | Uso                                                                |
+| --------------- | ----------------------- | -------------------- | ------------------------------------------------------------------ |
+| `navy`          | `#001b46`               | `#eef4fc`            | Texto principal; también relleno de botones/chips que se invierten |
+| `navy-deep`     | `#00112e`               | `#dce8f8`            | Estados de hover invertidos                                        |
+| `navy-mid`      | `#0a2a5c`               | `#c6daf2`            | Estados intermedios                                                |
+| `mist`          | `#f6f8fb`               | `#061126`            | Fondo de página                                                    |
+| `haze`          | `#e9eef7`               | `#0c1e3b`            | Superficies secundarias, skeletons                                 |
+| `surface`       | `rgba(255,255,255,.66)` | `rgba(12,30,59,.72)` | Cards, inputs, tablas, listas                                      |
+| `turquoise-ink` | `#00727a`               | `#5ce8eb`            | **Texto** turquesa legible                                         |
+| `violet`        | `#70205e`               | `#f090dd`            | Texto de ofertas, promos, errores, eyebrows                        |
+
+### Fondos expresivos
+
+- `.bg-expressive`: degradado `#001b46 → #241a55 → #70205e` (135°). Usar en
+  hero, footer público, bloque de pasos y sidebar admin, siempre con
+  `text-brand-ink`.
+- `.bg-expressive-card`: variante para tarjetas de oferta, con `text-brand-ink`
+  y acentos `turquoise`.
+
+### Modo noche
+
+- Se activa con la clase `.dark` en `<html>`; el script inline de
+  `index.html` la aplica antes del primer pintado.
+- Preferencia: sigue `prefers-color-scheme` hasta que el usuario pulse el
+  `ThemeToggle` (Sol/Luna); la elección se guarda en `localStorage`
+  (`npcart.theme`).
+- No hace falta duplicar clases: los tokens semánticos se invierten y los
+  componentes heredan el tema.
 
 ### Reglas de contraste (no negociables)
 
 - Turquesa **nunca** es color de texto sobre fondo claro → usar `turquoise-ink`.
-- Texto sobre relleno turquesa = `navy` (≈11:1), jamás blanco (≈1.5:1).
-- Texto sobre navy o violeta = `mist`/blanco (≥10:1).
+- Texto sobre relleno turquesa = `brand` (≈11:1), jamás blanco ni `mist`.
+- Texto sobre navy, violeta o superficies expresivas = `brand-ink`/blanco
+  (≥10:1). En superficies expresivas no usar `text-navy` (no se invierte).
 - Acentos decorativos (punto de marca, cifras sobre navy) pueden ser
   `turquoise` puro porque no cargan información.
 
@@ -50,10 +83,14 @@ como apoyo del dibujo (no es un color de superficie).
 
 ## Componentes base (`index.css`)
 
-`.btn-primary` (navy), `.btn-accent` (turquesa + texto navy),
-`.btn-ghost` (claro), `.btn-ghost-light` (sobre navy), `.input`, `.label`,
-`.card`, `.chip`/`.chip-active`, `.eyebrow` (violeta) y `.eyebrow-light`
-(turquesa, sobre navy).
+`.btn-primary` (navy, se invierte en modo noche), `.btn-accent` (turquesa +
+texto `brand`), `.btn-ghost` (superficie clara/oscura), `.btn-ghost-light`
+(sobre superficies de marca), `.input`, `.label`, `.card` (token `surface`),
+`.chip`/`.chip-active`, `.eyebrow` (violeta) y `.eyebrow-light` (turquesa,
+sobre superficies de marca).
+
+`ThemeToggle` (`components/ThemeToggle.tsx`) alterna día/noche en tienda y
+admin; usa `useThemeStore` para mantenerse sincronizado entre instancias.
 
 ## Movimiento
 
@@ -66,3 +103,6 @@ Sin entradas animadas por sección. Respetar `prefers-reduced-motion`.
 - Usar turquesa como texto sobre claro o blanco sobre turquesa.
 - Introducir colores fuera de la paleta (rojos, verdes de sistema).
 - Romper `.container-page` o usar full-bleed fuera del hero.
+- Usar `text-navy` sobre `.bg-expressive`/`.bg-expressive-card` o superficies
+  `brand`: en modo noche esas superficies no se invierten.
+- Añadir `dark:` por componente cuando basta con un token semántico.

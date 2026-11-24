@@ -3,6 +3,8 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/application/store/auth-store'
 import { authGateway } from '@/infrastructure/http/auth-gateway'
 import { apiErrorMessage } from '@/infrastructure/http/client'
+import BrandMark from '@/presentation/components/BrandMark'
+import ThemeToggle from '@/presentation/components/ThemeToggle'
 
 export default function AdminLoginPage() {
   const token = useAuthStore((state) => state.token)
@@ -32,12 +34,16 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="flex min-h-dvh items-center justify-center px-4 py-12">
+    <div className="relative flex min-h-dvh items-center justify-center px-4 py-12">
+      <ThemeToggle className="absolute right-4 top-4 h-11 w-11 border-navy/15 text-navy/70 hover:border-navy/40 hover:bg-navy/5" />
       <div className="w-full max-w-sm">
         <div className="text-center">
-          <p className="font-display text-2xl">
-            Alvina 3D<span className="text-turquoise">.</span>
-          </p>
+          <div className="flex items-center justify-center gap-2">
+            <BrandMark className="h-9 w-9" />
+            <p className="font-display text-2xl">
+              Alvina 3D<span className="text-turquoise">.</span>
+            </p>
+          </div>
           <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-navy/60">Panel admin</p>
         </div>
 

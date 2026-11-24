@@ -55,7 +55,7 @@ export default function ProductCard({ product, offer, onQuickAdd }: ProductCardP
               event.preventDefault()
               handleQuickAdd()
             }}
-            className="absolute bottom-2 right-2 flex h-10 w-10 items-center justify-center rounded-full bg-navy text-lg font-bold text-mist shadow-card transition hover:bg-turquoise hover:text-navy"
+            className="absolute bottom-2 right-2 flex h-10 w-10 items-center justify-center rounded-full bg-navy text-lg font-bold text-mist shadow-card transition hover:bg-turquoise hover:text-brand"
           >
             {added ? '✓' : '+'}
           </button>

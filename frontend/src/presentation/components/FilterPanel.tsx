@@ -21,8 +21,12 @@ function PriceRange({
   filters: CatalogFilters
   onUpdate: (patch: Partial<CatalogFilters>) => void
 }) {
-  const [min, setMin] = useState(filters.minPriceCents != null ? String(filters.minPriceCents / 100) : '')
-  const [max, setMax] = useState(filters.maxPriceCents != null ? String(filters.maxPriceCents / 100) : '')
+  const [min, setMin] = useState(
+    filters.minPriceCents != null ? String(filters.minPriceCents / 100) : '',
+  )
+  const [max, setMax] = useState(
+    filters.maxPriceCents != null ? String(filters.maxPriceCents / 100) : '',
+  )
 
   useEffect(() => {
     setMin(filters.minPriceCents != null ? String(filters.minPriceCents / 100) : '')
@@ -105,7 +109,7 @@ export default function FilterPanel({
                   'flex min-h-11 items-center justify-between gap-2 rounded-xl border px-3 py-2 text-left text-xs font-semibold transition',
                   selected
                     ? 'border-navy bg-navy text-mist'
-                    : 'border-navy/10 bg-white/60 text-navy hover:border-navy/40',
+                    : 'border-navy/10 bg-surface text-navy hover:border-navy/40',
                   !selected && count === 0 && 'cursor-not-allowed opacity-40',
                 )}
               >
@@ -134,7 +138,7 @@ export default function FilterPanel({
                   'flex min-h-11 items-center justify-between gap-2 rounded-xl border px-3 py-2 text-left text-xs font-semibold transition',
                   selected
                     ? 'border-navy bg-navy text-mist'
-                    : 'border-navy/10 bg-white/60 text-navy hover:border-navy/40',
+                    : 'border-navy/10 bg-surface text-navy hover:border-navy/40',
                   !selected && count === 0 && 'cursor-not-allowed opacity-40',
                 )}
               >
@@ -153,7 +157,7 @@ export default function FilterPanel({
         role="switch"
         aria-checked={filters.inStock}
         onClick={() => onUpdate({ inStock: !filters.inStock })}
-        className="flex min-h-11 w-full items-center justify-between rounded-xl border border-navy/10 bg-white/60 px-3 py-2 text-left text-xs font-semibold"
+        className="flex min-h-11 w-full items-center justify-between rounded-xl border border-navy/10 bg-surface px-3 py-2 text-left text-xs font-semibold"
       >
         <span>Solo disponibles</span>
         <span

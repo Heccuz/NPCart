@@ -123,7 +123,12 @@ export default function AdminCategoriesPage() {
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Category | null>(null)
 
-  const { data: categories = [], isLoading, isError, refetch } = useQuery({
+  const {
+    data: categories = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
     queryKey: ['admin', 'categories'],
     queryFn: () => adminGateway.listCategories(),
   })
@@ -176,7 +181,7 @@ export default function AdminCategoriesPage() {
       </div>
 
       {notice && (
-        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-navy/10 bg-white/70 px-4 py-3 text-sm">
+        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-navy/10 bg-surface px-4 py-3 text-sm">
           <p className="text-navy/70">{notice}</p>
           <button type="button" onClick={() => setNotice('')} className="text-navy/60">
             ✕
@@ -212,7 +217,7 @@ export default function AdminCategoriesPage() {
             <li
               key={category.id}
               className={cn(
-                'flex flex-wrap items-center gap-3 rounded-2xl border border-navy/10 bg-white/60 px-4 py-3',
+                'flex flex-wrap items-center gap-3 rounded-2xl border border-navy/10 bg-surface px-4 py-3',
                 category.deletedAt && 'opacity-60',
               )}
             >

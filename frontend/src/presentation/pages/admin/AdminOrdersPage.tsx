@@ -30,11 +30,7 @@ function StatusPill({ status }: { status: OrderStatus }) {
 }
 
 function statusLabel(status: OrderStatus) {
-  return status === 'PENDIENTE'
-    ? 'Pendiente'
-    : status === 'CONFIRMADO'
-      ? 'Confirmado'
-      : 'Cancelado'
+  return status === 'PENDIENTE' ? 'Pendiente' : status === 'CONFIRMADO' ? 'Confirmado' : 'Cancelado'
 }
 
 export default function AdminOrdersPage() {
@@ -113,7 +109,7 @@ export default function AdminOrdersPage() {
       </div>
 
       {notice && (
-        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-navy/10 bg-white/70 px-4 py-3 text-sm">
+        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-navy/10 bg-surface px-4 py-3 text-sm">
           <p className="text-navy/70">{notice}</p>
           <button type="button" onClick={() => setNotice('')} className="text-navy/60">
             ✕
@@ -163,7 +159,7 @@ export default function AdminOrdersPage() {
             {orders.map((order) => (
               <li
                 key={order.id}
-                className="flex flex-wrap items-center gap-3 rounded-2xl border border-navy/10 bg-white/60 px-4 py-3 text-sm"
+                className="flex flex-wrap items-center gap-3 rounded-2xl border border-navy/10 bg-surface px-4 py-3 text-sm"
               >
                 <div className="min-w-0 flex-1">
                   <p className="font-display text-sm">{order.code}</p>
@@ -261,8 +257,8 @@ export default function AdminOrdersPage() {
                 <ul className="mt-1 space-y-0.5">
                   {warnings.map((warning) => (
                     <li key={warning.productId}>
-                      {warning.name}: pedido {warning.requested}, disponible{' '}
-                      {warning.available}. Se descontó hasta agotar.
+                      {warning.name}: pedido {warning.requested}, disponible {warning.available}. Se
+                      descontó hasta agotar.
                     </li>
                   ))}
                 </ul>
@@ -289,12 +285,8 @@ export default function AdminOrdersPage() {
                         </p>
                       </td>
                       <td className="px-3 py-2">{item.qty}</td>
-                      <td className="px-3 py-2 text-right">
-                        {formatCents(item.unitPriceCents)}
-                      </td>
-                      <td className="px-3 py-2 text-right">
-                        {formatCents(item.lineTotalCents)}
-                      </td>
+                      <td className="px-3 py-2 text-right">{formatCents(item.unitPriceCents)}</td>
+                      <td className="px-3 py-2 text-right">{formatCents(item.lineTotalCents)}</td>
                     </tr>
                   ))}
                 </tbody>

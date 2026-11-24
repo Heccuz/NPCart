@@ -32,7 +32,22 @@ export const productQuerySchema = z.object({
   minPrice: z.coerce.number().int().min(0).optional(),
   maxPrice: z.coerce.number().int().min(0).optional(),
   inStock: booleanParam,
-  sort: z.enum(['default', 'price_asc', 'price_desc', 'newest']).optional(),
+  sort: z
+    .enum([
+      'default',
+      'price_asc',
+      'price_desc',
+      'newest',
+      'name_asc',
+      'name_desc',
+      'size_asc',
+      'size_desc',
+      'stock_asc',
+      'stock_desc',
+      'status_asc',
+      'status_desc',
+    ])
+    .optional(),
   page: z.coerce.number().int().min(1).optional(),
   pageSize: z.coerce.number().int().min(1).max(50).optional(),
 })

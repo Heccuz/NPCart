@@ -110,9 +110,7 @@ export default function ProductDetailPage() {
             ))}
           </div>
 
-          <h1 className="mt-4 font-display text-3xl tracking-tight sm:text-4xl">
-            {product.name}
-          </h1>
+          <h1 className="mt-4 font-display text-3xl tracking-tight sm:text-4xl">{product.name}</h1>
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <p className="text-2xl font-semibold">{formatCents(product.priceCents)}</p>
@@ -121,19 +119,20 @@ export default function ProductDetailPage() {
           </div>
 
           {tiers.length > 0 && (
-            <div className="mt-5 rounded-2xl border border-violet/30 bg-violet/5 p-4">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-violet">
+            <div className="bg-expressive-card mt-5 rounded-2xl p-4 text-brand-ink">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-turquoise">
                 Ofertas por cantidad
               </p>
-              <ul className="mt-2 space-y-1 text-sm text-navy/70">
+              <ul className="mt-2 space-y-1 text-sm text-brand-ink/70">
                 {tiers.map((tier) => (
                   <li key={tier.id}>
                     Lleva {tier.minQuantity}+ y paga{' '}
-                    <strong className="text-navy">{formatCents(tier.unitPriceCents)}</strong> c/u
+                    <strong className="text-brand-ink">{formatCents(tier.unitPriceCents)}</strong>{' '}
+                    c/u
                   </li>
                 ))}
               </ul>
-              <p className="mt-2 text-xs text-navy/60">
+              <p className="mt-2 text-xs text-brand-ink/60">
                 Se mezclan todas las minis de este tamaño, sin importar la serie.
               </p>
             </div>

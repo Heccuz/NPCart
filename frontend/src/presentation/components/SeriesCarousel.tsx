@@ -11,7 +11,7 @@ export default function SeriesCarousel({ series }: { series: Series[] }) {
         <Link
           key={item.id}
           to={`/series/${item.slug}`}
-          className="group relative w-40 shrink-0 snap-start overflow-hidden rounded-2xl border border-navy/10 bg-navy-deep sm:w-48"
+          className="group relative w-40 shrink-0 snap-start overflow-hidden rounded-2xl border border-navy/10 bg-brand-deep sm:w-48"
         >
           <ImageWithFallback
             src={item.imageUrl}
@@ -19,8 +19,8 @@ export default function SeriesCarousel({ series }: { series: Series[] }) {
             className="aspect-[4/5] w-full opacity-90"
             imgClassName="transition duration-500 group-hover:scale-105"
           />
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 to-transparent p-3 pt-10">
-            <p className="font-display text-sm text-mist">{item.name}</p>
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-deep/90 to-transparent p-3 pt-10">
+            <p className="font-display text-sm text-brand-ink">{item.name}</p>
           </div>
         </Link>
       ))}

@@ -139,7 +139,12 @@ export default function AdminOffersPage() {
   const [editing, setEditing] = useState<CategoryOffer | null>(null)
 
   const { data: categories = [] } = useCategories()
-  const { data: offers = [], isLoading, isError, refetch } = useQuery({
+  const {
+    data: offers = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
     queryKey: ['admin', 'offers'],
     queryFn: () => adminGateway.listOffers(),
   })
@@ -205,7 +210,7 @@ export default function AdminOffersPage() {
       </div>
 
       {notice && (
-        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-navy/10 bg-white/70 px-4 py-3 text-sm">
+        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-navy/10 bg-surface px-4 py-3 text-sm">
           <p className="text-navy/70">{notice}</p>
           <button type="button" onClick={() => setNotice('')} className="text-navy/60">
             ✕

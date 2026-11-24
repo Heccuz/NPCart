@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 import { Link, Navigate, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useAuthStore } from '@/application/store/auth-store'
+import BrandMark from '@/presentation/components/BrandMark'
+import ThemeToggle from '@/presentation/components/ThemeToggle'
 import { cn } from '@/presentation/lib/cn'
 
 export function ProtectedRoute({ children }: { children: ReactNode }) {
@@ -28,12 +30,17 @@ export default function AdminLayout() {
 
   return (
     <div className="min-h-dvh bg-mist">
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col bg-navy text-mist lg:flex">
-        <div className="border-b border-bone/10 px-5 py-5">
-          <p className="font-display text-xl">
-            Alvina 3D<span className="text-turquoise">.</span>
+      <aside className="bg-expressive fixed inset-y-0 left-0 z-30 hidden w-60 flex-col text-brand-ink lg:flex">
+        <div className="border-b border-brand-ink/10 px-5 py-5">
+          <p className="flex items-center gap-2 font-display text-xl">
+            <BrandMark className="h-8 w-8" />
+            <span>
+              Alvina 3D<span className="text-turquoise">.</span>
+            </span>
           </p>
-          <p className="mt-0.5 text-[11px] uppercase tracking-[0.18em] text-mist/60">Panel admin</p>
+          <p className="mt-0.5 text-[11px] uppercase tracking-[0.18em] text-brand-ink/60">
+            Panel admin
+          </p>
         </div>
 
         <nav className="flex-1 space-y-1 px-3 py-4">
@@ -45,8 +52,8 @@ export default function AdminLayout() {
                 cn(
                   'block rounded-xl px-3 py-2.5 text-sm font-medium transition',
                   isActive
-                    ? 'bg-mist/10 text-mist'
-                    : 'text-mist/60 hover:bg-mist/5 hover:text-mist',
+                    ? 'bg-brand-ink/10 text-brand-ink'
+                    : 'text-brand-ink/60 hover:bg-brand-ink/5 hover:text-brand-ink',
                 )
               }
             >
@@ -55,15 +62,18 @@ export default function AdminLayout() {
           ))}
         </nav>
 
-        <div className="space-y-3 border-t border-bone/10 px-5 py-4 text-xs">
-          <p className="truncate text-mist/65">{email}</p>
-          <Link to="/" className="block text-mist/60 transition hover:text-mist">
-            Ver tienda
-          </Link>
+        <div className="space-y-3 border-t border-brand-ink/10 px-5 py-4 text-xs">
+          <p className="truncate text-brand-ink/65">{email}</p>
+          <div className="flex items-center justify-between gap-2">
+            <Link to="/" className="block text-brand-ink/60 transition hover:text-brand-ink">
+              Ver tienda
+            </Link>
+            <ThemeToggle className="h-9 w-9 border-brand-ink/20 text-brand-ink/80 hover:border-brand-ink/45 hover:bg-brand-ink/10" />
+          </div>
           <button
             type="button"
             onClick={logout}
-            className="w-full rounded-xl border border-bone/15 px-3 py-2 text-left font-medium text-mist/70 transition hover:border-bone/40 hover:text-mist"
+            className="w-full rounded-xl border border-brand-ink/15 px-3 py-2 text-left font-medium text-brand-ink/70 transition hover:border-brand-ink/40 hover:text-brand-ink"
           >
             Cerrar sesión
           </button>
@@ -73,9 +83,12 @@ export default function AdminLayout() {
       <div className="lg:pl-60">
         <header className="sticky top-0 z-20 border-b border-navy/10 bg-mist/85 backdrop-blur-md lg:hidden">
           <div className="flex h-14 items-center justify-between px-4">
-            <Link to="/admin/productos" className="font-display text-lg">
-              Alvina 3D<span className="text-turquoise">.</span>
-              <span className="ml-2 text-[10px] font-semibold uppercase tracking-wider text-navy/60">
+            <Link to="/admin/productos" className="flex items-center gap-2 font-display text-lg">
+              <BrandMark className="h-7 w-7" />
+              <span>
+                Alvina 3D<span className="text-turquoise">.</span>
+              </span>
+              <span className="ml-1 text-[10px] font-semibold uppercase tracking-wider text-navy/60">
                 Admin
               </span>
             </Link>
@@ -83,6 +96,7 @@ export default function AdminLayout() {
               <Link to="/" className="text-xs font-medium text-navy/60">
                 Tienda
               </Link>
+              <ThemeToggle className="h-8 w-8 border-navy/15 text-navy/70 hover:border-navy/40 hover:bg-navy/5" />
               <button
                 type="button"
                 onClick={logout}

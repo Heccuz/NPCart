@@ -144,7 +144,7 @@ export default function CartDrawer() {
         type="button"
         aria-label="Cerrar carrito"
         onClick={close}
-        className="absolute inset-0 bg-navy/45 backdrop-blur-xs"
+        className="absolute inset-0 bg-brand/60 backdrop-blur-xs"
       />
 
       <aside
@@ -171,9 +171,7 @@ export default function CartDrawer() {
         {pending ? (
           <div className="flex flex-1 flex-col overflow-y-auto px-4 py-5 sm:px-5">
             <div className="rounded-2xl border border-violet/40 bg-violet/5 p-4">
-              <p className="font-display text-base text-violet">
-                Ajustamos tu pedido
-              </p>
+              <p className="font-display text-base text-violet">Ajustamos tu pedido</p>
               <p className="mt-1 text-xs leading-relaxed text-navy/60">
                 El pedido ya quedó registrado con el stock disponible. El total mostrado es el
                 definitivo.
@@ -187,8 +185,7 @@ export default function CartDrawer() {
                   <ul className="mt-1 space-y-1 text-sm text-navy/75">
                     {pending.excluded.map((item) => (
                       <li key={item.productId}>
-                        {item.name} —{' '}
-                        {item.reason === 'AGOTADO' ? 'agotado' : 'ya no disponible'}
+                        {item.name} — {item.reason === 'AGOTADO' ? 'agotado' : 'ya no disponible'}
                       </li>
                     ))}
                   </ul>
@@ -260,17 +257,16 @@ export default function CartDrawer() {
                         return (
                           <li
                             key={item.productId}
-                            className="flex gap-3 rounded-2xl border border-navy/10 bg-white/60 p-3"
+                            className="flex gap-3 rounded-2xl border border-navy/10 bg-surface p-3"
                           >
                             <ImageWithFallback
                               src={item.imageUrl}
                               alt={item.name}
-                              className="h-16 w-16 shrink-0 rounded-xl" hideLabel
+                              className="h-16 w-16 shrink-0 rounded-xl"
+                              hideLabel
                             />
                             <div className="min-w-0 flex-1">
-                              <p className="truncate font-display text-sm">
-                                {item.name}
-                              </p>
+                              <p className="truncate font-display text-sm">{item.name}</p>
                               <p className="text-[11px] text-navy/60">{item.seriesName}</p>
                               <div className="mt-1 flex items-center gap-1.5 text-sm">
                                 <span className={cn('font-semibold', discounted && 'text-violet')}>
@@ -333,7 +329,9 @@ export default function CartDrawer() {
             </dl>
 
             {error && (
-              <p className="mt-3 rounded-xl bg-turquoise/10 px-3 py-2 text-xs text-violet">{error}</p>
+              <p className="mt-3 rounded-xl bg-turquoise/10 px-3 py-2 text-xs text-violet">
+                {error}
+              </p>
             )}
 
             <button
