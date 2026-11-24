@@ -62,10 +62,7 @@ export default function PublicLayout() {
           </Link>
 
           <nav className="hidden items-center gap-1 text-sm font-medium sm:flex">
-            <Link
-              to="/catalogo"
-              className="rounded-full px-4 py-2 transition hover:bg-navy/5"
-            >
+            <Link to="/catalogo" className="rounded-full px-4 py-2 transition hover:bg-navy/5">
               Catálogo
             </Link>
             <Link to="/#series" className="rounded-full px-4 py-2 transition hover:bg-navy/5">
@@ -74,10 +71,7 @@ export default function PublicLayout() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link
-              to="/catalogo"
-              className="btn-ghost h-11 px-4 text-sm sm:hidden"
-            >
+            <Link to="/catalogo" className="btn-ghost h-11 px-4 text-sm sm:hidden">
               Catálogo
             </Link>
             <CartButton onClick={openCart} />
@@ -95,7 +89,7 @@ export default function PublicLayout() {
         <div className="container-page flex flex-col gap-4 text-sm text-navy/60 sm:flex-row sm:items-center sm:justify-between">
           <p>Alvina 3D — miniaturas y piezas personalizadas, hechas a pedido en Perú.</p>
           <p className="text-xs uppercase tracking-[0.18em]">
-            Pedidos por WhatsApp · Lima, Perú
+            Pedidos por WhatsApp · Cajamarca, Perú
           </p>
         </div>
       </footer>

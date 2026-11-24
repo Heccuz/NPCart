@@ -51,7 +51,9 @@ function HeroArt({ products }: { products: Product[] }) {
         <div className="mt-4 flex items-center justify-center rounded-2xl border border-turquoise/30 bg-turquoise p-4 text-center">
           <div>
             <p className="font-display text-3xl text-navy">100%</p>
-            <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-navy/70">hecho a pedido</p>
+            <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-navy/70">
+              hecho a pedido
+            </p>
           </div>
         </div>
       </div>
@@ -98,8 +100,8 @@ export default function HomePage() {
               Minis que <span className="text-turquoise">dan vida</span> a tu mesa.
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-mist/70">
-              Figuras impresas en 3D al detalle para D&amp;D, colección o regalo. Elige el
-              tamaño, mezcla tus series favoritas y pide por WhatsApp.
+              Figuras impresas en 3D al detalle para D&amp;D, colección o regalo. Elige el tamaño,
+              mezcla tus series favoritas y pide por WhatsApp.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -126,7 +128,7 @@ export default function HomePage() {
                 <dd className="text-xs text-mist/60">Impresión propia</dd>
               </div>
               <div>
-                <dt className="font-display text-lg">S/ 8</dt>
+                <dt className="font-display text-lg">S/ 3</dt>
                 <dd className="text-xs text-mist/60">Desde</dd>
               </div>
             </dl>
@@ -140,11 +142,12 @@ export default function HomePage() {
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="eyebrow">Descubre</p>
-            <h2 className="mt-2 font-display text-2xl sm:text-3xl">
-              Series para tu mesa
-            </h2>
+            <h2 className="mt-2 font-display text-2xl sm:text-3xl">Series para tu mesa</h2>
           </div>
-          <Link to="/catalogo" className="text-sm font-semibold text-navy hover:underline hover:text-turquoise-ink">
+          <Link
+            to="/catalogo"
+            className="text-sm font-semibold text-navy hover:underline hover:text-turquoise-ink"
+          >
             Ver todo el catálogo
           </Link>
         </div>
@@ -152,7 +155,10 @@ export default function HomePage() {
           {series.isLoading ? (
             <div className="flex gap-3 overflow-hidden">
               {Array.from({ length: 4 }, (_, index) => (
-                <div key={index} className="h-48 w-40 shrink-0 animate-pulse rounded-2xl bg-haze sm:w-48" />
+                <div
+                  key={index}
+                  className="h-48 w-40 shrink-0 animate-pulse rounded-2xl bg-haze sm:w-48"
+                />
               ))}
             </div>
           ) : (
@@ -166,9 +172,7 @@ export default function HomePage() {
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <p className="eyebrow">Ahorra por cantidad</p>
-              <h2 className="mt-2 font-display text-2xl sm:text-3xl">
-                Ofertas por tamaño
-              </h2>
+              <h2 className="mt-2 font-display text-2xl sm:text-3xl">Ofertas por tamaño</h2>
             </div>
             <p className="max-w-sm text-sm text-navy/60">
               Mezcla series libremente: lo que importa es cuántas minis del mismo tamaño llevas.
@@ -201,11 +205,12 @@ export default function HomePage() {
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="eyebrow">Selección</p>
-            <h2 className="mt-2 font-display text-2xl sm:text-3xl">
-              Destacadas de la semana
-            </h2>
+            <h2 className="mt-2 font-display text-2xl sm:text-3xl">Destacadas de la semana</h2>
           </div>
-          <Link to="/catalogo" className="text-sm font-semibold text-navy hover:underline hover:text-turquoise-ink">
+          <Link
+            to="/catalogo"
+            className="text-sm font-semibold text-navy hover:underline hover:text-turquoise-ink"
+          >
             Ver todas
           </Link>
         </div>
@@ -238,9 +243,7 @@ export default function HomePage() {
           <div className="grid gap-8 sm:grid-cols-3">
             {steps.map((step, index) => (
               <div key={step.title}>
-                <span className="font-display text-sm text-turquoise">
-                  0{index + 1}
-                </span>
+                <span className="font-display text-sm text-turquoise">0{index + 1}</span>
                 <h3 className="mt-2 font-display text-xl">{step.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-mist/60">{step.body}</p>
               </div>

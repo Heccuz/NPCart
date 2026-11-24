@@ -5,18 +5,18 @@ import { createPrismaClient } from '../src/infrastructure/database/prisma/client
 const prisma = createPrismaClient()
 
 const categories = [
-  { name: 'Mini pequeña', slug: 'mini-pequena', basePriceCents: 800, sortOrder: 1 },
-  { name: 'Mini mediana', slug: 'mini-mediana', basePriceCents: 1500, sortOrder: 2 },
-  { name: 'Mini grande', slug: 'mini-grande', basePriceCents: 2500, sortOrder: 3 },
+  { name: 'Mini pequeña', slug: 'mini-pequena', basePriceCents: 300, sortOrder: 1 },
+  { name: 'Mini mediana', slug: 'mini-mediana', basePriceCents: 500, sortOrder: 2 },
+  { name: 'Mini grande', slug: 'mini-grande', basePriceCents: 700, sortOrder: 3 },
 ]
 
 const seriesSeed = [
-  { name: 'Marvel', slug: 'marvel', sortOrder: 1 },
+  { name: 'Pokemon', slug: 'pokemon', sortOrder: 1 },
   { name: 'Spiderman', slug: 'spiderman', sortOrder: 2 },
   { name: 'Dungeons & Dragons', slug: 'dungeons-dragons', sortOrder: 3 },
   { name: 'Terror', slug: 'terror', sortOrder: 4 },
   { name: 'Super Héroes', slug: 'super-heroes', sortOrder: 5 },
-  { name: 'Anime', slug: 'anime', sortOrder: 6 },
+  { name: 'Naruto', slug: 'naruto', sortOrder: 6 },
 ]
 
 const productsSeed = [
