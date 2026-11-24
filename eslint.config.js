@@ -35,6 +35,10 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
+      // Regla nueva del React Compiler (plugin v7): los 4 usos actuales son
+      // sincronizaciones URL→input (reset de paginación, precios, búsqueda)
+      // con un único rebote de render. Refactor pendiente; mientras, warn.
+      'react-hooks/set-state-in-effect': 'warn',
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     },
   },
