@@ -36,7 +36,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm">
         <div className="text-center">
           <p className="font-display text-2xl">
-            NPCart<span className="text-turquoise">.</span>
+            Alvina 3D<span className="text-turquoise">.</span>
           </p>
           <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-navy/60">Panel admin</p>
         </div>

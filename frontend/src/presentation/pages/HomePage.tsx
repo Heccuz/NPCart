@@ -107,7 +107,7 @@ export default function HomePage() {
                 Ver catálogo
               </Link>
               <a
-                href={buildWaLink('Hola NPCart 👋 Quiero ver qué minis tienen disponibles.')}
+                href={buildWaLink('Hola Alvina 👋 Quiero ver qué minis tienen disponibles.')}
                 target="_blank"
                 rel="noreferrer"
                 className="btn-ghost-light h-12 px-7 text-base"

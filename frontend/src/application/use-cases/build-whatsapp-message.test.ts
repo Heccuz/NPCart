@@ -55,8 +55,9 @@ const categories: OrderCategorySummary[] = [
 ]
 
 describe('buildWhatsAppMessage', () => {
-  it('includes code, grouped lines and total', () => {
+  it('includes the brand, code, grouped lines and total', () => {
     const message = buildWhatsAppMessage(makeOrder(), categories)
+    expect(message).toContain('*Nuevo pedido - Alvina 3D*')
     expect(message).toContain('*Código: NPC-8F3K*')
     expect(message).toContain('*Mini mediana*')
     expect(message).toContain('*Mini grande*')

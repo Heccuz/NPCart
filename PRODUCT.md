@@ -3,8 +3,9 @@
 ## Qué es
 
 Catálogo web de miniaturas impresas en 3D hechas a pedido, con carrito y
-confirmación de pedido por WhatsApp. El emprendimiento se llama **ALVINA**;
-la web mantiene el nombre de proyecto NPCart.
+confirmación de pedido por WhatsApp. El emprendimiento y nombre visible del
+sitio es **Alvina 3D**; **NPCart** queda como nombre clave del proyecto
+(repositorio, paquetes, infraestructura).
 
 ## Quién compra
 

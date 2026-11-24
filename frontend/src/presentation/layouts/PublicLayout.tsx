@@ -58,7 +58,7 @@ export default function PublicLayout() {
       <header className="sticky top-0 z-30 border-b border-navy/10 bg-mist/85 backdrop-blur-md">
         <div className="container-page flex h-16 items-center justify-between gap-4">
           <Link to="/" className="font-display text-2xl tracking-tight">
-            NPCart<span className="text-turquoise">.</span>
+            Alvina 3D<span className="text-turquoise">.</span>
           </Link>
 
           <nav className="hidden items-center gap-1 text-sm font-medium sm:flex">
@@ -93,7 +93,7 @@ export default function PublicLayout() {
 
       <footer className="mt-20 border-t border-navy/10 py-10">
         <div className="container-page flex flex-col gap-4 text-sm text-navy/60 sm:flex-row sm:items-center sm:justify-between">
-          <p>NPCart — minis impresas en 3D, hechas a pedido en Perú.</p>
+          <p>Alvina 3D — miniaturas y piezas personalizadas, hechas a pedido en Perú.</p>
           <p className="text-xs uppercase tracking-[0.18em]">
             Pedidos por WhatsApp · Lima, Perú
           </p>

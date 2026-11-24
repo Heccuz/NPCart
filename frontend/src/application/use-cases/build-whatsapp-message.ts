@@ -56,7 +56,7 @@ export function buildWhatsAppMessage(
   categories: OrderCategorySummary[],
   maxLength = DEFAULT_MAX_LENGTH,
 ): string {
-  const header = `🛒 *Nuevo pedido - NPCart*\n🧾 *Código: ${order.code}*\n`
+  const header = `🛒 *Nuevo pedido - Alvina 3D*\n🧾 *Código: ${order.code}*\n`
   const discountLine =
     order.discountCents > 0 ? `Ahorro total: ${formatCents(order.discountCents)}\n` : ''
   const footer = `\n\n${discountLine}*Total: ${formatCents(order.totalCents)}*`

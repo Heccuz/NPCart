@@ -31,7 +31,7 @@ export default function AdminLayout() {
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col bg-navy text-mist lg:flex">
         <div className="border-b border-bone/10 px-5 py-5">
           <p className="font-display text-xl">
-            NPCart<span className="text-turquoise">.</span>
+            Alvina 3D<span className="text-turquoise">.</span>
           </p>
           <p className="mt-0.5 text-[11px] uppercase tracking-[0.18em] text-mist/60">Panel admin</p>
         </div>
@@ -74,7 +74,7 @@ export default function AdminLayout() {
         <header className="sticky top-0 z-20 border-b border-navy/10 bg-mist/85 backdrop-blur-md lg:hidden">
           <div className="flex h-14 items-center justify-between px-4">
             <Link to="/admin/productos" className="font-display text-lg">
-              NPCart<span className="text-turquoise">.</span>
+              Alvina 3D<span className="text-turquoise">.</span>
               <span className="ml-2 text-[10px] font-semibold uppercase tracking-wider text-navy/60">
                 Admin
               </span>
