@@ -1,10 +1,10 @@
 import type { RequestHandler } from 'express'
-import type { ZodTypeAny } from 'zod'
+import type { z } from 'zod'
 
 export interface ValidationSchemas {
-  body?: ZodTypeAny
-  query?: ZodTypeAny
-  params?: ZodTypeAny
+  body?: z.ZodType
+  query?: z.ZodType
+  params?: z.ZodType
 }
 
 /** Valida y deja los datos en res.locals (body/query/params). */

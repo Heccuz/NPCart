@@ -1,6 +1,6 @@
 import type { ErrorRequestHandler } from 'express'
 import { Prisma } from '../../../generated/prisma/client'
-import { ZodError } from 'zod'
+import { ZodError, flattenError } from 'zod'
 import { AppError } from '../../../application/errors/app-error'
 import { DomainError } from '../../../domain/errors/domain-error'
 
@@ -10,7 +10,7 @@ export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
       error: {
         code: 'VALIDATION_ERROR',
         message: 'Datos inválidos',
-        details: error.flatten(),
+        details: flattenError(error),
       },
     })
     return

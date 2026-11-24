@@ -15,7 +15,7 @@ const envSchema = z.object({
 const parsed = envSchema.safeParse(process.env)
 
 if (!parsed.success) {
-  console.error('[env] Configuración inválida:', parsed.error.flatten().fieldErrors)
+  console.error('[env] Configuración inválida:', z.flattenError(parsed.error).fieldErrors)
   throw new Error('Variables de entorno inválidas')
 }
 
