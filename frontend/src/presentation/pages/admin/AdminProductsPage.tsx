@@ -42,11 +42,9 @@ function initialForm(product: Product | null): FormState {
 
 function ProductForm({
   product,
-  onClose,
   onSaved,
 }: {
   product: Product | null
-  onClose: () => void
   onSaved: () => void
 }) {
   const { data: categories = [] } = useCategories()
@@ -673,7 +671,6 @@ export default function AdminProductsPage() {
         >
           <ProductForm
             product={editing}
-            onClose={() => setFormOpen(false)}
             onSaved={() => {
               invalidate()
               setFormOpen(false)

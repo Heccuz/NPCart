@@ -26,6 +26,7 @@ backups/
 .netlify/
 .railway/
 *.local
+DEPENDENCY_UPGRADE_PLAN.md
 
 # SO / IDE
 .DS_Store

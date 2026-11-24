@@ -18,7 +18,6 @@ export default function SearchBar({
   useEffect(() => {
     setText(value)
     // Sincroniza cuando la URL cambia desde fuera (chips, limpiar).
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
   useEffect(() => {
