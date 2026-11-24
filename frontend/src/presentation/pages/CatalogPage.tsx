@@ -37,22 +37,22 @@ function FilterSheet({
         type="button"
         aria-label="Cerrar filtros"
         onClick={onClose}
-        className="absolute inset-0 bg-ink/45 backdrop-blur-xs"
+        className="absolute inset-0 bg-navy/45 backdrop-blur-xs"
       />
-      <div className="absolute inset-x-0 bottom-0 flex max-h-[88dvh] flex-col rounded-t-3xl bg-bone shadow-2xl">
-        <div className="flex items-center justify-between border-b border-ink/10 px-5 py-4">
-          <h2 className="font-display text-lg font-semibold">Filtros</h2>
+      <div className="absolute inset-x-0 bottom-0 flex max-h-[88dvh] flex-col rounded-t-3xl bg-mist shadow-2xl">
+        <div className="flex items-center justify-between border-b border-navy/10 px-5 py-4">
+          <h2 className="font-display text-lg">Filtros</h2>
           <button
             type="button"
             onClick={onClose}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-ink/10 text-lg"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-navy/10 text-lg"
             aria-label="Cerrar filtros"
           >
             ✕
           </button>
         </div>
         <div className="flex-1 overflow-y-auto px-5 py-4">{children}</div>
-        <div className="border-t border-ink/10 px-5 py-4">
+        <div className="border-t border-navy/10 px-5 py-4">
           <button type="button" onClick={onClose} className="btn-primary h-12 w-full">
             Ver resultados
           </button>
@@ -93,7 +93,7 @@ function ActiveChips({
           key={chip.key}
           type="button"
           onClick={chip.onRemove}
-          className="inline-flex items-center gap-1.5 rounded-full border border-ink bg-ink px-3 py-1.5 text-xs font-semibold text-bone"
+          className="inline-flex items-center gap-1.5 rounded-full border border-navy bg-navy px-3 py-1.5 text-xs font-semibold text-mist"
         >
           {chip.label}
           <span aria-hidden="true">✕</span>
@@ -152,7 +152,7 @@ export default function CatalogPage() {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="eyebrow">Catálogo</p>
-            <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+            <h1 className="mt-2 font-display text-3xl tracking-tight sm:text-4xl">
               Elige tu próxima mini
             </h1>
           </div>
@@ -193,9 +193,9 @@ export default function CatalogPage() {
 
           <div>
             <div className="mb-4 flex flex-wrap items-center gap-2">
-              <p className="mr-1 text-sm text-ink/60">
+              <p className="mr-1 text-sm text-navy/60">
                 {total} {total === 1 ? 'mini' : 'minis'}
-                {isFetching && !isLoading && <span className="ml-2 text-ink/60">actualizando…</span>}
+                {isFetching && !isLoading && <span className="ml-2 text-navy/60">actualizando…</span>}
               </p>
               <ActiveChips
                 categories={categories}
@@ -208,7 +208,7 @@ export default function CatalogPage() {
                 <button
                   type="button"
                   onClick={clear}
-                  className="text-xs font-semibold text-ink/60 underline-offset-4 hover:text-ink hover:underline"
+                  className="text-xs font-semibold text-navy/60 underline-offset-4 hover:text-navy hover:underline"
                 >
                   Limpiar todo
                 </button>
@@ -249,7 +249,7 @@ export default function CatalogPage() {
                 >
                   Anterior
                 </button>
-                <span className={cn('text-sm text-ink/60')}>
+                <span className={cn('text-sm text-navy/60')}>
                   Página {Math.min(filters.page, totalPages)} de {totalPages}
                 </span>
                 <button

@@ -98,13 +98,13 @@ function CategoryForm({ category, onSaved }: { category: Category | null; onSave
           onChange={(event) => setSlug(event.target.value)}
           placeholder="mini-mediana"
         />
-        <p className="mt-1 text-[11px] text-ink/60">
+        <p className="mt-1 text-[11px] text-navy/60">
           Se genera del nombre si lo dejas vacío. Se usa en la URL del catálogo.
         </p>
       </div>
 
       {error && (
-        <p className="rounded-xl bg-ember/10 px-3 py-2 text-xs text-ember" role="alert">
+        <p className="rounded-xl bg-turquoise/10 px-3 py-2 text-xs text-violet" role="alert">
           {error}
         </p>
       )}
@@ -158,8 +158,8 @@ export default function AdminCategoriesPage() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="eyebrow">Admin</p>
-          <h1 className="mt-1 font-display text-2xl font-semibold sm:text-3xl">Categorías</h1>
-          <p className="mt-1 text-xs text-ink/60">
+          <h1 className="mt-1 font-display text-2xl sm:text-3xl">Categorías</h1>
+          <p className="mt-1 text-xs text-navy/60">
             Tamaños de mini. Definen el precio base y las ofertas por cantidad.
           </p>
         </div>
@@ -176,15 +176,15 @@ export default function AdminCategoriesPage() {
       </div>
 
       {notice && (
-        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-ink/10 bg-white/70 px-4 py-3 text-sm">
-          <p className="text-ink/70">{notice}</p>
-          <button type="button" onClick={() => setNotice('')} className="text-ink/60">
+        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-navy/10 bg-white/70 px-4 py-3 text-sm">
+          <p className="text-navy/70">{notice}</p>
+          <button type="button" onClick={() => setNotice('')} className="text-navy/60">
             ✕
           </button>
         </div>
       )}
 
-      <label className="mt-4 flex items-center gap-2 text-xs font-medium text-ink/60">
+      <label className="mt-4 flex items-center gap-2 text-xs font-medium text-navy/60">
         <input
           type="checkbox"
           checked={showArchived}
@@ -195,7 +195,7 @@ export default function AdminCategoriesPage() {
 
       {isError ? (
         <div className="card mt-5 px-5 py-10 text-center text-sm">
-          <p className="text-ink/60">No pudimos cargar las categorías.</p>
+          <p className="text-navy/60">No pudimos cargar las categorías.</p>
           <button type="button" onClick={() => refetch()} className="btn-ghost mt-3 h-10">
             Reintentar
           </button>
@@ -203,7 +203,7 @@ export default function AdminCategoriesPage() {
       ) : isLoading ? (
         <div className="mt-5 space-y-2">
           {Array.from({ length: 4 }, (_, index) => (
-            <div key={index} className="h-14 animate-pulse rounded-xl bg-sand" />
+            <div key={index} className="h-14 animate-pulse rounded-xl bg-haze" />
           ))}
         </div>
       ) : (
@@ -212,20 +212,20 @@ export default function AdminCategoriesPage() {
             <li
               key={category.id}
               className={cn(
-                'flex flex-wrap items-center gap-3 rounded-2xl border border-ink/10 bg-white/60 px-4 py-3',
+                'flex flex-wrap items-center gap-3 rounded-2xl border border-navy/10 bg-white/60 px-4 py-3',
                 category.deletedAt && 'opacity-60',
               )}
             >
               <div className="min-w-0 flex-1">
-                <p className="font-display text-sm font-semibold">
+                <p className="font-display text-sm">
                   {category.name}
                   {category.deletedAt && (
-                    <span className="ml-2 text-[10px] font-semibold uppercase tracking-wider text-ink/60">
+                    <span className="ml-2 text-[10px] font-semibold uppercase tracking-wider text-navy/60">
                       archivada
                     </span>
                   )}
                 </p>
-                <p className="text-[11px] text-ink/60">
+                <p className="text-[11px] text-navy/60">
                   /{category.slug} · orden {category.sortOrder}
                 </p>
               </div>
@@ -235,7 +235,7 @@ export default function AdminCategoriesPage() {
                   <button
                     type="button"
                     onClick={() => restore.mutate(category.id)}
-                    className="text-moss"
+                    className="text-turquoise-ink"
                   >
                     Restaurar
                   </button>
@@ -247,7 +247,7 @@ export default function AdminCategoriesPage() {
                         setEditing(category)
                         setFormOpen(true)
                       }}
-                      className="text-ink/60 hover:text-ink"
+                      className="text-navy/60 hover:text-navy"
                     >
                       Editar
                     </button>
@@ -258,7 +258,7 @@ export default function AdminCategoriesPage() {
                           archive.mutate(category.id)
                         }
                       }}
-                      className="text-ember"
+                      className="text-violet"
                     >
                       Archivar
                     </button>

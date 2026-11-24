@@ -100,7 +100,7 @@ function SeriesForm({ series, onSaved }: { series: Series | null; onSaved: () =>
       </div>
 
       {error && (
-        <p className="rounded-xl bg-ember/10 px-3 py-2 text-xs text-ember" role="alert">
+        <p className="rounded-xl bg-turquoise/10 px-3 py-2 text-xs text-violet" role="alert">
           {error}
         </p>
       )}
@@ -154,8 +154,8 @@ export default function AdminSeriesPage() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="eyebrow">Admin</p>
-          <h1 className="mt-1 font-display text-2xl font-semibold sm:text-3xl">Series</h1>
-          <p className="mt-1 text-xs text-ink/60">Temáticas que agrupan las minis.</p>
+          <h1 className="mt-1 font-display text-2xl sm:text-3xl">Series</h1>
+          <p className="mt-1 text-xs text-navy/60">Temáticas que agrupan las minis.</p>
         </div>
         <button
           type="button"
@@ -170,15 +170,15 @@ export default function AdminSeriesPage() {
       </div>
 
       {notice && (
-        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-ink/10 bg-white/70 px-4 py-3 text-sm">
-          <p className="text-ink/70">{notice}</p>
-          <button type="button" onClick={() => setNotice('')} className="text-ink/60">
+        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-navy/10 bg-white/70 px-4 py-3 text-sm">
+          <p className="text-navy/70">{notice}</p>
+          <button type="button" onClick={() => setNotice('')} className="text-navy/60">
             ✕
           </button>
         </div>
       )}
 
-      <label className="mt-4 flex items-center gap-2 text-xs font-medium text-ink/60">
+      <label className="mt-4 flex items-center gap-2 text-xs font-medium text-navy/60">
         <input
           type="checkbox"
           checked={showArchived}
@@ -189,7 +189,7 @@ export default function AdminSeriesPage() {
 
       {isError ? (
         <div className="card mt-5 px-5 py-10 text-center text-sm">
-          <p className="text-ink/60">No pudimos cargar las series.</p>
+          <p className="text-navy/60">No pudimos cargar las series.</p>
           <button type="button" onClick={() => refetch()} className="btn-ghost mt-3 h-10">
             Reintentar
           </button>
@@ -197,7 +197,7 @@ export default function AdminSeriesPage() {
       ) : isLoading ? (
         <div className="mt-5 space-y-2">
           {Array.from({ length: 4 }, (_, index) => (
-            <div key={index} className="h-14 animate-pulse rounded-xl bg-sand" />
+            <div key={index} className="h-14 animate-pulse rounded-xl bg-haze" />
           ))}
         </div>
       ) : (
@@ -206,7 +206,7 @@ export default function AdminSeriesPage() {
             <li
               key={item.id}
               className={cn(
-                'flex items-center gap-3 rounded-2xl border border-ink/10 bg-white/60 px-3 py-2.5',
+                'flex items-center gap-3 rounded-2xl border border-navy/10 bg-white/60 px-3 py-2.5',
                 item.deletedAt && 'opacity-60',
               )}
             >
@@ -216,21 +216,21 @@ export default function AdminSeriesPage() {
                 className="h-12 w-12 shrink-0 rounded-xl" hideLabel
               />
               <div className="min-w-0 flex-1">
-                <p className="truncate font-display text-sm font-semibold">
+                <p className="truncate font-display text-sm">
                   {item.name}
                   {item.deletedAt && (
-                    <span className="ml-2 text-[10px] font-semibold uppercase tracking-wider text-ink/60">
+                    <span className="ml-2 text-[10px] font-semibold uppercase tracking-wider text-navy/60">
                       archivada
                     </span>
                   )}
                 </p>
-                <p className="text-[11px] text-ink/60">
+                <p className="text-[11px] text-navy/60">
                   /{item.slug} · orden {item.sortOrder}
                 </p>
               </div>
               <div className="flex gap-3 text-xs font-semibold">
                 {item.deletedAt ? (
-                  <button type="button" onClick={() => restore.mutate(item.id)} className="text-moss">
+                  <button type="button" onClick={() => restore.mutate(item.id)} className="text-turquoise-ink">
                     Restaurar
                   </button>
                 ) : (
@@ -241,7 +241,7 @@ export default function AdminSeriesPage() {
                         setEditing(item)
                         setFormOpen(true)
                       }}
-                      className="text-ink/60 hover:text-ink"
+                      className="text-navy/60 hover:text-navy"
                     >
                       Editar
                     </button>
@@ -252,7 +252,7 @@ export default function AdminSeriesPage() {
                           archive.mutate(item.id)
                         }
                       }}
-                      className="text-ember"
+                      className="text-violet"
                     >
                       Archivar
                     </button>

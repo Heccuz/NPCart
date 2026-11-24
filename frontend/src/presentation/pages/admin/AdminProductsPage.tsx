@@ -183,8 +183,8 @@ function ProductForm({
                 className={cn(
                   'inline-flex items-center rounded-full border text-[11px] font-semibold',
                   selected
-                    ? 'border-ink bg-ink text-bone'
-                    : 'border-ink/15 bg-white/60 text-ink/70',
+                    ? 'border-navy bg-navy text-mist'
+                    : 'border-navy/15 bg-white/60 text-navy/70',
                 )}
               >
                 <button
@@ -200,7 +200,7 @@ function ProductForm({
                     onClick={() => setForm({ ...form, primarySeriesId: item.id })}
                     aria-label={`Marcar ${item.name} como serie principal`}
                     title={isPrimary ? 'Serie principal' : 'Marcar como principal'}
-                    className={cn('py-1.5 pl-0.5 pr-2.5 text-sm', isPrimary ? 'text-ember' : 'text-bone/65')}
+                    className={cn('py-1.5 pl-0.5 pr-2.5 text-sm', isPrimary ? 'text-violet' : 'text-mist/65')}
                   >
                     {isPrimary ? '★' : '☆'}
                   </button>
@@ -209,7 +209,7 @@ function ProductForm({
             )
           })}
         </div>
-        <p className="mt-1.5 text-[11px] text-ink/60">
+        <p className="mt-1.5 text-[11px] text-navy/60">
           La estrella marca la serie principal que se muestra en la tarjeta.
         </p>
       </div>
@@ -268,7 +268,7 @@ function ProductForm({
             placeholder="https://drive.google.com/file/d/…/view"
           />
         </div>
-        <p className="mt-1 text-[11px] text-ink/60">
+        <p className="mt-1 text-[11px] text-navy/60">
           Comparte el archivo como “cualquiera con el link”. La URL se normaliza sola.
         </p>
       </div>
@@ -287,7 +287,7 @@ function ProductForm({
       </div>
 
       {error && (
-        <p className="rounded-xl bg-ember/10 px-3 py-2 text-xs text-ember" role="alert">
+        <p className="rounded-xl bg-turquoise/10 px-3 py-2 text-xs text-violet" role="alert">
           {error}
         </p>
       )}
@@ -377,7 +377,7 @@ export default function AdminProductsPage() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="eyebrow">Admin</p>
-          <h1 className="mt-1 font-display text-2xl font-semibold sm:text-3xl">Productos</h1>
+          <h1 className="mt-1 font-display text-2xl sm:text-3xl">Productos</h1>
         </div>
         <button type="button" onClick={openNew} className="btn-primary h-11">
           + Nuevo producto
@@ -385,9 +385,9 @@ export default function AdminProductsPage() {
       </div>
 
       {notice && (
-        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-ink/10 bg-white/70 px-4 py-3 text-sm">
-          <p className="text-ink/70">{notice}</p>
-          <button type="button" onClick={() => setNotice('')} className="text-ink/60">
+        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-navy/10 bg-white/70 px-4 py-3 text-sm">
+          <p className="text-navy/70">{notice}</p>
+          <button type="button" onClick={() => setNotice('')} className="text-navy/60">
             ✕
           </button>
         </div>
@@ -400,7 +400,7 @@ export default function AdminProductsPage() {
           value={q}
           onChange={(event) => setQ(event.target.value)}
         />
-        <label className="flex items-center gap-2 text-xs font-medium text-ink/60">
+        <label className="flex items-center gap-2 text-xs font-medium text-navy/60">
           <input
             type="checkbox"
             checked={showArchived}
@@ -412,7 +412,7 @@ export default function AdminProductsPage() {
 
       {isError ? (
         <div className="card mt-6 px-5 py-10 text-center text-sm">
-          <p className="text-ink/60">No pudimos cargar los productos.</p>
+          <p className="text-navy/60">No pudimos cargar los productos.</p>
           <button type="button" onClick={() => refetch()} className="btn-ghost mt-3 h-10">
             Reintentar
           </button>
@@ -420,18 +420,18 @@ export default function AdminProductsPage() {
       ) : isLoading ? (
         <div className="mt-6 space-y-2">
           {Array.from({ length: 5 }, (_, index) => (
-            <div key={index} className="h-14 animate-pulse rounded-xl bg-sand" />
+            <div key={index} className="h-14 animate-pulse rounded-xl bg-haze" />
           ))}
         </div>
       ) : products.length === 0 ? (
-        <div className="card mt-6 px-5 py-10 text-center text-sm text-ink/60">
+        <div className="card mt-6 px-5 py-10 text-center text-sm text-navy/60">
           No hay productos que coincidan.
         </div>
       ) : (
         <>
-          <div className="mt-5 hidden overflow-hidden rounded-2xl border border-ink/10 bg-white/60 md:block">
+          <div className="mt-5 hidden overflow-hidden rounded-2xl border border-navy/10 bg-white/60 md:block">
             <table className="w-full text-sm">
-              <thead className="border-b border-ink/10 bg-ink/5 text-left text-[11px] uppercase tracking-wider text-ink/60">
+              <thead className="border-b border-navy/10 bg-navy/5 text-left text-[11px] uppercase tracking-wider text-navy/60">
                 <tr>
                   <th className="px-4 py-3 font-semibold">Producto</th>
                   <th className="px-4 py-3 font-semibold">Tamaño</th>
@@ -441,9 +441,9 @@ export default function AdminProductsPage() {
                   <th className="px-4 py-3" />
                 </tr>
               </thead>
-              <tbody className="divide-y divide-ink/5">
+              <tbody className="divide-y divide-navy/5">
                 {products.map((product) => (
-                  <tr key={product.id} className={cn(product.deletedAt && 'bg-ink/[0.03]')}>
+                  <tr key={product.id} className={cn(product.deletedAt && 'bg-navy/[0.03]')}>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         <ImageWithFallback
@@ -453,17 +453,17 @@ export default function AdminProductsPage() {
                         />
                         <div className="min-w-0">
                           <p className="truncate font-medium">{product.name}</p>
-                          <p className="truncate text-[11px] text-ink/60">
+                          <p className="truncate text-[11px] text-navy/60">
                             {product.primarySeries.name}
                             {product.deletedAt && ' · archivado'}
                           </p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-ink/60">{product.category.name}</td>
+                    <td className="px-4 py-3 text-navy/60">{product.category.name}</td>
                     <td className="px-4 py-3">{formatCents(product.priceCents)}</td>
                     <td className="px-4 py-3">
-                      <span className={cn(product.stock === 0 && 'text-ember')}>
+                      <span className={cn(product.stock === 0 && 'text-violet')}>
                         {product.stock}
                       </span>
                     </td>
@@ -478,8 +478,8 @@ export default function AdminProductsPage() {
                           className={cn(
                             'rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider',
                             product.isActive
-                              ? 'border-moss/40 bg-moss/10 text-moss'
-                              : 'border-ink/15 text-ink/60',
+                              ? 'border-turquoise/40 bg-turquoise/10 text-turquoise-ink'
+                              : 'border-navy/15 text-navy/60',
                           )}
                         >
                           {product.isActive ? 'Activo' : 'Inactivo'}
@@ -496,8 +496,8 @@ export default function AdminProductsPage() {
                           className={cn(
                             'rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider',
                             product.isFeatured
-                              ? 'border-ember/40 bg-ember/10 text-ember'
-                              : 'border-ink/15 text-ink/60',
+                              ? 'border-violet/40 bg-violet/10 text-violet'
+                              : 'border-navy/15 text-navy/60',
                           )}
                         >
                           {product.isFeatured ? '★ Destacado' : 'Destacar'}
@@ -510,7 +510,7 @@ export default function AdminProductsPage() {
                           <button
                             type="button"
                             onClick={() => restore.mutate(product.id)}
-                            className="text-moss hover:underline"
+                            className="text-turquoise-ink hover:underline"
                           >
                             Restaurar
                           </button>
@@ -519,7 +519,7 @@ export default function AdminProductsPage() {
                             <button
                               type="button"
                               onClick={() => openEdit(product)}
-                              className="text-ink/60 hover:text-ink"
+                              className="text-navy/60 hover:text-navy"
                             >
                               Editar
                             </button>
@@ -530,7 +530,7 @@ export default function AdminProductsPage() {
                                   archive.mutate(product.id)
                                 }
                               }}
-                              className="text-ember hover:underline"
+                              className="text-violet hover:underline"
                             >
                               Archivar
                             </button>
@@ -549,7 +549,7 @@ export default function AdminProductsPage() {
               <li
                 key={product.id}
                 className={cn(
-                  'rounded-2xl border border-ink/10 bg-white/60 p-3',
+                  'rounded-2xl border border-navy/10 bg-white/60 p-3',
                   product.deletedAt && 'opacity-60',
                 )}
               >
@@ -560,8 +560,8 @@ export default function AdminProductsPage() {
                     className="h-14 w-14 shrink-0 rounded-xl" hideLabel
                   />
                   <div className="min-w-0 flex-1">
-                    <p className="truncate font-display text-sm font-semibold">{product.name}</p>
-                    <p className="text-[11px] text-ink/60">
+                    <p className="truncate font-display text-sm">{product.name}</p>
+                    <p className="text-[11px] text-navy/60">
                       {product.category.name} · {product.primarySeries.name}
                     </p>
                     <p className="mt-1 text-sm">
@@ -579,8 +579,8 @@ export default function AdminProductsPage() {
                     className={cn(
                       'rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider',
                       product.isActive
-                        ? 'border-moss/40 bg-moss/10 text-moss'
-                        : 'border-ink/15 text-ink/60',
+                        ? 'border-turquoise/40 bg-turquoise/10 text-turquoise-ink'
+                        : 'border-navy/15 text-navy/60',
                     )}
                   >
                     {product.isActive ? 'Activo' : 'Inactivo'}
@@ -594,8 +594,8 @@ export default function AdminProductsPage() {
                     className={cn(
                       'rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider',
                       product.isFeatured
-                        ? 'border-ember/40 bg-ember/10 text-ember'
-                        : 'border-ink/15 text-ink/60',
+                        ? 'border-violet/40 bg-violet/10 text-violet'
+                        : 'border-navy/15 text-navy/60',
                     )}
                   >
                     {product.isFeatured ? '★ Destacado' : 'Destacar'}
@@ -605,7 +605,7 @@ export default function AdminProductsPage() {
                     <button
                       type="button"
                       onClick={() => restore.mutate(product.id)}
-                      className="text-xs font-semibold text-moss"
+                      className="text-xs font-semibold text-turquoise-ink"
                     >
                       Restaurar
                     </button>
@@ -614,7 +614,7 @@ export default function AdminProductsPage() {
                       <button
                         type="button"
                         onClick={() => openEdit(product)}
-                        className="text-xs font-semibold text-ink/60"
+                        className="text-xs font-semibold text-navy/60"
                       >
                         Editar
                       </button>
@@ -625,7 +625,7 @@ export default function AdminProductsPage() {
                             archive.mutate(product.id)
                           }
                         }}
-                        className="text-xs font-semibold text-ember"
+                        className="text-xs font-semibold text-violet"
                       >
                         Archivar
                       </button>
@@ -646,7 +646,7 @@ export default function AdminProductsPage() {
               >
                 Anterior
               </button>
-              <span className="text-ink/60">
+              <span className="text-navy/60">
                 Página {page} de {totalPages}
               </span>
               <button

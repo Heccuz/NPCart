@@ -56,7 +56,7 @@ function PriceRange({
           }}
           className="input h-11"
         />
-        <span className="text-ink/60">—</span>
+        <span className="text-navy/60">—</span>
         <input
           type="number"
           inputMode="decimal"
@@ -104,8 +104,8 @@ export default function FilterPanel({
                 className={cn(
                   'flex min-h-11 items-center justify-between gap-2 rounded-xl border px-3 py-2 text-left text-xs font-semibold transition',
                   selected
-                    ? 'border-ink bg-ink text-bone'
-                    : 'border-ink/10 bg-white/60 text-ink hover:border-ink/40',
+                    ? 'border-navy bg-navy text-mist'
+                    : 'border-navy/10 bg-white/60 text-navy hover:border-navy/40',
                   !selected && count === 0 && 'cursor-not-allowed opacity-40',
                 )}
               >
@@ -133,8 +133,8 @@ export default function FilterPanel({
                 className={cn(
                   'flex min-h-11 items-center justify-between gap-2 rounded-xl border px-3 py-2 text-left text-xs font-semibold transition',
                   selected
-                    ? 'border-ink bg-ink text-bone'
-                    : 'border-ink/10 bg-white/60 text-ink hover:border-ink/40',
+                    ? 'border-navy bg-navy text-mist'
+                    : 'border-navy/10 bg-white/60 text-navy hover:border-navy/40',
                   !selected && count === 0 && 'cursor-not-allowed opacity-40',
                 )}
               >
@@ -153,13 +153,13 @@ export default function FilterPanel({
         role="switch"
         aria-checked={filters.inStock}
         onClick={() => onUpdate({ inStock: !filters.inStock })}
-        className="flex min-h-11 w-full items-center justify-between rounded-xl border border-ink/10 bg-white/60 px-3 py-2 text-left text-xs font-semibold"
+        className="flex min-h-11 w-full items-center justify-between rounded-xl border border-navy/10 bg-white/60 px-3 py-2 text-left text-xs font-semibold"
       >
         <span>Solo disponibles</span>
         <span
           className={cn(
             'relative h-6 w-11 rounded-full transition',
-            filters.inStock ? 'bg-ember' : 'bg-ink/15',
+            filters.inStock ? 'bg-turquoise' : 'bg-navy/15',
           )}
         >
           <span
@@ -174,7 +174,7 @@ export default function FilterPanel({
       <button
         type="button"
         onClick={onClear}
-        className="w-full rounded-xl border border-ink/10 px-3 py-2.5 text-xs font-semibold text-ink/60 transition hover:border-ink/30 hover:text-ink"
+        className="w-full rounded-xl border border-navy/10 px-3 py-2.5 text-xs font-semibold text-navy/60 transition hover:border-navy/30 hover:text-navy"
       >
         Limpiar filtros
       </button>

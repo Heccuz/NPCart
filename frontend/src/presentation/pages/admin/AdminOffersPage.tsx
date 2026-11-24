@@ -113,13 +113,13 @@ function OfferForm({
         Oferta activa
       </label>
 
-      <p className="rounded-xl bg-ink/5 px-3 py-2 text-[11px] leading-relaxed text-ink/60">
+      <p className="rounded-xl bg-navy/5 px-3 py-2 text-[11px] leading-relaxed text-navy/60">
         Los tramos de una categoría deben tener cantidades distintas y precios estrictamente
         decrecientes: 5+ a S/ 12, 10+ a S/ 10.
       </p>
 
       {error && (
-        <p className="rounded-xl bg-ember/10 px-3 py-2 text-xs text-ember" role="alert">
+        <p className="rounded-xl bg-turquoise/10 px-3 py-2 text-xs text-violet" role="alert">
           {error}
         </p>
       )}
@@ -187,8 +187,8 @@ export default function AdminOffersPage() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="eyebrow">Admin</p>
-          <h1 className="mt-1 font-display text-2xl font-semibold sm:text-3xl">Ofertas</h1>
-          <p className="mt-1 text-xs text-ink/60">
+          <h1 className="mt-1 font-display text-2xl sm:text-3xl">Ofertas</h1>
+          <p className="mt-1 text-xs text-navy/60">
             Tramos por cantidad, agrupados por tamaño. Se suman todas las series.
           </p>
         </div>
@@ -205,15 +205,15 @@ export default function AdminOffersPage() {
       </div>
 
       {notice && (
-        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-ink/10 bg-white/70 px-4 py-3 text-sm">
-          <p className="text-ink/70">{notice}</p>
-          <button type="button" onClick={() => setNotice('')} className="text-ink/60">
+        <div className="mt-4 flex items-start justify-between gap-3 rounded-xl border border-navy/10 bg-white/70 px-4 py-3 text-sm">
+          <p className="text-navy/70">{notice}</p>
+          <button type="button" onClick={() => setNotice('')} className="text-navy/60">
             ✕
           </button>
         </div>
       )}
 
-      <label className="mt-4 flex items-center gap-2 text-xs font-medium text-ink/60">
+      <label className="mt-4 flex items-center gap-2 text-xs font-medium text-navy/60">
         <input
           type="checkbox"
           checked={showArchived}
@@ -224,7 +224,7 @@ export default function AdminOffersPage() {
 
       {isError ? (
         <div className="card mt-5 px-5 py-10 text-center text-sm">
-          <p className="text-ink/60">No pudimos cargar las ofertas.</p>
+          <p className="text-navy/60">No pudimos cargar las ofertas.</p>
           <button type="button" onClick={() => refetch()} className="btn-ghost mt-3 h-10">
             Reintentar
           </button>
@@ -232,19 +232,19 @@ export default function AdminOffersPage() {
       ) : isLoading ? (
         <div className="mt-5 space-y-2">
           {Array.from({ length: 3 }, (_, index) => (
-            <div key={index} className="h-24 animate-pulse rounded-xl bg-sand" />
+            <div key={index} className="h-24 animate-pulse rounded-xl bg-haze" />
           ))}
         </div>
       ) : groups.length === 0 ? (
-        <div className="card mt-5 px-5 py-10 text-center text-sm text-ink/60">
+        <div className="card mt-5 px-5 py-10 text-center text-sm text-navy/60">
           Todavía no hay ofertas.
         </div>
       ) : (
         <div className="mt-5 grid gap-3 lg:grid-cols-2">
           {groups.map((group) => (
             <section key={group.name} className="card p-4">
-              <h2 className="font-display text-base font-semibold">{group.name}</h2>
-              <ul className="mt-2 divide-y divide-ink/5">
+              <h2 className="font-display text-base">{group.name}</h2>
+              <ul className="mt-2 divide-y divide-navy/5">
                 {group.offers.map((offer) => (
                   <li
                     key={offer.id}
@@ -255,16 +255,16 @@ export default function AdminOffersPage() {
                   >
                     <span className="min-w-0 flex-1">
                       <span className="font-medium">Lleva {offer.minQuantity}+</span>
-                      <span className="text-ink/60"> → </span>
+                      <span className="text-navy/60"> → </span>
                       <span className="font-semibold">{formatCents(offer.unitPriceCents)}</span>
-                      <span className="text-xs text-ink/60"> c/u</span>
+                      <span className="text-xs text-navy/60"> c/u</span>
                     </span>
                     <span
                       className={cn(
                         'rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider',
                         offer.isActive
-                          ? 'border-moss/40 bg-moss/10 text-moss'
-                          : 'border-ink/15 text-ink/60',
+                          ? 'border-turquoise/40 bg-turquoise/10 text-turquoise-ink'
+                          : 'border-navy/15 text-navy/60',
                       )}
                     >
                       {offer.isActive ? 'activa' : 'inactiva'}
@@ -274,7 +274,7 @@ export default function AdminOffersPage() {
                         <button
                           type="button"
                           onClick={() => restore.mutate(offer.id)}
-                          className="text-moss"
+                          className="text-turquoise-ink"
                         >
                           Restaurar
                         </button>
@@ -286,7 +286,7 @@ export default function AdminOffersPage() {
                               setEditing(offer)
                               setFormOpen(true)
                             }}
-                            className="text-ink/60 hover:text-ink"
+                            className="text-navy/60 hover:text-navy"
                           >
                             Editar
                           </button>
@@ -297,7 +297,7 @@ export default function AdminOffersPage() {
                                 archive.mutate(offer.id)
                               }
                             }}
-                            className="text-ember"
+                            className="text-violet"
                           >
                             Archivar
                           </button>

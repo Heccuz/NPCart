@@ -33,17 +33,17 @@ function OfferProgress({
     const pct = Math.min(100, Math.round((units / nextOffer.minQuantity) * 100))
     return (
       <div className="mt-2">
-        <p className="text-[11px] leading-snug text-ink/60">
+        <p className="text-[11px] leading-snug text-navy/60">
           {appliedOffer && `Oferta ${appliedOffer.minQuantity}+ activa · `}
           Te {unitsToNextOffer === 1 ? 'falta' : 'faltan'}{' '}
-          <strong className="text-ink">{unitsToNextOffer}</strong>{' '}
+          <strong className="text-navy">{unitsToNextOffer}</strong>{' '}
           {unitsToNextOffer === 1 ? 'mini' : 'minis'} para{' '}
           {unitsToNextOffer === 1 ? 'que todas queden' : 'que todas queden'} a{' '}
-          <strong className="text-ember">{formatCents(nextOffer.unitPriceCents)}</strong> c/u
+          <strong className="text-violet">{formatCents(nextOffer.unitPriceCents)}</strong> c/u
         </p>
-        <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-ink/10">
+        <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-navy/10">
           <div
-            className="h-full rounded-full bg-ember transition-all duration-300"
+            className="h-full rounded-full bg-turquoise transition-all duration-300"
             style={{ width: `${pct}%` }}
           />
         </div>
@@ -53,14 +53,14 @@ function OfferProgress({
 
   if (discountCents > 0) {
     return (
-      <p className="mt-1 text-[11px] font-medium text-moss">
+      <p className="mt-1 text-[11px] font-medium text-turquoise-ink">
         Oferta aplicada: {formatCents(appliedOffer!.unitPriceCents)} c/u · ahorras{' '}
         {formatCents(discountCents)}
       </p>
     )
   }
 
-  return <p className="mt-1 text-[11px] font-medium text-moss">Oferta completada</p>
+  return <p className="mt-1 text-[11px] font-medium text-turquoise-ink">Oferta completada</p>
 }
 
 export default function CartDrawer() {
@@ -144,17 +144,17 @@ export default function CartDrawer() {
         type="button"
         aria-label="Cerrar carrito"
         onClick={close}
-        className="absolute inset-0 bg-ink/45 backdrop-blur-xs"
+        className="absolute inset-0 bg-navy/45 backdrop-blur-xs"
       />
 
       <aside
         aria-label="Carrito"
-        className="absolute inset-0 flex flex-col bg-bone sm:inset-y-0 sm:left-auto sm:right-0 sm:w-[440px] sm:shadow-2xl"
+        className="absolute inset-0 flex flex-col bg-mist sm:inset-y-0 sm:left-auto sm:right-0 sm:w-[440px] sm:shadow-2xl"
       >
-        <header className="flex h-16 items-center justify-between border-b border-ink/10 px-4 sm:px-5">
+        <header className="flex h-16 items-center justify-between border-b border-navy/10 px-4 sm:px-5">
           <div>
-            <p className="font-display text-lg font-semibold">Tu pedido</p>
-            <p className="text-xs text-ink/60">
+            <p className="font-display text-lg">Tu pedido</p>
+            <p className="text-xs text-navy/60">
               {items.reduce((sum, item) => sum + item.qty, 0)} minis en el carrito
             </p>
           </div>
@@ -162,7 +162,7 @@ export default function CartDrawer() {
             type="button"
             onClick={close}
             aria-label="Cerrar carrito"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-ink/10 text-lg"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-navy/10 text-lg"
           >
             ✕
           </button>
@@ -170,21 +170,21 @@ export default function CartDrawer() {
 
         {pending ? (
           <div className="flex flex-1 flex-col overflow-y-auto px-4 py-5 sm:px-5">
-            <div className="rounded-2xl border border-ember/40 bg-ember/5 p-4">
-              <p className="font-display text-base font-semibold text-ember">
+            <div className="rounded-2xl border border-violet/40 bg-violet/5 p-4">
+              <p className="font-display text-base text-violet">
                 Ajustamos tu pedido
               </p>
-              <p className="mt-1 text-xs leading-relaxed text-ink/60">
+              <p className="mt-1 text-xs leading-relaxed text-navy/60">
                 El pedido ya quedó registrado con el stock disponible. El total mostrado es el
                 definitivo.
               </p>
 
               {pending.excluded.length > 0 && (
                 <div className="mt-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-wider text-ink/60">
+                  <p className="text-[11px] font-semibold uppercase tracking-wider text-navy/60">
                     Excluidos del pedido
                   </p>
-                  <ul className="mt-1 space-y-1 text-sm text-ink/75">
+                  <ul className="mt-1 space-y-1 text-sm text-navy/75">
                     {pending.excluded.map((item) => (
                       <li key={item.productId}>
                         {item.name} —{' '}
@@ -197,10 +197,10 @@ export default function CartDrawer() {
 
               {pending.adjusted.length > 0 && (
                 <div className="mt-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-wider text-ink/60">
+                  <p className="text-[11px] font-semibold uppercase tracking-wider text-navy/60">
                     Cantidades ajustadas
                   </p>
-                  <ul className="mt-1 space-y-1 text-sm text-ink/75">
+                  <ul className="mt-1 space-y-1 text-sm text-navy/75">
                     {pending.adjusted.map((item) => (
                       <li key={item.productId}>
                         {item.name}: quedan {item.availableQty} (pediste {item.requestedQty})
@@ -235,8 +235,8 @@ export default function CartDrawer() {
                 return (
                   <section key={group.categoryId}>
                     <div className="flex items-baseline justify-between gap-2">
-                      <h3 className="font-display text-sm font-semibold">{group.categoryName}</h3>
-                      <span className="text-[11px] text-ink/60">
+                      <h3 className="font-display text-sm">{group.categoryName}</h3>
+                      <span className="text-[11px] text-navy/60">
                         {breakdown?.units ?? group.items.reduce((sum, item) => sum + item.qty, 0)}{' '}
                         unid.
                       </span>
@@ -260,7 +260,7 @@ export default function CartDrawer() {
                         return (
                           <li
                             key={item.productId}
-                            className="flex gap-3 rounded-2xl border border-ink/10 bg-white/60 p-3"
+                            className="flex gap-3 rounded-2xl border border-navy/10 bg-white/60 p-3"
                           >
                             <ImageWithFallback
                               src={item.imageUrl}
@@ -268,16 +268,16 @@ export default function CartDrawer() {
                               className="h-16 w-16 shrink-0 rounded-xl" hideLabel
                             />
                             <div className="min-w-0 flex-1">
-                              <p className="truncate font-display text-sm font-semibold">
+                              <p className="truncate font-display text-sm">
                                 {item.name}
                               </p>
-                              <p className="text-[11px] text-ink/60">{item.seriesName}</p>
+                              <p className="text-[11px] text-navy/60">{item.seriesName}</p>
                               <div className="mt-1 flex items-center gap-1.5 text-sm">
-                                <span className={cn('font-semibold', discounted && 'text-ember')}>
+                                <span className={cn('font-semibold', discounted && 'text-violet')}>
                                   {formatCents(effectivePrice)}
                                 </span>
                                 {discounted && (
-                                  <span className="text-[11px] text-ink/55 line-through">
+                                  <span className="text-[11px] text-navy/55 line-through">
                                     {formatCents(item.priceCents)}
                                   </span>
                                 )}
@@ -291,7 +291,7 @@ export default function CartDrawer() {
                                 <button
                                   type="button"
                                   onClick={() => removeItem(item.productId)}
-                                  className="text-[11px] font-medium text-ink/60 underline-offset-4 hover:text-ember hover:underline"
+                                  className="text-[11px] font-medium text-navy/60 underline-offset-4 hover:text-navy hover:underline"
                                 >
                                   Quitar
                                 </button>
@@ -306,7 +306,7 @@ export default function CartDrawer() {
               })}
             </div>
             {offers.length === 0 && (
-              <p className="mt-5 text-[11px] text-ink/60">
+              <p className="mt-5 text-[11px] text-navy/60">
                 Las ofertas por cantidad se aplican automáticamente al enviar.
               </p>
             )}
@@ -314,14 +314,14 @@ export default function CartDrawer() {
         )}
 
         {!pending && items.length > 0 && (
-          <footer className="border-t border-ink/10 bg-bone px-4 pb-5 pt-4 sm:px-5">
+          <footer className="border-t border-navy/10 bg-mist px-4 pb-5 pt-4 sm:px-5">
             <dl className="space-y-1 text-sm">
-              <div className="flex justify-between text-ink/60">
+              <div className="flex justify-between text-navy/60">
                 <dt>Subtotal</dt>
                 <dd>{formatCents(pricing.subtotalCents)}</dd>
               </div>
               {pricing.discountCents > 0 && (
-                <div className="flex justify-between font-medium text-moss">
+                <div className="flex justify-between font-medium text-turquoise-ink">
                   <dt>Ahorro por ofertas</dt>
                   <dd>− {formatCents(pricing.discountCents)}</dd>
                 </div>
@@ -333,29 +333,29 @@ export default function CartDrawer() {
             </dl>
 
             {error && (
-              <p className="mt-3 rounded-xl bg-ember/10 px-3 py-2 text-xs text-ember">{error}</p>
+              <p className="mt-3 rounded-xl bg-turquoise/10 px-3 py-2 text-xs text-violet">{error}</p>
             )}
 
             <button
               type="button"
               onClick={submit}
               disabled={sending}
-              className="btn-ember mt-4 h-12 w-full text-base"
+              className="btn-accent mt-4 h-12 w-full text-base"
             >
               {sending ? 'Preparando pedido…' : 'Enviar pedido por WhatsApp'}
             </button>
-            <p className="mt-2 text-center text-[11px] leading-snug text-ink/60">
+            <p className="mt-2 text-center text-[11px] leading-snug text-navy/60">
               Abre WhatsApp con tu pedido y un código verificable. Confirmas con el vendedor.
             </p>
           </footer>
         )}
 
         {pending && (
-          <footer className="border-t border-ink/10 bg-bone px-4 pb-5 pt-4 sm:px-5">
+          <footer className="border-t border-navy/10 bg-mist px-4 pb-5 pt-4 sm:px-5">
             <button
               type="button"
               onClick={() => finishOrder(pending)}
-              className="btn-ember h-12 w-full text-base"
+              className="btn-accent h-12 w-full text-base"
             >
               Continuar por WhatsApp
             </button>

@@ -34,24 +34,24 @@ export default function SeriesPage() {
 
   return (
     <div className="container-page py-8 sm:py-10">
-      <nav aria-label="Migas de pan" className="text-xs text-ink/60">
-        <Link to="/catalogo" className="hover:text-ink">
+      <nav aria-label="Migas de pan" className="text-xs text-navy/60">
+        <Link to="/catalogo" className="hover:text-navy">
           Catálogo
         </Link>{' '}
-        / <span className="text-ink/70">{current?.name ?? slug}</span>
+        / <span className="text-navy/70">{current?.name ?? slug}</span>
       </nav>
 
       <header className="mt-4 flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="eyebrow">Serie</p>
-          <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+          <h1 className="mt-2 font-display text-3xl tracking-tight sm:text-4xl">
             {current?.name ?? 'Serie'}
           </h1>
-          <p className="mt-2 max-w-lg text-sm text-ink/60">
+          <p className="mt-2 max-w-lg text-sm text-navy/60">
             Todas las minis de esta temática, en sus distintos tamaños.
           </p>
         </div>
-        <p className="text-sm text-ink/60">{data?.total ?? 0} minis</p>
+        <p className="text-sm text-navy/60">{data?.total ?? 0} minis</p>
       </header>
 
       <div className="mt-6">

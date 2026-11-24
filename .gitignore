@@ -25,6 +25,7 @@ backups/
 # Tooling local
 .netlify/
 .railway/
+.shots/
 *.local
 DEPENDENCY_UPGRADE_PLAN.md
 

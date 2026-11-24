@@ -6,13 +6,13 @@ interface QuantityStepperProps {
 
 export default function QuantityStepper({ value, max, onChange }: QuantityStepperProps) {
   return (
-    <div className="inline-flex items-center rounded-full border border-ink/15 bg-white/70">
+    <div className="inline-flex items-center rounded-full border border-navy/15 bg-white/70">
       <button
         type="button"
         aria-label="Quitar una unidad"
         disabled={value <= 1}
         onClick={() => onChange(value - 1)}
-        className="flex h-11 w-11 items-center justify-center rounded-l-full text-lg font-medium transition hover:bg-ink/5 disabled:opacity-30"
+        className="flex h-11 w-11 items-center justify-center rounded-l-full text-lg font-medium transition hover:bg-navy/5 disabled:opacity-30"
       >
         −
       </button>
@@ -24,7 +24,7 @@ export default function QuantityStepper({ value, max, onChange }: QuantitySteppe
         aria-label="Agregar una unidad"
         disabled={value >= max}
         onClick={() => onChange(value + 1)}
-        className="flex h-11 w-11 items-center justify-center rounded-r-full text-lg font-medium transition hover:bg-ink/5 disabled:opacity-30"
+        className="flex h-11 w-11 items-center justify-center rounded-r-full text-lg font-medium transition hover:bg-navy/5 disabled:opacity-30"
       >
         +
       </button>

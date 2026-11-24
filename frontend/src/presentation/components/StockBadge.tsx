@@ -5,7 +5,7 @@ export default function StockBadge({ stock, className }: { stock: number; classN
     return (
       <span
         className={cn(
-          'rounded-full bg-ink px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-bone',
+          'rounded-full bg-navy px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-mist',
           className,
         )}
       >
@@ -18,7 +18,7 @@ export default function StockBadge({ stock, className }: { stock: number; classN
     return (
       <span
         className={cn(
-          'rounded-full border border-ember bg-bone/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-ember',
+          'rounded-full border border-turquoise-ink/40 bg-mist/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-turquoise-ink',
           className,
         )}
       >

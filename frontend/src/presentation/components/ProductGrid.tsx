@@ -16,10 +16,10 @@ interface ProductGridProps {
 function SkeletonCard() {
   return (
     <div className="card overflow-hidden">
-      <div className="aspect-[4/5] animate-pulse bg-sand" />
+      <div className="aspect-[4/5] animate-pulse bg-haze" />
       <div className="space-y-2 p-3.5">
-        <div className="h-4 w-4/5 animate-pulse rounded bg-sand" />
-        <div className="h-4 w-2/5 animate-pulse rounded bg-sand" />
+        <div className="h-4 w-4/5 animate-pulse rounded bg-haze" />
+        <div className="h-4 w-2/5 animate-pulse rounded bg-haze" />
       </div>
     </div>
   )

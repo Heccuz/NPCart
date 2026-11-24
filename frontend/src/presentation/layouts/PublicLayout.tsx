@@ -12,7 +12,7 @@ function CartButton({ onClick }: { onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="relative flex h-11 w-11 items-center justify-center rounded-full border border-ink/15 transition hover:border-ink/40"
+      className="relative flex h-11 w-11 items-center justify-center rounded-full border border-navy/15 transition hover:border-navy/40"
       aria-label={`Abrir carrito (${count} ítems)`}
     >
       <svg
@@ -30,7 +30,7 @@ function CartButton({ onClick }: { onClick: () => void }) {
         <path d="M3 4h2l2.1 11.2h11.7L21 7H6" />
       </svg>
       {count > 0 && (
-        <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-ember px-1 text-[11px] font-bold text-white">
+        <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-turquoise px-1 text-[11px] font-bold text-navy">
           {count}
         </span>
       )}
@@ -51,24 +51,24 @@ export default function PublicLayout() {
     <div className="flex min-h-dvh flex-col">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-bone"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-navy focus:px-4 focus:py-2 focus:text-sm focus:text-mist"
       >
         Saltar al contenido
       </a>
-      <header className="sticky top-0 z-30 border-b border-ink/10 bg-bone/85 backdrop-blur-md">
+      <header className="sticky top-0 z-30 border-b border-navy/10 bg-mist/85 backdrop-blur-md">
         <div className="container-page flex h-16 items-center justify-between gap-4">
-          <Link to="/" className="font-display text-2xl font-extrabold tracking-tight">
-            NPCart<span className="text-ember">.</span>
+          <Link to="/" className="font-display text-2xl tracking-tight">
+            NPCart<span className="text-turquoise">.</span>
           </Link>
 
           <nav className="hidden items-center gap-1 text-sm font-medium sm:flex">
             <Link
               to="/catalogo"
-              className="rounded-full px-4 py-2 transition hover:bg-ink/5"
+              className="rounded-full px-4 py-2 transition hover:bg-navy/5"
             >
               Catálogo
             </Link>
-            <Link to="/#series" className="rounded-full px-4 py-2 transition hover:bg-ink/5">
+            <Link to="/#series" className="rounded-full px-4 py-2 transition hover:bg-navy/5">
               Series
             </Link>
           </nav>
@@ -91,8 +91,8 @@ export default function PublicLayout() {
 
       <CartDrawer />
 
-      <footer className="mt-20 border-t border-ink/10 py-10">
-        <div className="container-page flex flex-col gap-4 text-sm text-ink/60 sm:flex-row sm:items-center sm:justify-between">
+      <footer className="mt-20 border-t border-navy/10 py-10">
+        <div className="container-page flex flex-col gap-4 text-sm text-navy/60 sm:flex-row sm:items-center sm:justify-between">
           <p>NPCart — minis impresas en 3D, hechas a pedido en Perú.</p>
           <p className="text-xs uppercase tracking-[0.18em]">
             Pedidos por WhatsApp · Lima, Perú

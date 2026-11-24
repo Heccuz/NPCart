@@ -55,7 +55,7 @@ export default function ProductCard({ product, offer, onQuickAdd }: ProductCardP
               event.preventDefault()
               handleQuickAdd()
             }}
-            className="absolute bottom-2 right-2 flex h-10 w-10 items-center justify-center rounded-full bg-ink text-lg font-bold text-bone shadow-card transition hover:bg-ember"
+            className="absolute bottom-2 right-2 flex h-10 w-10 items-center justify-center rounded-full bg-navy text-lg font-bold text-mist shadow-card transition hover:bg-turquoise hover:text-navy"
           >
             {added ? '✓' : '+'}
           </button>
@@ -63,22 +63,22 @@ export default function ProductCard({ product, offer, onQuickAdd }: ProductCardP
       </div>
 
       <div className="flex flex-1 flex-col p-3.5">
-        <p className="truncate text-[10px] font-semibold uppercase tracking-wider text-ink/60">
+        <p className="truncate text-[10px] font-semibold uppercase tracking-wider text-navy/60">
           {product.primarySeries.name}
         </p>
-        <h3 className="mt-0.5 line-clamp-2 min-h-[2.5em] font-display text-[15px] font-semibold leading-snug">
+        <h3 className="mt-0.5 line-clamp-2 min-h-[2.5em] font-display text-[15px] leading-snug">
           {product.name}
         </h3>
         <div className="mt-auto pt-2">
           <div className="flex items-baseline justify-between gap-2">
             <span className="text-[15px] font-semibold">{formatCents(product.priceCents)}</span>
             {soldOut && (
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-ink/60">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-navy/60">
                 Agotado
               </span>
             )}
           </div>
-          <p className="mt-0.5 h-4 truncate text-[11px] font-semibold text-ember">
+          <p className="mt-0.5 h-4 truncate text-[11px] font-semibold text-violet">
             {hasOffer && offer
               ? `Oferta ${offer.minQuantity}+: ${formatCents(offer.unitPriceCents)} c/u`
               : ''}

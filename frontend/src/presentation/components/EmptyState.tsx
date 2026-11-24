@@ -19,7 +19,7 @@ export default function EmptyState({
 }: EmptyStateProps) {
   return (
     <div className="card flex flex-col items-center gap-3 px-6 py-14 text-center">
-      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-ink/5 text-ink/60">
+      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-navy/5 text-navy/60">
         {icon ?? (
           <svg
             aria-hidden="true"
@@ -34,8 +34,8 @@ export default function EmptyState({
           </svg>
         )}
       </div>
-      <h3 className="font-display text-xl font-semibold">{title}</h3>
-      {description && <p className="max-w-sm text-sm text-ink/60">{description}</p>}
+      <h3 className="font-display text-xl">{title}</h3>
+      {description && <p className="max-w-sm text-sm text-navy/60">{description}</p>}
       {actionLabel && actionTo && (
         <Link to={actionTo} className="btn-primary mt-2">
           {actionLabel}

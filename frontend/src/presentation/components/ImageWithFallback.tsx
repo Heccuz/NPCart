@@ -14,7 +14,7 @@ interface ImageWithFallbackProps {
 
 function MiniPlaceholder({ hideLabel }: { hideLabel?: boolean }) {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-1.5 bg-gradient-to-br from-shale via-coal to-ink text-bone/60">
+    <div className="flex h-full w-full flex-col items-center justify-center gap-1.5 bg-gradient-to-br from-shale via-coal to-ink text-mist/60">
       <svg
         aria-hidden="true"
         viewBox="0 0 24 24"
@@ -55,8 +55,8 @@ export default function ImageWithFallback({
   }
 
   return (
-    <div className={cn('relative overflow-hidden bg-sand', className)}>
-      {!loaded && <div className="absolute inset-0 animate-pulse bg-sand" />}
+    <div className={cn('relative overflow-hidden bg-haze', className)}>
+      {!loaded && <div className="absolute inset-0 animate-pulse bg-haze" />}
       <img
         src={resolved}
         alt={alt}

@@ -1,19 +1,22 @@
 @import "tailwindcss";
 
+/* Paleta ALVINA: azul marino + turquesa + blanco núcleo; violeta secundario. */
 @theme {
-  --color-ink: #12100e;
-  --color-coal: #1c1917;
-  --color-shale: #2a2522;
-  --color-bone: #f4efe6;
-  --color-sand: #e7ddcb;
-  --color-ember: #e4572e;
-  --color-ember-dark: #bf3f1c;
-  --color-moss: #7d8f7b;
+  --color-navy: #001b46;
+  --color-navy-deep: #00112e;
+  --color-navy-mid: #0a2a5c;
+  --color-mist: #f6f8fb;
+  --color-haze: #e9eef7;
+  --color-turquoise: #00d8dc;
+  --color-turquoise-deep: #00aeb3;
+  /* Turquesa oscurecido para texto sobre fondos claros (AA, ~5.7:1). */
+  --color-turquoise-ink: #00727a;
+  --color-violet: #70205e;
 
-  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-display: "Anton", "Arial Narrow", system-ui, sans-serif;
   --font-sans: "Inter", system-ui, sans-serif;
 
-  --shadow-card: 0 18px 40px -24px rgba(18, 16, 14, 0.55);
+  --shadow-card: 0 18px 40px -24px rgba(0, 27, 70, 0.35);
 }
 
 @layer base {
@@ -22,25 +25,25 @@
   }
 
   body {
-    @apply bg-bone font-sans text-ink;
-    background-image: radial-gradient(circle at 20% 0%, rgba(228, 87, 46, 0.06), transparent 45%),
-      radial-gradient(circle at 85% 15%, rgba(125, 143, 123, 0.08), transparent 40%);
+    @apply bg-mist font-sans text-navy;
+    background-image: radial-gradient(circle at 20% 0%, rgba(0, 27, 70, 0.04), transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(0, 216, 220, 0.09), transparent 40%);
     background-attachment: fixed;
   }
 
   ::selection {
-    @apply bg-ember/20;
+    @apply bg-turquoise/30;
   }
 
   :where(a, button, input, select, textarea):focus-visible {
-    outline: 2px solid #e4572e;
+    outline: 2px solid #00727a;
     outline-offset: 2px;
   }
 }
 
-/* Registrada como utility para poder @apply en .btn-primary/.btn-ember/.btn-ghost. */
+/* Registrada como utility para poder @apply en los .btn-*. */
 @utility btn {
-  @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember disabled:cursor-not-allowed disabled:opacity-40;
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turquoise-ink disabled:cursor-not-allowed disabled:opacity-40;
 }
 
 @layer components {
@@ -49,39 +52,49 @@
   }
 
   .btn-primary {
-    @apply btn bg-ink text-bone hover:bg-shale;
+    @apply btn bg-navy text-mist hover:bg-navy-mid;
   }
 
-  .btn-ember {
-    @apply btn bg-ember text-white hover:bg-ember-dark;
+  .btn-accent {
+    @apply btn bg-turquoise text-navy hover:bg-turquoise-deep;
   }
 
   .btn-ghost {
-    @apply btn border border-ink/15 bg-transparent text-ink hover:border-ink/40 hover:bg-ink/5;
+    @apply btn border border-navy/15 bg-transparent text-navy hover:border-navy/40 hover:bg-navy/5;
+  }
+
+  /* Ghost para fondos navy (hero, secciones oscuras). */
+  .btn-ghost-light {
+    @apply btn border border-mist/25 bg-transparent text-mist hover:border-mist/50 hover:bg-white/5;
   }
 
   .input {
-    @apply w-full rounded-xl border border-ink/15 bg-white/70 px-3.5 py-2.5 text-sm text-ink outline-hidden transition placeholder:text-ink/55 focus:border-ember focus:ring-2 focus:ring-ember/20;
+    @apply w-full rounded-xl border border-navy/15 bg-white/70 px-3.5 py-2.5 text-sm text-navy outline-hidden transition placeholder:text-navy/55 focus:border-turquoise-ink focus:ring-2 focus:ring-turquoise/25;
   }
 
   .label {
-    @apply mb-1.5 block text-xs font-semibold uppercase tracking-wider text-ink/60;
+    @apply mb-1.5 block text-xs font-semibold uppercase tracking-wider text-navy/60;
   }
 
   .card {
-    @apply rounded-2xl border border-ink/10 bg-white/60 backdrop-blur-xs;
+    @apply rounded-2xl border border-navy/10 bg-white/60 backdrop-blur-xs;
   }
 
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full border border-ink/10 bg-bone/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-ink/70 backdrop-blur-xs;
+    @apply inline-flex items-center gap-1 rounded-full border border-navy/10 bg-mist/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-navy/70 backdrop-blur-xs;
   }
 
   .chip-active {
-    @apply border-ink bg-ink text-bone;
+    @apply border-navy bg-navy text-mist;
   }
 
   .eyebrow {
-    @apply text-[11px] font-semibold uppercase tracking-[0.22em] text-ember;
+    @apply text-[11px] font-semibold uppercase tracking-[0.22em] text-violet;
+  }
+
+  /* Eyebrow para fondos navy. */
+  .eyebrow-light {
+    @apply text-[11px] font-semibold uppercase tracking-[0.22em] text-turquoise;
   }
 
   .scrollbar-none {
@@ -90,5 +103,13 @@
 
   .scrollbar-none::-webkit-scrollbar {
     display: none;
+  }
+}
+
+/* Anton solo tiene 400: evita el bold sintético y da el aire condensado del logo. */
+@layer utilities {
+  .font-display {
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
   }
 }
